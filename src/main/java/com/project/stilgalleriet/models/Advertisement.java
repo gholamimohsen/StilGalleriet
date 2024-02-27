@@ -10,6 +10,58 @@ import java.util.Date;
 
 @Document(collection="advertisement")
 public class Advertisement {
+
+    @Id
+    private String id;
+
+    @DBRef
+    @NotBlank(message="Field can not be blank")
+    private User userId;
+
+    @NotBlank(message="Field can not be blank")
+    private String title;
+
+    @NotBlank(message="Field can not be blank")
+    private String description;
+
+
+    @DBRef
+    @NotBlank(message="Field can not be blank")
+    private EGender gender;
+
+
+    @DBRef
+    @NotBlank(message="Field can not be blank")
+    private ECategory category;
+
+    @NotBlank(message="Field can not be blank")
+    private String imgUrl;
+
+
+    @DBRef
+    @NotBlank(message="Field can not be blank")
+     private ESize size;
+
+
+    @DBRef
+    @NotBlank(message="Field can not be blank")
+     private EColor color;
+
+    @NotBlank(message="Field can not be blank")
+     private double price;
+
+     private Date createdAt;
+
+     private Date updatedAt;
+
+     private boolean isActive;
+
+
+    public Advertisement() {
+    }
+
+
+
     public User getUserId() {
         return userId;
     }
@@ -82,68 +134,6 @@ public class Advertisement {
         this.price = price;
     }
 
-    public Date getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public Date getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(Date updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
-    @Id
-    private String id;
-
-    @DBRef
-    @NotBlank(message="Field can not be blank")
-    private User userId;
-
-    @NotBlank(message="Field can not be blank")
-    private String title;
-
-    @NotBlank(message="Field can not be blank")
-    private String description;
 
 
-    @DBRef
-    @NotBlank(message="Field can not be blank")
-    private EGender gender;
-
-
-    @DBRef
-    @NotBlank(message="Field can not be blank")
-    private ECategory category;
-
-    @NotBlank(message="Field can not be blank")
-    private String imgUrl;
-
-
-    @DBRef
-    @NotBlank(message="Field can not be blank")
-     private ESize size;
-
-
-    @DBRef
-    @NotBlank(message="Field can not be blank")
-     private EColor color;
-
-    @NotBlank(message="Field can not be blank")
-     private double price;
-
-     private Date createdAt;
-
-     private Date updatedAt;
-
-     private boolean isActive;
-
-
-    public Advertisement() {
-    }
 }
