@@ -1,4 +1,7 @@
 package com.project.stilgalleriet.repositories;
 
-public interface AdvertisementRepository {
+import com.project.stilgalleriet.models.Advertisement;
+import org.springframework.data.mongodb.repository.MongoRepository;
+
+public interface AdvertisementRepository extends MongoRepository<Advertisement, String> {
 }
