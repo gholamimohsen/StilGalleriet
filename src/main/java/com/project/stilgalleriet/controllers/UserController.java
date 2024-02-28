@@ -1,4 +1,4 @@
 package com.project.stilgalleriet.controllers;
 
-public class UserController {
+public class UserController { 
 }
