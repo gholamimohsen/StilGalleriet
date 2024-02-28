@@ -1,5 +1,6 @@
 package com.project.stilgalleriet.models;
 
+import jakarta.validation.constraints.NotBlank;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -9,13 +10,16 @@ public class Review {
     @Id
     private String id;
 
+    @NotBlank(message = "Field cannot be blank")
     private String ratingUserId; //Add @DBRef after other CRUD are done
 
+    @NotBlank(message = "Field cannot be blank")
     private String ratedUserId; //Add @DBRef after other CRUD are done
 
+    @NotBlank(message = "Field cannot be blank")
     private String rating; //Might need to make an enum for this field
 
-    private String comment;
+    private String comment; //This field should be optional, if reviewer wants to comment
 
     public Review(){
 
