@@ -1,4 +1,7 @@
 package com.project.stilgalleriet.repositories;
 
-public interface UserRepository {
+import com.project.stilgalleriet.models.User;
+import org.springframework.data.mongodb.repository.MongoRepository;
+
+public interface UserRepository extends MongoRepository<User, String> {
 }
