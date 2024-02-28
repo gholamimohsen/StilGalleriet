@@ -1,8 +1,11 @@
 package com.project.stilgalleriet.models;
 
 import jakarta.validation.constraints.NotBlank;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.util.Date;
 
 @Document(collection = "reviews")
 public class Review {
@@ -17,9 +20,12 @@ public class Review {
     private String ratedUserId; //Add @DBRef after other CRUD are done
 
     @NotBlank(message = "Field cannot be blank")
-    private String rating; //Might need to make an enum for this field
+    private String rating; //As Enum does work for numbers, might change to integer with min 1 and max 10
 
     private String comment; //This field should be optional, if reviewer wants to comment
+
+    @CreatedDate
+    private Date createdAt;
 
     public Review(){
 
