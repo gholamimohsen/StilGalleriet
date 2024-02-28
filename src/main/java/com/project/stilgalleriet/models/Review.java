@@ -13,14 +13,13 @@ public class Review {
     @Id
     private String id;
 
-    @NotBlank(message = "Field cannot be blank")
     private String ratingUserId; //Add @DBRef after other CRUD are done
 
-    @NotBlank(message = "Field cannot be blank")
     private String ratedUserId; //Add @DBRef after other CRUD are done
 
+    //As Enum does work for numbers, might change to integer with min 1 and max 10. Can use a method to limit the number.
     @NotBlank(message = "Field cannot be blank")
-    private String rating; //As Enum does work for numbers, might change to integer with min 1 and max 10
+    private String rating;
 
     private String comment; //This field should be optional, if reviewer wants to comment
 
@@ -65,5 +64,9 @@ public class Review {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
     }
 }

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ReviewService {
@@ -17,9 +18,14 @@ public class ReviewService {
         return reviewRepository.save(review);
     }
 
-    //Get all reviews, can have it for testing CRUD not sure if needed later on
+    //Get all reviews
     public List<Review> getAllReviews(){
         return reviewRepository.findAll();
+    }
+
+    //Find review by ID
+    public Optional<Review> getReviewById(String id) {
+        return reviewRepository.findById(id);
     }
 
     //Get reviews by seller user ID, implemented later as Order need to be functional
