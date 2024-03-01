@@ -11,8 +11,8 @@ import java.util.List;
 public class advertisementDTO {
 
     private String userId;
-    private List<String> advertisementTitles;
-    private List <String> advertisementDescriptions;
+    private String advertisementTitles;
+    private String advertisementDescriptions;
     private EGender advertisementGender;
     private ECategory advertisementCategory;
     private List <String> advertisementImgUrls;
@@ -22,7 +22,6 @@ public class advertisementDTO {
     private Date advertisementDate;
     private Date advertisementUpdatedDate;
     private boolean advertisementIsActive;
-
 
     public advertisementDTO() {
     }
@@ -35,19 +34,19 @@ public class advertisementDTO {
         this.userId = userId;
     }
 
-    public List<String> getAdvertisementTitles() {
+    public String getAdvertisementTitles() {
         return advertisementTitles;
     }
 
-    public void setAdvertisementTitles(List<String> advertisementTitles) {
+    public void setAdvertisementTitles(String advertisementTitles) {
         this.advertisementTitles = advertisementTitles;
     }
 
-    public List<String> getAdvertisementDescriptions() {
+    public String getAdvertisementDescriptions() {
         return advertisementDescriptions;
     }
 
-    public void setAdvertisementDescriptions(List<String> advertisementDescriptions) {
+    public void setAdvertisementDescriptions(String advertisementDescriptions) {
         this.advertisementDescriptions = advertisementDescriptions;
     }
 

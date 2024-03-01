@@ -7,6 +7,8 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
+import java.util.List;
+
 
 @Document(collection="advertisement")
 public class Advertisement {
@@ -35,7 +37,7 @@ public class Advertisement {
     private ECategory category;
 
     @NotBlank(message="Field can not be blank")
-    private String imgUrl;
+    private List<String > imgUrl;
 
 
     @DBRef
@@ -109,11 +111,11 @@ public class Advertisement {
         this.category = category;
     }
 
-    public String getImgUrl() {
+    public List<String> getImgUrl() {
         return imgUrl;
     }
 
-    public void setImgUrl(String imgUrl) {
+    public void setImgUrl(List<String> imgUrl) {
         this.imgUrl = imgUrl;
     }
 
