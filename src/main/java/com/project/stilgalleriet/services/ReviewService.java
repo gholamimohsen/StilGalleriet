@@ -50,4 +50,8 @@ public class ReviewService {
         reviewRepository.deleteById(id);
     }
 
+    //Check if rating field input within range of rating(1-10)
+    public boolean isWithinRange(byte rating){
+        return rating < 1 || rating > 10;
+    }
 }

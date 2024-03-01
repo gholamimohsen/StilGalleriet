@@ -17,9 +17,8 @@ public class Review {
 
     private String ratedUserId; //Add @DBRef after other CRUD are done
 
-    //As Enum does work for numbers, might change to integer with min 1 and max 10. Can use a method to limit the number.
-    @NotBlank(message = "Field cannot be blank")
-    private String rating;
+    @NotBlank(message = "Please enter a number from 1 to 10 for your rating")
+    private byte rating;
 
     private String comment; //This field should be optional, if reviewer wants to comment
 
