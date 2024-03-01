@@ -1,6 +1,7 @@
 package com.project.stilgalleriet.models;
 
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -17,7 +18,7 @@ public class Review {
 
     private String ratedUserId; //Add @DBRef after other CRUD are done
 
-    @NotBlank(message = "Please enter a number from 1 to 10 for your rating")
+    @Min(value = 1, message = "Minimum is 1") @Max(value = 10, message = "10 is the highest")
     private byte rating;
 
     private String comment; //This field should be optional, if reviewer wants to comment
@@ -49,11 +50,11 @@ public class Review {
         this.ratedUserId = ratedUserId;
     }
 
-    public String getRating() {
+    public byte getRating() {
         return rating;
     }
 
-    public void setRating(String rating) {
+    public void setRating(byte rating) {
         this.rating = rating;
     }
 

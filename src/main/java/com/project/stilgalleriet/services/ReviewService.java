@@ -32,11 +32,13 @@ public class ReviewService {
 
     //Update a review
     public Review updateReview(String id, Review updatedReview){
+
         return reviewRepository.findById(id)
                 .map(review -> {
-                    if (updatedReview.getRating() != null){
-                        review.setRating(updatedReview.getRating());
-                    }
+
+                    //Validation annotations in model already check this value, we don't need to check it here
+                    review.setRating(updatedReview.getRating());
+
                     if (updatedReview.getComment() != null){
                         review.setComment(updatedReview.getComment());
                     }
@@ -50,8 +52,4 @@ public class ReviewService {
         reviewRepository.deleteById(id);
     }
 
-    //Check if rating field input within range of rating(1-10)
-    public boolean isWithinRange(byte rating){
-        return rating < 1 || rating > 10;
-    }
 }
