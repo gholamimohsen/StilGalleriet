@@ -1,4 +1,11 @@
 package com.project.stilgalleriet.repositories;
 
-public interface OrderRepository {
+import com.project.stilgalleriet.models.Order;
+import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface OrderRepository extends MongoRepository<Order, String> {
+
+
 }

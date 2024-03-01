@@ -2,42 +2,27 @@ package com.project.stilgalleriet.models;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.Field;
-import java.util.Date;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 @Document (collection = "orders")
 public class Order {
     @Id
     private String id;
-
-    @Field ("seller_user_id")
     private  String SellerUserId;
-
-    @Field ("buyer_user_id")
     private String buyersUserId;
-
-    @Field ("advertisement_id")
     private String advertisementId;
-
-    @Field ("order_date")
     private Date orderDate;
     private int quantity;
-
-    @Field ("total_price")
     private BigDecimal totalPrice;
-
-    @Field ("isSold")
     private boolean isSold;
-
-    @Field ("created_at")
     private Date createdAt;
-
-    @Field ("updated_at")
     private Date updatedAt;
 
+    //Constructors, getters, and setters
 
+    //Constructs a new Order with the given info
     public Order(String sellerUserId, String buyersUserId, String advertisementId, Date orderDate, int quantity, BigDecimal totalPrice, boolean isSold, Date createdAt, Date updatedAt) {
         SellerUserId = sellerUserId;
         this.buyersUserId = buyersUserId;

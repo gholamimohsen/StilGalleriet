@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class StilGallerietApplication {
+public class stigallerietApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(StilGallerietApplication.class, args);
+		SpringApplication.run(stigallerietApplication.class, args);
 	}
 
 }
