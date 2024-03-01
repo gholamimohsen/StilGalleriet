@@ -27,7 +27,7 @@ public class AdvertisementController {
 
      //GET all advertisements
 
-    @GetMapping("/allAdvertisement")
+    @GetMapping("/allAdvertisements")
     public List<Advertisement> getAllAdvertisment(){
         return advertisementService.getAllAdvertisements();
     }
