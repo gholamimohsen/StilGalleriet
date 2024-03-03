@@ -1,19 +1,25 @@
 package com.project.stilgalleriet.models;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.management.relation.Role;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 @Document(collection = "users")
 public class User {
    @Id
    private String id;
+   @DBRef
+   private Set<Role> roles = new HashSet<>();
    private String firstName;
    private String lastName;
    private String email;
    private String password;
-   private ArrayList adress;
+   private ArrayList address;
    private Enum role;
    private boolean isActive;
    private ArrayList favorites;
@@ -63,12 +69,12 @@ public class User {
       this.password = password;
    }
 
-   public ArrayList getAdress() {
-      return adress;
+   public ArrayList getAddress() {
+      return address;
    }
 
-   public void setAdress(ArrayList adress) {
-      this.adress = adress;
+   public void setAddress(ArrayList adress) {
+      this.address = adress;
    }
 
    public Enum getRole() {
