@@ -4,13 +4,15 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
-
+@Service
 public class UserDetailsImpl implements UserDetails { //UserDetails Interface är grundläggande uppgifter som krävs för att autentisera en användare.
     private static final long serialVersionUID = 1L; //En standardpraxis när man implementerar Serializable gränssnittet.
 
@@ -33,7 +35,7 @@ public class UserDetailsImpl implements UserDetails { //UserDetails Interface ä
         this.password = password;
         this.authorities = authorities;
     }
-/*
+
     public static UserDetailsImpl build(User user) {
         List<GrantedAuthority> authorities = user.getRoles().stream()//1. implementera @DBRef private Set<Role> roles = new HashSet<>(); på User model. 2. Skapa getters och setters för instansvariabeln Role.
                 .map(role-> new SimpleGrantedAuthority(role.getRolePermission().rolePermission()))
@@ -46,17 +48,53 @@ public class UserDetailsImpl implements UserDetails { //UserDetails Interface ä
                 user.getLastName(),
                 user.getEmail(),
                 user.getPassword(),
-                authorities); */
+                authorities);
 
+}
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
     }
 
+    @Override
+    public String getPassword() {
+        return null;
+    }
 
+    @Override
+    public String getUsername() {
+        return null;
+    }
 
+    @Override
+    public boolean isAccountNonExpired() {
+        return false;
+    }
 
+    @Override
+    public boolean isAccountNonLocked() {
+        return false;
+    }
 
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return false;
+    }
 
+    @Override
+    public boolean isEnabled() {
+        return false;
+    }
 
-
-
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        UserDetailsImpl user = (UserDetailsImpl) o;
+        return Objects.equals(id, user.id);
+    }
 
 }
