@@ -2,8 +2,8 @@ package com.project.stilgalleriet.models;
 
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
@@ -16,9 +16,10 @@ public class Advertisement {
     @Id
     private String id;
 
-    @DBRef
+    //@DBRef to reference to users collection
+    // private User userId;      //must be changed this field and getters/ setters according to this field
     @NotBlank(message="Field can not be blank")
-    private User userId;
+    private String userId;
 
     @NotBlank(message="Field can not be blank")
     private String title;
@@ -27,25 +28,20 @@ public class Advertisement {
     private String description;
 
 
-    @DBRef
     @NotBlank(message="Field can not be blank")
     private EGender gender;
 
 
-    @DBRef
     @NotBlank(message="Field can not be blank")
     private ECategory category;
 
-    @NotBlank(message="Field can not be blank")
+    @NotEmpty(message="Field can not be empty")
     private List<String > imgUrl;
 
 
-    @DBRef
     @NotBlank(message="Field can not be blank")
      private ESize size;
 
-
-    @DBRef
     @NotBlank(message="Field can not be blank")
      private EColor color;
 
@@ -71,11 +67,11 @@ public class Advertisement {
         this.id = id;
     }
 
-    public User getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(User userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 

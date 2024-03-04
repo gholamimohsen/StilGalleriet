@@ -8,14 +8,14 @@ import com.project.stilgalleriet.models.ESize;
 import java.util.Date;
 import java.util.List;
 
-public class advertisementDTO {
-
+public class AdvertisementResponse {
     private String userId;
+    private String advertisementId;
     private String advertisementTitles;
     private String advertisementDescriptions;
     private EGender advertisementGender;
     private ECategory advertisementCategory;
-    private List <String> advertisementImgUrls;
+    private List<String> advertisementImgUrls;
     private ESize advertisementSize;
     private EColor advertisementColor;
     private double advertisementPrice;
@@ -23,7 +23,8 @@ public class advertisementDTO {
     private Date advertisementUpdatedDate;
     private boolean advertisementIsActive;
 
-    public advertisementDTO() {
+
+    public AdvertisementResponse() {
     }
 
     public String getUserId() {
@@ -120,5 +121,13 @@ public class advertisementDTO {
 
     public void setAdvertisementIsActive(boolean advertisementIsActive) {
         this.advertisementIsActive = advertisementIsActive;
+    }
+
+    public String getAdvertisementId() {
+        return advertisementId;
+    }
+
+    public void setAdvertisementId(String advertisementId) {
+        this.advertisementId = advertisementId;
     }
 }
