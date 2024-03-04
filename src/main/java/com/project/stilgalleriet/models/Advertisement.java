@@ -52,7 +52,7 @@ public class Advertisement {
 
      private Date updatedAt;
 
-     private boolean isActive;
+     private boolean isActive=true;
 
 
     public Advertisement() {
@@ -154,6 +154,7 @@ public class Advertisement {
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
     }
+
 
     public boolean isActive() {
         return isActive;

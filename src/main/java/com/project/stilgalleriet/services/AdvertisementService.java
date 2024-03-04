@@ -64,6 +64,10 @@ public class AdvertisementService {
                     }
                     if (updatedAdvertisement.getPrice()!=0.00){
                         existingAdvertisement.setPrice(updatedAdvertisement.getPrice());
+
+                    }
+                   if (updatedAdvertisement.isActive()==false ){
+                        existingAdvertisement.setActive(false);
                     }
                     return advertisementRepository.save(existingAdvertisement);
 
