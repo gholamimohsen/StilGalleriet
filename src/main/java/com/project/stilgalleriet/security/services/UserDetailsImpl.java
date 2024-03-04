@@ -17,7 +17,6 @@ public class UserDetailsImpl implements UserDetails { //UserDetails Interface ä
     private static final long serialVersionUID = 1L; //En standardpraxis när man implementerar Serializable gränssnittet.
 
     private String id;
-    private String username;
     private String firsName;
     private String lastName;
     private String email;
@@ -26,9 +25,9 @@ public class UserDetailsImpl implements UserDetails { //UserDetails Interface ä
     private Collection<? extends GrantedAuthority> authorities;
 
 
-    public UserDetailsImpl(String id, String username, String firsName, String lastName, String email, String password, Collection<? extends GrantedAuthority> authorities) {
+    public UserDetailsImpl(String id, String firsName, String lastName, String email, String password, Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
-        this.username = username;
+
         this.firsName = firsName;
         this.lastName = lastName;
         this.email = email;
@@ -43,7 +42,6 @@ public class UserDetailsImpl implements UserDetails { //UserDetails Interface ä
 
         return  new UserDetailsImpl(
                 user.getId(),
-                user.getUsername(),
                 user.getFirstName(),
                 user.getLastName(),
                 user.getEmail(),
@@ -64,7 +62,7 @@ public class UserDetailsImpl implements UserDetails { //UserDetails Interface ä
 
     @Override
     public String getUsername() {
-        return null;
+        return email; // Returnerar användarens e-postadress som användarnamn
     }
 
     @Override
