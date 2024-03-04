@@ -21,7 +21,8 @@ public class OrderService {
     }
 
     // Method to add a new Order
-    public  Order addOrder(@Valid Order order) {
+
+     public Order addOrder(@Valid Order order) {
         return orderRepository.save(order);
 
     }
