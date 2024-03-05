@@ -1,6 +1,7 @@
 package com.project.stilgalleriet.models;
 
 
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -11,14 +12,17 @@ import java.util.Date;
 public class Order {
     @Id
     private String id;
-    private String SellerUserId;
-    private String buyersUserId;
+    private String sellerUserId;
+    private String buyerUserId;
     private String advertisementId;
-    private Date orderDate;
+    private Date orderDate; //Might consider removing this in the future if same as createdAt
     private int quantity;
     private BigDecimal totalPrice;
     private boolean isSold;
+
+    @CreatedDate
     private Date createdAt;
+
     private Date updatedAt;
 
 
@@ -26,20 +30,24 @@ public class Order {
     public Order() {
     }
 
+    public String getId() {
+        return id;
+    }
+
     public String getSellerUserId() {
-        return SellerUserId;
+        return sellerUserId;
     }
 
     public void setSellerUserId(String sellerUserId) {
-        SellerUserId = sellerUserId;
+        this.sellerUserId = sellerUserId;
     }
 
-    public String getBuyersUserId() {
-        return buyersUserId;
+    public String getBuyerUserId() {
+        return buyerUserId;
     }
 
-    public void setBuyersUserId(String buyersUserId) {
-        this.buyersUserId = buyersUserId;
+    public void setBuyerUserId(String buyerUserId) {
+        this.buyerUserId = buyerUserId;
     }
 
     public String getAdvertisementId() {
