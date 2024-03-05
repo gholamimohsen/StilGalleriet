@@ -27,7 +27,10 @@ public class User {
     @NotBlank
     private String password;
 
-    private String address;
+    private String street;
+    private String city;
+    private String state;
+    private int zipcode;
 
     private Enum role;
 
@@ -38,9 +41,8 @@ public class User {
 
     private ArrayList<String> favorites = new ArrayList<>();
 
+
     //private String advertisementId;
-
-
 
     public User() {
     }
@@ -53,14 +55,6 @@ public class User {
     public void setId(String id) {
         this.id = id;
     }
-
-    /*public Set<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
-    }*/
 
     public String getFirstName() {
         return firstName;
@@ -94,12 +88,36 @@ public class User {
         this.password = password;
     }
 
-    public String getAddress() {
-        return address;
+    public String getStreet() {
+        return street;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public int getZipcode() {
+        return zipcode;
+    }
+
+    public void setZipcode(int zipcode) {
+        this.zipcode = zipcode;
     }
 
     public Enum getRole() {
@@ -126,21 +144,13 @@ public class User {
         isActive = active;
     }
 
-    public ArrayList getFavorites() {
+    public ArrayList<String> getFavorites() {
         return favorites;
     }
 
-    public void setFavorites(ArrayList favorites) {
+    public void setFavorites(ArrayList<String> favorites) {
         this.favorites = favorites;
     }
-
-    /*public String getAdvertisementId() {
-        return advertisementId;
-    }
-
-    public void setAdvertisementId(String advertisementId) {
-        this.advertisementId = advertisementId;
-    }*/
 }
 
 
