@@ -11,7 +11,7 @@ import java.util.Date;
 public class Order {
     @Id
     private String id;
-    private  String SellerUserId;
+    private String SellerUserId;
     private String buyersUserId;
     private String advertisementId;
     private Date orderDate;
@@ -21,19 +21,9 @@ public class Order {
     private Date createdAt;
     private Date updatedAt;
 
-    //Constructors, getters, and setters
 
-    //Constructs a new Order with the given info
-    public Order(String sellerUserId, String buyersUserId, String advertisementId, Date orderDate, int quantity, BigDecimal totalPrice, boolean isSold, Date createdAt, Date updatedAt) {
-        SellerUserId = sellerUserId;
-        this.buyersUserId = buyersUserId;
-        this.advertisementId = advertisementId;
-        this.orderDate = orderDate;
-        this.quantity = quantity;
-        this.totalPrice = totalPrice;
-        this.isSold = isSold;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
+    //Constructors, getters, and setters
+    public Order() {
     }
 
     public String getSellerUserId() {
@@ -108,15 +98,6 @@ public class Order {
         this.updatedAt = updatedAt;
     }
 
-    public Order() {
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
 
 }
+
