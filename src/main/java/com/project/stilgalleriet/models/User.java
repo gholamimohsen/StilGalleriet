@@ -30,19 +30,18 @@ public class User {
     private String street;
     private String city;
     private String state;
-    private int zipcode;
+    private String zipcode;
 
-    private Enum role;
+    //private Enum role;
 
     @CreatedDate
     private Date createdAt;
 
     private boolean isActive = true;
 
-    private ArrayList<String> favorites = new ArrayList<>();
+    //Add DBRef
+    private ArrayList<String> favorites = new ArrayList<>(); //Stores advertisement references(advertisementId)
 
-
-    //private String advertisementId;
 
     public User() {
     }
@@ -52,9 +51,11 @@ public class User {
         return id;
     }
 
+    /* Security risk to have setter for ID
     public void setId(String id) {
         this.id = id;
     }
+     */
 
     public String getFirstName() {
         return firstName;
@@ -112,20 +113,12 @@ public class User {
         this.state = state;
     }
 
-    public int getZipcode() {
+    public String getZipcode() {
         return zipcode;
     }
 
-    public void setZipcode(int zipcode) {
+    public void setZipcode(String zipcode) {
         this.zipcode = zipcode;
-    }
-
-    public Enum getRole() {
-        return role;
-    }
-
-    public void setRole(Enum role) {
-        this.role = role;
     }
 
     public Date getCreatedAt() {
