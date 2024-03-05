@@ -31,11 +31,28 @@ public class OrderService {
         return orderRepository.findById(id);
     }
 
-    // Method to update an existing Order
-    public Order updateOrder(String id, Order updatedOrder) {
-        Order order = orderRepository.findById(id)
-                .orElseThrow(()-> new RuntimeException("Order not found"));
-        return orderRepository.save(updatedOrder);
+    public Order updateOrder(String id, Order updatedOrder){
+
+        //No exception handling added!
+        return orderRepository.findById(id)
+                .map(order -> {
+
+                    /*Have to consider what you can update in Order, for example don't think IDs should be updated.
+                    This time I just use all the setters, to quickly finish this.
+                    */
+                    order.setSellerUserId(updatedOrder.getSellerUserId());
+                    order.setBuyerUserId(updatedOrder.getBuyerUserId());
+                    order.setAdvertisementId(updatedOrder.getAdvertisementId());
+                    order.setOrderDate(updatedOrder.getOrderDate());
+                    order.setQuantity(updatedOrder.getQuantity());
+                    order.setTotalPrice(updatedOrder.getTotalPrice());
+                    order.setSold(updatedOrder.isSold());
+
+
+                    return orderRepository.save(order);
+
+                })
+                .orElseThrow();
     }
 
     // Method to delete an Order by its ID

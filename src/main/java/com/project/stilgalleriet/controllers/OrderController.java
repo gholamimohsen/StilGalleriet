@@ -14,7 +14,7 @@ import java.util.Optional;
 // Controller class for handling Order-related HTTP requests
 
 @RestController
-@RequestMapping("/api/orders")
+@RequestMapping("/stilgalleriet/orders")
 public class OrderController {
 
     @Autowired
