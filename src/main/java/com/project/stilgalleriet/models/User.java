@@ -36,9 +36,9 @@ public class User {
 
     private boolean isActive = true;
 
-    private ArrayList favorites;
+    private ArrayList<String> favorites = new ArrayList<>();
 
-    private String advertisementId;
+    //private String advertisementId;
 
 
 
@@ -134,13 +134,13 @@ public class User {
         this.favorites = favorites;
     }
 
-    public String getAdvertisementId() {
+    /*public String getAdvertisementId() {
         return advertisementId;
     }
 
     public void setAdvertisementId(String advertisementId) {
         this.advertisementId = advertisementId;
-    }
+    }*/
 }
 
 
