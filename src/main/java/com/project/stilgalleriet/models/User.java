@@ -21,10 +21,10 @@ public class User {
 
     private String lastName;
 
-    @NotBlank
+    @NotBlank //Is not activated, need @Valid
     private String email;
 
-    @NotBlank
+    @NotBlank //Is not activated, need @Valid
     private String password;
 
     private String street;

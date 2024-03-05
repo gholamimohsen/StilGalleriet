@@ -28,9 +28,28 @@ public class UserService {
         return userRepository.findById(id).get();
     }
 
-    //update / Put user
-    public User updateUser(User user) {
-        return userRepository.save(user);
+    //Update user. Replaced with an update method. The previous "update" method was a create operation.
+    public User updateUser(String id, User updatedUser){
+
+        //No exception handling added!
+        return userRepository.findById(id)
+                .map(user -> {
+
+                    user.setFirstName(updatedUser.getFirstName());
+                    user.setLastName(updatedUser.getLastName());
+                    user.setEmail(updatedUser.getEmail());
+                    user.setPassword(updatedUser.getPassword());
+                    user.setStreet(updatedUser.getStreet());
+                    user.setCity(updatedUser.getCity());
+                    user.setState(updatedUser.getState());
+                    user.setZipcode(updatedUser.getZipcode());
+                    user.setActive(updatedUser.isActive());
+                    user.setFavorites(updatedUser.getFavorites()); //This might overwrite favorites, probably need .add method from ArrayList
+
+                    return userRepository.save(user);
+
+                })
+                .orElseThrow();
     }
 
     //Delete user
