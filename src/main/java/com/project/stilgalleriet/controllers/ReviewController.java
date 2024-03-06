@@ -48,5 +48,10 @@ public class ReviewController {
         reviewService.deleteReview(id);
         return ResponseEntity.ok("Deleted review: " + id);
     }
+
+    @GetMapping("/find/{id}")
+    public List<Review> findReviewByRatedUserId(@PathVariable String id){
+        return reviewService.findReviewByRatedUserId(id);
+    }
 }
 
