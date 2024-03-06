@@ -4,6 +4,7 @@ import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
@@ -14,12 +15,14 @@ public class Review {
     @Id
     private String id;
 
-    private String ratingUserId; //Add @DBRef after other CRUD are done
+    @DBRef
+    private String ratingUserId;
 
-    private String ratedUserId; //Add @DBRef after other CRUD are done
+    @DBRef
+    private String ratedUserId;
 
     @Min(value = 1, message = "Minimum is 1") @Max(value = 10, message = "10 is the highest")
-    private byte rating;
+    private int rating;
 
     private String comment; //This field should be optional, if reviewer wants to comment
 
@@ -50,11 +53,11 @@ public class Review {
         this.ratedUserId = ratedUserId;
     }
 
-    public byte getRating() {
+    public int getRating() {
         return rating;
     }
 
-    public void setRating(byte rating) {
+    public void setRating(int rating) {
         this.rating = rating;
     }
 
