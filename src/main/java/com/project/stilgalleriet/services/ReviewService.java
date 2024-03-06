@@ -1,6 +1,7 @@
 package com.project.stilgalleriet.services;
 
 import com.project.stilgalleriet.models.Review;
+import com.project.stilgalleriet.repositories.OrderRepository;
 import com.project.stilgalleriet.repositories.ReviewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,8 +14,17 @@ public class ReviewService {
     @Autowired
     ReviewRepository reviewRepository;
 
+    @Autowired
+    OrderRepository orderRepository;
+
     //Create a new review
     public Review addReview(Review review){
+
+        //Check if user already made review
+
+        //Check if user is eligible for making a review(See if an order match the seller and buyer ids)
+
+
         return reviewRepository.save(review);
     }
 
@@ -50,6 +60,10 @@ public class ReviewService {
     //Delete review
     public void deleteReview(String id){
         reviewRepository.deleteById(id);
+    }
+
+    public List<Review> findReviewByRatedUserId(String id){
+       return reviewRepository.findByRatedUserId(id);
     }
 
 }
