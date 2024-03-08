@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface ReviewRepository extends MongoRepository<Review, String> {
 
-    //Does not work if DBRef is applied to field(ratedUserId)
-    List<Review> findByRatedUserId(String id);
+    //Untested, need to change Review creation service to use DTO
+    List<Review> findByRatedUserId(String ratedUser);
 
 }

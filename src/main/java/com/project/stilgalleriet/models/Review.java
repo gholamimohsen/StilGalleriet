@@ -16,10 +16,10 @@ public class Review {
     private String id;
 
     @DBRef
-    private String ratingUserId;
+    private User ratingUserId;
 
     @DBRef
-    private String ratedUserId;
+    private User ratedUserId;
 
     @Min(value = 1, message = "Minimum is 1") @Max(value = 10, message = "10 is the highest")
     private int rating;
@@ -37,19 +37,19 @@ public class Review {
         return id;
     }
 
-    public String getRatingUserId() {
+    public User getRatingUserId() {
         return ratingUserId;
     }
 
-    public void setRatingUserId(String ratingUserId) {
+    public void setRatingUserId(User ratingUserId) {
         this.ratingUserId = ratingUserId;
     }
 
-    public String getRatedUserId() {
+    public User getRatedUserId() {
         return ratedUserId;
     }
 
-    public void setRatedUserId(String ratedUserId) {
+    public void setRatedUserId(User ratedUserId) {
         this.ratedUserId = ratedUserId;
     }
 
