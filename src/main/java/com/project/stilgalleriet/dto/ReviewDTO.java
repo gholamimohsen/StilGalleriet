@@ -1,9 +1,11 @@
 package com.project.stilgalleriet.dto;
 
-public class ReviewAdd {
+public class ReviewDTO { //DTO for Reviews. Used for both request and response.
     private String ratingUserId;
 
     private String ratedUserId;
+
+    private int rating;
 
     private String comment;
 
@@ -21,6 +23,14 @@ public class ReviewAdd {
 
     public void setRatedUserId(String ratedUserId) {
         this.ratedUserId = ratedUserId;
+    }
+
+    public int getRating() {
+        return rating;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
     }
 
     public String getComment() {
