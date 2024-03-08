@@ -1,6 +1,8 @@
 package com.project.stilgalleriet.services;
 
+import com.project.stilgalleriet.dto.ReviewAdd;
 import com.project.stilgalleriet.models.Review;
+import com.project.stilgalleriet.models.User;
 import com.project.stilgalleriet.repositories.OrderRepository;
 import com.project.stilgalleriet.repositories.ReviewRepository;
 import com.project.stilgalleriet.repositories.UserRepository;
@@ -22,7 +24,7 @@ public class ReviewService {
     UserRepository userRepository;
 
     //Create a new review
-    public Review addReview(Review review){
+    public Review addReview(ReviewAdd reviewAdd){
 
         //Change to input DTO object that contains(IDs as string)
 
@@ -30,7 +32,13 @@ public class ReviewService {
 
         //Check if user is eligible for making a review(See if an order match the seller and buyer ids)
 
+        Optional<User> ratingUser = Optional.of(userRepository.findById(reviewAdd.getRatingUserId())).orElseThrow(() -> new RuntimeException("User not found"));
+        Optional<User> ratedUser = Optional.of(userRepository.findById(reviewAdd.getRatedUserId()).orElseThrow(() -> new RuntimeException("User not found")));
 
+        Review review = new Review();
+
+        review.setRatingUserId(ratingUser.get());
+        review.setRatedUserId(ratedUser.get());
 
         return reviewRepository.save(review);
     }
