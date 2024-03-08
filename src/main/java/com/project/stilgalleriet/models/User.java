@@ -3,10 +3,13 @@ package com.project.stilgalleriet.models;
 import jakarta.validation.constraints.NotBlank;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Document(collection = "users")
 public class User {
@@ -14,8 +17,8 @@ public class User {
     @Id
     private String id;
 
-    /*@DBRef
-    private Set<Role> roles = new HashSet<>();*/
+    @DBRef
+    private Set<Role> roles = new HashSet<>();
 
     private String firstName;
 
@@ -143,6 +146,14 @@ public class User {
 
     public void setFavorites(ArrayList<String> favorites) {
         this.favorites = favorites;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 }
 

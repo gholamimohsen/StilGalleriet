@@ -1,13 +1,13 @@
 package com.project.stilgalleriet.security.services;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.project.stilgalleriet.models.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -37,7 +37,7 @@ public class UserDetailsImpl implements UserDetails { //UserDetails Interface ä
 
     public static UserDetailsImpl build(User user) {
         List<GrantedAuthority> authorities = user.getRoles().stream()//1. implementera @DBRef private Set<Role> roles = new HashSet<>(); på User model. 2. Skapa getters och setters för instansvariabeln Role.
-                .map(role-> new SimpleGrantedAuthority(role.getRolePermission().rolePermission()))
+                .map(role-> new SimpleGrantedAuthority(role.getRolePermission().name()))
                 .collect(Collectors.toList());
 
         return  new UserDetailsImpl(
@@ -52,12 +52,16 @@ public class UserDetailsImpl implements UserDetails { //UserDetails Interface ä
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return authorities;
+    }
+
+    public String getId() {
+        return id;
     }
 
     @Override
     public String getPassword() {
-        return null;
+        return password;
     }
 
     @Override
@@ -67,22 +71,22 @@ public class UserDetailsImpl implements UserDetails { //UserDetails Interface ä
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return true;
     }
 
     @Override
