@@ -3,6 +3,7 @@ package com.project.stilgalleriet.models;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.math.BigDecimal;
@@ -12,8 +13,11 @@ import java.util.Date;
 public class Order {
     @Id
     private String id;
+   @DBRef
     private String sellerUserId;
+   @DBRef
     private String buyerUserId;
+    @DBRef
     private String advertisementId;
     private Date orderDate; //Might consider removing this in the future if same as createdAt
     private int quantity;
@@ -22,7 +26,6 @@ public class Order {
 
     @CreatedDate
     private Date createdAt;
-
     private Date updatedAt;
 
 
