@@ -51,7 +51,7 @@ public class ReviewController {
 
     @GetMapping("/find/{id}")
     public List<Review> findReviewByRatedUserId(@PathVariable String id){
-        return reviewService.findReviewByRatedUserId(id);
+        return reviewService.getReviewBySeller(id);
     }
 }
 
