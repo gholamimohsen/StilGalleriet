@@ -1,6 +1,6 @@
 package com.project.stilgalleriet.controllers;
 
-import com.project.stilgalleriet.dto.ReviewAdd;
+import com.project.stilgalleriet.dto.ReviewDTO;
 import com.project.stilgalleriet.models.Review;
 import com.project.stilgalleriet.services.ReviewService;
 import jakarta.validation.Valid;
@@ -19,8 +19,8 @@ public class ReviewController {
     private ReviewService reviewService;
 
     @PostMapping
-    public ResponseEntity<Review> addReview(@Valid @RequestBody ReviewAdd reviewAdd){
-        Review newReview = reviewService.addReview(reviewAdd); //Change to take user IDs from orders and put it in Review object
+    public ResponseEntity<Review> addReview(@Valid @RequestBody ReviewDTO reviewDTO){
+        Review newReview = reviewService.addReview(reviewDTO); //Change to take user IDs from orders and put it in Review object
         return new ResponseEntity<>(newReview, HttpStatus.CREATED);
     }
 
@@ -51,7 +51,7 @@ public class ReviewController {
     }
 
     @GetMapping("/find/{id}")
-    public List<Review> findReviewByRatedUserId(@PathVariable String id){
+    public List<ReviewDTO> findReviewByRatedUserId(@PathVariable String id){
         return reviewService.getReviewBySeller(id);
     }
 }

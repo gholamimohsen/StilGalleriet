@@ -1,6 +1,6 @@
 package com.project.stilgalleriet.services;
 
-import com.project.stilgalleriet.dto.ReviewAdd;
+import com.project.stilgalleriet.dto.ReviewDTO;
 import com.project.stilgalleriet.models.Review;
 import com.project.stilgalleriet.models.User;
 import com.project.stilgalleriet.repositories.OrderRepository;
@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ReviewService {
@@ -24,16 +25,14 @@ public class ReviewService {
     UserRepository userRepository;
 
     //Create a new review
-    public Review addReview(ReviewAdd reviewAdd){
-
-        //Change to input DTO object that contains(IDs as string)
+    public Review addReview(ReviewDTO reviewDTO){
 
         //Check if user already made review
 
         //Check if user is eligible for making a review(See if an order match the seller and buyer ids)
 
-        Optional<User> ratingUser = Optional.of(userRepository.findById(reviewAdd.getRatingUserId())).orElseThrow(() -> new RuntimeException("User not found"));
-        Optional<User> ratedUser = Optional.of(userRepository.findById(reviewAdd.getRatedUserId()).orElseThrow(() -> new RuntimeException("User not found")));
+        Optional<User> ratingUser = Optional.of(userRepository.findById(reviewDTO.getRatingUserId())).orElseThrow(() -> new RuntimeException("User not found"));
+        Optional<User> ratedUser = Optional.of(userRepository.findById(reviewDTO.getRatedUserId()).orElseThrow(() -> new RuntimeException("User not found")));
 
         Review review = new Review();
 
@@ -77,8 +76,22 @@ public class ReviewService {
         reviewRepository.deleteById(id);
     }
 
-    public List<Review> getReviewBySeller(String ratedId){
-        return reviewRepository.findByRatedUserId(ratedId);
+    //Show all reviews for a seller(ratedUserId)
+    public List<ReviewDTO> getReviewBySeller(String id){
+        List<Review> reviews = reviewRepository.findByRatedUserId(id);
+        return reviews.stream().map(this::convertToDTO).collect(Collectors.toList());
+    }
+
+
+    //Convert Review object to ReviewDTO object
+    private ReviewDTO convertToDTO(Review review){
+        ReviewDTO reviewDTO = new ReviewDTO();
+        reviewDTO.setRatingUserId(review.getRatingUserId().getId());
+        reviewDTO.setRatedUserId(review.getRatedUserId().getId());
+        reviewDTO.setRating(review.getRating());
+        reviewDTO.setComment(review.getComment());
+
+        return reviewDTO;
     }
 
 }
