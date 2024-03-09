@@ -24,21 +24,27 @@ public class ReviewService {
     @Autowired
     UserRepository userRepository;
 
-    //Create a new review
+    //Create a new review, takes DTO as input
     public Review addReview(ReviewDTO reviewDTO){
 
-        //Check if user already made review
+        //Check if user already made review(Can be done with exception handling)
 
-        //Check if user is eligible for making a review(See if an order match the seller and buyer ids)
+        //Check if user is eligible for making a review(See if an order match the seller id)
+        //Might need custom query for Order similar to the one in getReviewBySeller
 
+        //Use User ID strings from DTO to get User objects to feed into Review object
         Optional<User> ratingUser = Optional.of(userRepository.findById(reviewDTO.getRatingUserId())).orElseThrow(() -> new RuntimeException("User not found"));
         Optional<User> ratedUser = Optional.of(userRepository.findById(reviewDTO.getRatedUserId()).orElseThrow(() -> new RuntimeException("User not found")));
 
+        //Insert values into Review object
         Review review = new Review();
 
         review.setRatingUserId(ratingUser.get());
         review.setRatedUserId(ratedUser.get());
+        review.setRating(reviewDTO.getRating());
+        review.setComment(reviewDTO.getComment());
 
+        //Return and save Review object
         return reviewRepository.save(review);
     }
 
@@ -51,8 +57,6 @@ public class ReviewService {
     public Optional<Review> getReviewById(String id) {
         return reviewRepository.findById(id);
     }
-
-    //Get reviews by seller user ID, implemented later as Order need to be functional
 
     //Update a review
     public Review updateReview(String id, Review updatedReview){
