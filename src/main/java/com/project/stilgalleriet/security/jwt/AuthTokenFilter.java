@@ -15,11 +15,13 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
-public class AuthTokenFilter extends OncePerRequestFilter {//Förhindra att samma filter körs flera gånger i samma request. t.ex autentisering eller loggning, det ska inte ske mer än en gång.
+public class AuthTokenFilter extends OncePerRequestFilter {//Förhindra att samma filter körs flera gånger i samma request. t.ex autentisering eller loggning, det ska inte ske mer än en gång.//
+    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
    @Autowired
    private JwtUtils jwtUtils;
 
-   @Autowired
+    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
+    @Autowired
    private UserDetailsServiceImpl userDetailsService;
 
 
@@ -52,32 +54,11 @@ public class AuthTokenFilter extends OncePerRequestFilter {//Förhindra att samm
         if (StringUtils.hasText(headerAuth) && headerAuth.startsWith("Bearer ")) {
             return headerAuth.substring(7);
         }
+        return null;
+
     }
 
-
-
-
-
-
-
-
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
