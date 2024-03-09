@@ -1,7 +1,7 @@
 package com.project.stilgalleriet.dto;
 
 public class ReviewDTO { //DTO for Reviews. Used for both request and response.
-    private String ratingUserId;
+    private String ratingUserId; //Can grab this ID somehow with authentication or being logged in(user account)?
 
     private String ratedUserId;
 
