@@ -1,8 +1,11 @@
 package com.project.stilgalleriet.models;
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -17,6 +20,10 @@ public class User {
     @Id
     private String id;
 
+    @NotBlank
+    @Size (max =50)
+    private String username;
+
     @DBRef
     private Set<Role> roles = new HashSet<>();
 
@@ -25,9 +32,12 @@ public class User {
     private String lastName;
 
     @NotBlank //Is not activated, need @Valid
+    @Email
+    @Indexed(unique = true)
     private String email;
 
     @NotBlank //Is not activated, need @Valid
+    @Size(max = 120)
     private String password;
 
     private String street;
@@ -35,7 +45,6 @@ public class User {
     private String state;
     private String zipcode;
 
-    //private Enum role;
 
     @CreatedDate
     private Date createdAt;
@@ -46,7 +55,10 @@ public class User {
     private ArrayList<String> favorites = new ArrayList<>(); //Stores advertisement references(advertisementId)
 
 
-    public User() {
+    public User(String username, String email, String password) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
     }
 
 
@@ -54,11 +66,18 @@ public class User {
         return id;
     }
 
-    /* Security risk to have setter for ID
+
     public void setId(String id) {
         this.id = id;
     }
-     */
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
     public String getFirstName() {
         return firstName;
