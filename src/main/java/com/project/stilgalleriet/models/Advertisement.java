@@ -4,6 +4,7 @@ package com.project.stilgalleriet.models;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
@@ -16,10 +17,9 @@ public class Advertisement {
     @Id
     private String id;
 
-    //@DBRef to reference to users collection
-    // private User userId;      //must be changed this field and getters/ setters according to this field
+    @DBRef
     @NotBlank(message="Field can not be blank")
-    private String userId;
+    private User userId;
 
     @NotBlank(message="Field can not be blank")
     private String title;
@@ -67,13 +67,6 @@ public class Advertisement {
         this.id = id;
     }
 
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
 
     public String getTitle() {
         return title;
@@ -162,5 +155,13 @@ public class Advertisement {
 
     public void setIsActive(boolean isActive) {
         isActive = isActive;
+    }
+
+    public User getUserId() {
+        return userId;
+    }
+
+    public void setUserId(User userId) {
+        this.userId = userId;
     }
 }
