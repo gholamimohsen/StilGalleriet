@@ -1,11 +1,12 @@
 package com.project.stilgalleriet.repositories;
 
-import com.project.stilgalleriet.models.Advertisement;
+import com.project.stilgalleriet.models.*;
 import org.springframework.data.mongodb.repository.MongoRepository;
+
+import java.util.List;
 
 public interface AdvertisementRepository extends MongoRepository<Advertisement, String> {
 
-   /* NEW CODES TO FILTER BY ID CATEGORY ETC FOR DTO CLASSES CODE ??
 
     List<Advertisement> findAdvertisementById(String advertisementId);
 
@@ -17,7 +18,7 @@ public interface AdvertisementRepository extends MongoRepository<Advertisement, 
     List <Advertisement> findAdvertisementBySize(ESize advertisementSize);
     List <Advertisement> findAdvertisementByColor (EColor advertisementColor);
 
-*/
+
 
 
 }
