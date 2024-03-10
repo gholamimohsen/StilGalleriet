@@ -21,11 +21,7 @@ public class UserDetailsServiceImpl implements UserDetailsService { // Interface
         User user = userRepository.findByUsername(username) //Hittar en user via userns username
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + username)); //
 
-        /*//Generera saltat lösenord med BCrypt
-        String saltedPassword = user.getPassword(); //Hämta lösenord från databasen
 
-        //Hasha lösenordet med saltet
-        String hashedPassword = new BCryptPasswordEncoder().encode(saltedPassword);*/
 
         return UserDetailsImpl.build(user);
 

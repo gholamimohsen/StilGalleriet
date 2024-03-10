@@ -19,9 +19,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableMethodSecurity(
-        //securedEnabled = true,
-        // jsr250Enabled = true,
-        // prePostEnabled = false*
+
 )
 public class WebSecurityConfig {
 
@@ -63,7 +61,6 @@ public class WebSecurityConfig {
                 .sessionManagement(session-> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth ->
                         auth.requestMatchers("/api/stilgalleriet/**").permitAll()
-                                .requestMatchers("/api/stilgalleriet/**").permitAll()
                                 .anyRequest().authenticated()
                 );
 

@@ -17,8 +17,7 @@ public class UserDetailsImpl implements UserDetails { //UserDetails Interface ä
 
     private String id;
     private String username;
-    //private String firsName;
-    //private String lastName;
+
     private String email;
     @JsonIgnore
     private String password;
@@ -29,8 +28,6 @@ public class UserDetailsImpl implements UserDetails { //UserDetails Interface ä
                            Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
         this.username = username;
-        //this.firsName = firsName;
-       // this.lastName = lastName;
         this.email = email;
         this.password = password;
         this.authorities = authorities;
@@ -44,8 +41,6 @@ public class UserDetailsImpl implements UserDetails { //UserDetails Interface ä
         return  new UserDetailsImpl(
                 user.getId(),
                 user.getUsername(),
-                //user.getFirstName(),
-                //user.getLastName(),
                 user.getEmail(),
                 user.getPassword(),
                 authorities);
