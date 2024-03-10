@@ -103,28 +103,29 @@ public class AuthController {
 
         if (strRoles == null) {
             Role userRole = roleRepository.findByRolePermission(ERole.ROLE_USER)
-                    .orElseThrow(() -> new RuntimeException("Error: Roles is not found"));
+                    .orElseThrow(() -> new RuntimeException("Error: roles is not found"));
             roles.add(userRole);
         } else {
             strRoles.forEach(role -> {
-                if ("admin".equals(role)) {
+                switch (role) {
+                    case "admin" -> {
                         Role adminRole = roleRepository.findByRolePermission(ERole.ROLE_ADMIN)
                                 .orElseThrow(() -> new RuntimeException("Error: Role not found"));
                         roles.add(adminRole);
-                    } else {
+                    }
+                    default -> {
                         Role userRole = roleRepository.findByRolePermission(ERole.ROLE_USER)
                                 .orElseThrow(() -> new RuntimeException("Error: Role not found"));
                         roles.add(userRole);
-
                     }
+                }
             });
         }
         user.setRoles(roles);
         userRepository.save(user);
 
         return ResponseEntity.ok(new MessageResponse("User registered successfully"));
-
-
     }
-
 }
+
+
