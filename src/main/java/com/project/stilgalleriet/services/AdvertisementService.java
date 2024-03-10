@@ -67,7 +67,7 @@ public class AdvertisementService {
 
                     }
                    if (updatedAdvertisement.isActive()==false ){
-                        existingAdvertisement.setActive(false);
+                        existingAdvertisement.setIsActive(false);
                     }
                     return advertisementRepository.save(existingAdvertisement);
 
