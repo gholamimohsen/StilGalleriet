@@ -17,9 +17,9 @@ public class UserDetailsServiceImpl implements UserDetailsService { // Interface
 
     @Override
     @Transactional
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        User user = userRepository.findByEmail(email) //Hittar en user via userns username(email)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email)); //
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = userRepository.findByUsername(username) //Hittar en user via userns username
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + username)); //
 
         /*//Generera saltat lösenord med BCrypt
         String saltedPassword = user.getPassword(); //Hämta lösenord från databasen

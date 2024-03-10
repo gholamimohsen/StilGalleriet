@@ -5,31 +5,32 @@ import com.project.stilgalleriet.models.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-@Service
+
 public class UserDetailsImpl implements UserDetails { //UserDetails Interface är grundläggande uppgifter som krävs för att autentisera en användare.
     private static final long serialVersionUID = 1L; //En standardpraxis när man implementerar Serializable gränssnittet.
 
     private String id;
-    private String firsName;
-    private String lastName;
+    private String username;
+    //private String firsName;
+    //private String lastName;
     private String email;
     @JsonIgnore
     private String password;
     private Collection<? extends GrantedAuthority> authorities;
 
 
-    public UserDetailsImpl(String id, String firsName, String lastName, String email, String password, Collection<? extends GrantedAuthority> authorities) {
+    public UserDetailsImpl(String id,String username, String email, String password,
+                           Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
-
-        this.firsName = firsName;
-        this.lastName = lastName;
+        this.username = username;
+        //this.firsName = firsName;
+       // this.lastName = lastName;
         this.email = email;
         this.password = password;
         this.authorities = authorities;
@@ -42,8 +43,9 @@ public class UserDetailsImpl implements UserDetails { //UserDetails Interface ä
 
         return  new UserDetailsImpl(
                 user.getId(),
-                user.getFirstName(),
-                user.getLastName(),
+                user.getUsername(),
+                //user.getFirstName(),
+                //user.getLastName(),
                 user.getEmail(),
                 user.getPassword(),
                 authorities);
@@ -58,6 +60,9 @@ public class UserDetailsImpl implements UserDetails { //UserDetails Interface ä
     public String getId() {
         return id;
     }
+    public String getEmail() {
+        return email;
+    }
 
     @Override
     public String getPassword() {
@@ -66,7 +71,7 @@ public class UserDetailsImpl implements UserDetails { //UserDetails Interface ä
 
     @Override
     public String getUsername() {
-        return email; // Returnerar användarens e-postadress som användarnamn
+        return username;
     }
 
     @Override
@@ -98,5 +103,6 @@ public class UserDetailsImpl implements UserDetails { //UserDetails Interface ä
         UserDetailsImpl user = (UserDetailsImpl) o;
         return Objects.equals(id, user.id);
     }
+
 
 }
