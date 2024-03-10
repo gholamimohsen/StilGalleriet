@@ -66,13 +66,7 @@ public class AuthController {
                 .map(item -> item.getAuthority())
                 .collect(Collectors.toList());
 
-        //jwt utan cookie
-        /*
-        return ResponseEntity.ok(new JwtResponse(jwt,
-                userDetails.getId(),
-                userDetails.getUsername(),
-                userDetails.getEmail(),
-                roles));*/
+
 
         //Jwt med cookie
         return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, jwtCookie.toString())
