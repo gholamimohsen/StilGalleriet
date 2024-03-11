@@ -54,11 +54,16 @@ public class User {
     //Add DBRef
     private ArrayList<String> favorites = new ArrayList<>(); //Stores advertisement references(advertisementId)
 
-
-    public User(String username, String email, String password) {
+    public User(String username, String firstName, String lastName, String email, String password, String street, String city, String state, String zipcode) {
         this.username = username;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.email = email;
         this.password = password;
+        this.street = street;
+        this.city = city;
+        this.state = state;
+        this.zipcode = zipcode;
     }
 
 

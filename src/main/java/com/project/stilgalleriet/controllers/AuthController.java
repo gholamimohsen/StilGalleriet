@@ -89,8 +89,14 @@ public class AuthController {
 
         //Skapa userns konto
         User user = new User(signupRequest.getUsername(),
+                signupRequest.getFirstName(),
+                signupRequest.getLastName(),
                 signupRequest.getEmail(),
-                encoder.encode(signupRequest.getPassword()));
+                encoder.encode(signupRequest.getPassword()),
+                signupRequest.getStreet(),
+                signupRequest.getCity(),
+                signupRequest.getState(),
+                signupRequest.getZipcode());
 
         Set<String> strRoles = signupRequest.getRoles();
         Set<Role> roles = new HashSet<>();
