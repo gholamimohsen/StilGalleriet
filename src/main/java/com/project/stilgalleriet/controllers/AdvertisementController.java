@@ -106,10 +106,35 @@ public class AdvertisementController {
         }
     }
 
+    //GET advertisement list only with actives
+    @GetMapping("/isActive/{isActive}")
+    public ResponseEntity <List<Advertisement>> findAdvertisementByActive(@PathVariable boolean isActive){
+         List <Advertisement> advertisementByActive=advertisementService.findAdvertisementByActive(isActive);
+         if (!advertisementByActive.isEmpty()){
+             return ResponseEntity.ok(advertisementByActive);
+         } else {
+            return ResponseEntity.notFound().build();
+    }
 
+    }
 
+    //GET advertisement list by price less than max price
+    @GetMapping("/price/lessthan/{maxPrice}")
+    public List<Advertisement> findAdvertisementByPriceLessThan(@PathVariable double maxPrice){
+        return advertisementService.findAdvertisementByPriceLessThan(maxPrice);
+    }
 
+    //GET advertisement list by price greater than max price
+    @GetMapping("/price/greaterthan/{minPrice}")
+    public List<Advertisement> findAdvertisementByPriceGreaterThan(@PathVariable double minPrice){
+        return advertisementService.findAdvertisementByPriceGreaterThan(minPrice);
+    }
 
+    //GET advertisement list by price between min and max price
+    @GetMapping("/price/between")
+    public List<Advertisement> findAdvertisementByPriceBetween(@RequestParam double minPrice, @RequestParam double maxPrice){
+        return advertisementService.findAdvertisementByPriceBetween(minPrice, maxPrice);
+    }
 
 
     }

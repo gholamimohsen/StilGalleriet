@@ -77,7 +77,7 @@ public class AdvertisementService {
 
     //Get advertisement list by color
     public List <Advertisement> findAdvertisementByColor(String color){
-        return advertisementRepository.findAdvertisementByColour(EColor.fromString(color.toUpperCase()));
+        return advertisementRepository.findAdvertisementByColor(EColor.fromString(color.toUpperCase()));
     }
 
     // Get advertisement list by gender
@@ -85,7 +85,7 @@ public class AdvertisementService {
         return advertisementRepository.findAdvertisementByGender(EGender.fromString(gender.toUpperCase()));
     }
 
-    //Get advertisment list by size
+    //Get advertisement list by size
     public List<Advertisement> findAdvertisementBySize(String size){
         return advertisementRepository.findAdvertisementBySize(ESize.fromString(size.toUpperCase()));
     }
@@ -93,6 +93,27 @@ public class AdvertisementService {
     //Get advertisement list by category
     public List<Advertisement> findAdvertisementByCategory(String category){
         return advertisementRepository.findAdvertisementByCategory(ECategory.fromString(category.toUpperCase()));
+    }
+
+    //Get advertisement list only with actives
+    public List<Advertisement> findAdvertisementByActive(boolean isActive){
+        return advertisementRepository.findAdvertisementByActive(true);
+    }
+
+
+    // Get advertisement by price less than maxPrice
+    public List<Advertisement> findAdvertisementByPriceLessThan(double maxPrice){
+        return advertisementRepository.findAdvertisementByPriceLessThan(maxPrice);
+    }
+
+    // Get advertisement by price greater than minPrice
+    public List<Advertisement> findAdvertisementByPriceGreaterThan(double minPrice){
+        return advertisementRepository.findAdvertisementByPriceGreaterThan(minPrice);
+    }
+
+    // Get advertisement by price between min and max
+    public List<Advertisement> findAdvertisementByPriceBetween(double minPrice, double maxPrice){
+        return advertisementRepository.findAdvertisementByPriceBetween(minPrice, maxPrice);
     }
 
 
