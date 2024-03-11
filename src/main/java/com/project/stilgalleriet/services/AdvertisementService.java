@@ -1,6 +1,6 @@
 package com.project.stilgalleriet.services;
 
-import com.project.stilgalleriet.models.Advertisement;
+import com.project.stilgalleriet.models.*;
 import com.project.stilgalleriet.repositories.AdvertisementRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -74,56 +74,28 @@ public class AdvertisementService {
                 })
                 .orElseThrow(()-> new Exception("Advertisement with id: "+ id + " was not found to update!"));
     }
+
+    //Get advertisement list by color
+    public List <Advertisement> findAdvertisementByColor(String color){
+        return advertisementRepository.findAdvertisementByColour(EColor.fromString(color.toUpperCase()));
+    }
+
+    // Get advertisement list by gender
+    public List <Advertisement> findAdvertisementByGender(String gender){
+        return advertisementRepository.findAdvertisementByGender(EGender.fromString(gender.toUpperCase()));
+    }
+
+    //Get advertisment list by size
+    public List<Advertisement> findAdvertisementBySize(String size){
+        return advertisementRepository.findAdvertisementBySize(ESize.fromString(size.toUpperCase()));
+    }
+
+    //Get advertisement list by category
+    public List<Advertisement> findAdvertisementByCategory(String category){
+        return advertisementRepository.findAdvertisementByCategory(ECategory.fromString(category.toUpperCase()));
+    }
+
+
+
 }
-
-
-
-
-
-//for reference to user
-   /* @Autowired
-    UserRepository userRepository;*/
-
-/*NEW CODES WITH DTO CLASSES
-    //create an advertisement
-
-    public Advertisement createAdvertisement(@Valid AdvertisementDTO advertisementDTO) {
-        User user = userRepository.findById(advertisementDTO.getUserId())
-                .orElseThrow(() -> new IllegalArgumentException("Invalid user id"));
-
-        //the list with advertisements, so need a loop to find right id
-
-        List<Advertisement> advertisements = new ArrayList<>();
-        for (String advertisementId : advertisementDTO.getAdvertisementId()) {
-            advertisements.add(advertisementRepository.findById(advertisementId))
-                    .orElseThrow(() -> new IllegalArgumentException("Invalid advertisement id"));
-        }
-    }
-
-    //get all advertisements
-
-    public List<Advertisement> getAllAdvertisements(){
-        return advertisementRepository.findAll();
-    }
-
-
-    // get an advertisement by id
-
-    public Optional<Advertisement> getAdvertisementById(String id){
-        return advertisementRepository.findById(id);
-    }
-
-
-    //delete an advertisement by id
-
-    public void deleteAdvertisement(String id){
-        advertisementRepository.deleteById(id);
-    }
-
-    ///update an advertisement
-
-    public Advertisement updatedAdvertisement (String id, Advertisement updatedAdvertisement){
-        return advertisementRepository.save(updatedAdvertisement);
-    }
-*/
 

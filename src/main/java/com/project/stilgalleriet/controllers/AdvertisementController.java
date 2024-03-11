@@ -60,62 +60,60 @@ public class AdvertisementController {
           }
           }
 
+     // GET advertisement list by color
+    @GetMapping("/color/{color}")
+
+    public ResponseEntity<List<Advertisement>> findAdvertisementByColor(@PathVariable String color){
+        List <Advertisement> advertisementByColor= advertisementService.findAdvertisementByColor(color);
+        if (!advertisementByColor.isEmpty()){
+            return ResponseEntity.ok(advertisementByColor);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
-
-
-
-
-
-
-    /*NEW CODES WITH DTO CLASSES
-    //POST a new advertisement
-    @PostMapping("/createAdvertisement")
-    public ResponseEntity<Advertisement> creatAdvertisement(@Valid @RequestBody AdvertisementDTO advertisementDTO){
-        Advertisement newAdvertisement= advertisementService.createAdvertisement(advertisementDTO);
-        return new ResponseEntity<>(newAdvertisement, HttpStatus.CREATED);
+    //GET advertisement list by gender
+    @GetMapping("/gender/{gender}")
+    public ResponseEntity<List<Advertisement>> findAdvertisementByGender(@PathVariable String gender){
+        List<Advertisement> advertisementByGender=advertisementService.findAdvertisementByGender(gender);
+        if (!advertisementByGender.isEmpty()){
+            return ResponseEntity.ok(advertisementByGender);
+        } else{
+            return ResponseEntity.notFound().build();
+        }
     }
 
-     //GET all advertisements
-
-    @GetMapping("/allAdvertisements")
-    public ResponseEntity< List< Advertisement>> getAllAdvertisments(){
-       List <AdvertisementResponse> advertisements=advertisementService.getAllAdvertisements();
-       return ResponseEntity.ok(advertisements);
-    }
-
-    //GET an advertisment by id
-    @GetMapping("/{advertisementId}")
-    public ResponseEntity<List<Advertisement>> getAdvertisementById(@PathVariable String advertisementId){
-       List <AdvertisementResponse> advertisements=advertisementService.getAdvertisementById(advertisementId);
-
-       return ResponseEntity.ok(advertisements);
-
-        /*Optional<Advertisement> advertisement= advertisementService.getAdvertisementById(id);
-        return advertisement.map(ResponseEntity::ok).orElseGet(()-> ResponseEntity.notFound().build());
-
-
-    }
-
-
-//DELETE by id
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteAdvertisement(@PathVariable String id){
-        advertisementService.deleteAdvertisement(id);
-        return ResponseEntity.ok("Advertisement with id " + id + "has been deleted");
-    }
-
-//UPDATE an advertisement
-    @PutMapping("/{id}")
-    public ResponseEntity<?> updateAdvertisement(@PathVariable String id, @Valid @RequestBody Advertisement advertisementDetails){
-        try {
-            Advertisement updatedAdvertisement= advertisementService.updatedAdvertisement(id,advertisementDetails);
-            return ResponseEntity.ok(updatedAdvertisement);
-        } catch (Exception e){ //EntityNotFoundException ska skapas???
-return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+    //GET advertisement list by size
+    @GetMapping("/size/{size}")
+    public ResponseEntity<List<Advertisement>> findAdvertisementBySize(@PathVariable String size){
+        List<Advertisement> advertisementBySize=advertisementService.findAdvertisementBySize(size);
+        if (!advertisementBySize.isEmpty()){
+            return ResponseEntity.ok(advertisementBySize);
+        } else {
+            return ResponseEntity.notFound().build();
         }
 
-    }*/
+    }
+
+    //GET advertisement list by category
+    @GetMapping("/category/{category}")
+    public ResponseEntity<List<Advertisement>> findAdvertisementByCategory(@PathVariable String category){
+        List<Advertisement> advertisementByCategory=advertisementService.findAdvertisementByCategory(category);
+        if(!advertisementByCategory.isEmpty()){
+            return ResponseEntity.ok(advertisementByCategory);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+
+
+
+
+
+
+    }
+
 
 
 
