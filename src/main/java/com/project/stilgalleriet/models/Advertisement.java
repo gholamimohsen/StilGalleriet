@@ -49,9 +49,11 @@ public class Advertisement {
     @NotBlank(message="Field can not be blank")
      private double price;
 
-     private Date createdAt;
 
-     private Date updatedAt;
+     private Date createdAt=new Date();
+
+
+     private Date updatedAt=new Date();
 
      private boolean isActive=true;
 
@@ -133,21 +135,6 @@ public class Advertisement {
         this.price = price;
     }
 
-    public Date getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public Date getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(Date updatedAt) {
-        this.updatedAt = updatedAt;
-    }
 
 
     public boolean isActive() {
@@ -172,5 +159,22 @@ public class Advertisement {
 
     public String getUserId() {
         return userId;
+    }
+
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
     }
 }

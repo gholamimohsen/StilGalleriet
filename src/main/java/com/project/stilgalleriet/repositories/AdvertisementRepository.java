@@ -4,6 +4,7 @@ import com.project.stilgalleriet.models.*;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -18,7 +19,7 @@ public interface AdvertisementRepository extends MongoRepository<Advertisement, 
     List <Advertisement> findAdvertisementByPriceLessThan(double maxPrice);
     List<Advertisement> findAdvertisementByPriceGreaterThan(double minPrice);
     List <Advertisement> findAdvertisementByPriceBetween(double minPrice, double maxPrice);
-
+    List <Advertisement> findAdvertisementByCreatedAtAfter(Date date);
 
 
 

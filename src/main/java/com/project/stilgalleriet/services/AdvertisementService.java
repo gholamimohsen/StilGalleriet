@@ -5,6 +5,7 @@ import com.project.stilgalleriet.repositories.AdvertisementRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -101,19 +102,24 @@ public class AdvertisementService {
     }
 
 
-    // Get advertisement by price less than maxPrice
+    // Get advertisement list by price less than maxPrice
     public List<Advertisement> findAdvertisementByPriceLessThan(double maxPrice){
         return advertisementRepository.findAdvertisementByPriceLessThan(maxPrice);
     }
 
-    // Get advertisement by price greater than minPrice
+    // Get advertisement list by price greater than minPrice
     public List<Advertisement> findAdvertisementByPriceGreaterThan(double minPrice){
         return advertisementRepository.findAdvertisementByPriceGreaterThan(minPrice);
     }
 
-    // Get advertisement by price between min and max
+    // Get advertisement list by price between min and max
     public List<Advertisement> findAdvertisementByPriceBetween(double minPrice, double maxPrice){
         return advertisementRepository.findAdvertisementByPriceBetween(minPrice, maxPrice);
+    }
+
+    //Get advertisement list by date that is created after
+    public List<Advertisement> findAdvertisementByCreatedAtAfter(Date date){
+        return advertisementRepository.findAdvertisementByCreatedAtAfter(date);
     }
 
 

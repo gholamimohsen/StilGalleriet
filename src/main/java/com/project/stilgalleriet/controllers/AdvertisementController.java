@@ -8,6 +8,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -136,6 +139,22 @@ public class AdvertisementController {
         return advertisementService.findAdvertisementByPriceBetween(minPrice, maxPrice);
     }
 
+
+    //GET advertisement list by date after created at
+     @GetMapping("/date/createdAfter")
+    public List <Advertisement> findAdvertisementByCreatedAtAfter(@RequestParam("date") String dateString){ // take date String typ
+         SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            Date date= dateFormat.parse(dateString); // to convert String to Date format
+            List <Advertisement> filteredDate=advertisementService.findAdvertisementByCreatedAtAfter(date);
+            return new ResponseEntity<>(filteredDate, HttpStatus.OK).getBody();
+
+        }catch (ParseException e){
+            //if there is aan error
+            return (List<Advertisement>) new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+     }
 
     }
 
