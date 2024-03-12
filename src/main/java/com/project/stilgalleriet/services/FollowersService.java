@@ -14,7 +14,7 @@ public class FollowersService {
     FollowersRepository followersRepository;
 
     //POST
-    public Followers createFollowers(Followers followers) {
+    public Followers createFollower(Followers followers) {
         return followersRepository.save(followers);
 
     }
