@@ -2,7 +2,9 @@ package com.project.stilgalleriet.repositories;
 
 import com.project.stilgalleriet.models.Advertisement;
 import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface AdvertisementRepository extends MongoRepository<Advertisement, String> {
 
    /* NEW CODES TO FILTER BY ID CATEGORY ETC FOR DTO CLASSES CODE ??

@@ -1,5 +1,7 @@
 package com.project.stilgalleriet.controllers;
 
+import com.project.stilgalleriet.dto.OrderDTO;
+import com.project.stilgalleriet.dto.OrderResponse;
 import com.project.stilgalleriet.models.Order;
 import com.project.stilgalleriet.services.OrderService;
 import jakarta.validation.Valid;
@@ -9,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 // Controller class for handling Order-related HTTP requests
 
@@ -20,25 +21,71 @@ public class OrderController {
     @Autowired
     private  OrderService orderService;
 
+    // Inside OrderController
+
+    /*private OrderResponse convertToOrderResponse(Order order) {
+        OrderResponse response = new OrderResponse();
+        response.setId(order.getId());
+        //sellerUserId and buyerUserId are supposed to be the IDs of User entities
+        response.setSellerUserId(order.getSellerUserId().getId());
+        response.setBuyerUserId(order.getBuyerUserId().getId());
+        List<String> advertisementId = order.getAdvertisementId().stream()
+                .map(Advertisement::getId)
+                .collect(Collectors.toList());
+        response.setAdvertisementId(advertisementId);
+        response.setQuantity(order.getQuantity());
+        response.setTotalPrice(order.getTotalPrice());
+        response.setOrderDate(order.getOrderDate());
+        response.setSold(order.isSold());
+        response.setCreatedAt(order.getCreatedAt());
+        response.setUpdatedAt(order.getUpdatedAt());
+
+        return response;
+    }*/
+
     @PostMapping
-    public ResponseEntity<Order> addOrder(@Valid @RequestBody Order order){
-        Order newOrder =orderService.addOrder(order);
-        return  new ResponseEntity<>(newOrder, HttpStatus.CREATED);
+    public ResponseEntity<Order>addOrder(@Valid @RequestBody OrderDTO orderDTO){
+        Order newOrder= orderService.addOrder(orderDTO);
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<OrderResponse>> getAllOrders(){
+        List<OrderResponse>orders =orderService.getAllOrders();
+        return ResponseEntity.ok(orders);
+    }
+
+    @GetMapping ("/{id}")
+    public ResponseEntity<List<OrderResponse>> getOrderById(@PathVariable String id){
+        List<OrderResponse> orders = orderService.getOrderById(id);
+        return ResponseEntity.ok(orders);
+
+    }
+   /* public ResponseEntity<OrderResponse> addOrder(@Valid @RequestBody OrderDTO orderDTO){
+        Order newOrder =orderService.addOrder(orderDTO);
+        OrderResponse response = convertToOrderResponse(newOrder);
+        return  new ResponseEntity<>(response, HttpStatus.CREATED);
     }
     // Endpoint to get all Orders
     @GetMapping
-    public List<Order>getAllOrder(){
-        return orderService.getAllOrders();
+    public ResponseEntity<List<OrderResponse>>getAllOrder(){
+        List<Order> orders = orderService.getAllOrders();
+        List<OrderResponse> responses = orders.stream()
+                .map(this::convertToOrderResponse)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(responses);
 
     }
     // Endpoint to get an Order by its id
     @GetMapping("/{id}")
-    public ResponseEntity<Order> getOrderById (@PathVariable String id){
-        Optional<Order> order = orderService.getOrderById(id);
-        return  order.map(ResponseEntity::ok)
-                .orElseGet(()-> ResponseEntity.notFound().build());
-    }
- // update order by id
+    public ResponseEntity<OrderResponse> getOrderById(@PathVariable String id){
+        Order order = orderService.getOrderById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Order not found"));
+        OrderResponse response = convertToOrderResponse(order);
+        return ResponseEntity.ok(response);
+    }*/
+
+    // update order by id
     @PutMapping("/{id}")
     public  ResponseEntity<Order> updateOrder (@PathVariable String id, @Valid @RequestBody Order orderDetails){
         Order updateOrder = orderService.updateOrder(id, orderDetails);

@@ -5,12 +5,10 @@ import jakarta.validation.constraints.Min;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-
 import java.util.Date;
 
 @Document(collection = "reviews")
 public class Review {
-
     @Id
     private String id;
 
@@ -70,3 +68,4 @@ public class Review {
         return createdAt;
     }
 }
+
