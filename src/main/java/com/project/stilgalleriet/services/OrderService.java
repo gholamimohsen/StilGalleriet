@@ -26,18 +26,23 @@ public class OrderService {
     AdvertisementRepository advertisementRepository;
 
     public Order createOrder(OrderDTO orderDTO) {
+        // check that buyer exists in db
         User buyer = userRepository.findById(orderDTO.getBuyerUserId())
                 .orElseThrow(() -> new IllegalArgumentException("Invalid user id"));
 
+        // check that the ad exists in db
         Advertisement advertisement = advertisementRepository.findById(orderDTO.getAdvertisementId())
                 .orElseThrow(() -> new IllegalArgumentException("Invalid advertisement id"));
 
-       /* User seller = userRepository.findById(advertisement.getUser().getId())
-                .orElseThrow(() -> new IllegalArgumentException("Invalid user id"));*/
-
         Order order = new Order();
+        // set buyer
         order.setBuyerUserId(buyer);
+        // set ad
         order.setAdvertisementId(advertisement);
+        // since the ad already has a user that is by default the seller of the ad
+        // and since I implemented check mon user i ad service no need to check again
+        // we can be sure the user exists
+        // and we set the seller from the user in the ad
         order.setSellerUserId(advertisement.getUser());
 
         return orderRepository.save(order);

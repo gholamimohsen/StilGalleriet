@@ -34,6 +34,8 @@ public class AdvertisementService {
         Advertisement newAd = new Advertisement();
         newAd.setUser(user);
         newAd.setTitle(advertisementDTO.getTitle());
+        // to add more fields first add the in the AdvertisementDT0
+        // then add them here
         return advertisementRepository.save(newAd);
     }
 
