@@ -1,12 +1,11 @@
 package com.project.stilgalleriet.controllers;
 
 
+import com.project.stilgalleriet.dto.AdvertisementDTO;
 import com.project.stilgalleriet.models.Advertisement;
 import com.project.stilgalleriet.services.AdvertisementService;
 import com.project.stilgalleriet.services.UserService;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,12 +22,24 @@ public class AdvertisementController {
     UserService userService;
 
     //POST  new advertisement
-    @PostMapping("/add")
-    public ResponseEntity<Advertisement> addAdvertisement(@Valid @RequestBody Advertisement advertisement){
+   /* @PostMapping("/add")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    public ResponseEntity<Advertisement> addAdvertisement(@RequestBody Advertisement advertisement){
         Advertisement newAdvertisement=advertisementService.addAdvertisement(advertisement);
         return new ResponseEntity<>(newAdvertisement, HttpStatus.CREATED);
 
+    }*/
+
+    @PostMapping
+    public ResponseEntity<Advertisement> createAdvertisement(@RequestBody AdvertisementDTO advertisementDTO) {
+        Advertisement advertisement = advertisementService.createAdvertisement(advertisementDTO);
+        return ResponseEntity.ok(advertisement);
     }
+   /* @PostMapping
+    public ResponseEntity<Order> createOrder(@RequestBody OrderDTO orderDTO) {
+        Order newOrder = orderService.createOrder(orderDTO);
+        return ResponseEntity.ok(newOrder);
+    }*/
 
     // GET all advertisements
     @GetMapping("/all")
@@ -54,7 +65,7 @@ public class AdvertisementController {
     }
 
     //UPDATE an advertisement by id
-    @PutMapping("update/{id}") // need for @valid ??
+/*    @PutMapping("update/{id}") // need for @valid ??
     public ResponseEntity<Advertisement> updateAdvertisement(@PathVariable String id,@RequestBody Advertisement advertisementDetails){
           try {
               Advertisement updatedAdvertisement = advertisementService.updateAdvertisement(id, advertisementDetails);
@@ -63,7 +74,7 @@ public class AdvertisementController {
           {
               return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
           }
-          }
+          }*/
 
     }
 

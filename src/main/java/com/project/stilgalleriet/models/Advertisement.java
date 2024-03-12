@@ -1,31 +1,58 @@
 package com.project.stilgalleriet.models;
 
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.Date;
-import java.util.List;
 
-
-@Document(collection="advertisement")
+@Document(collection="advertisements")
 public class Advertisement {
 
     @Id
     private String id;
 
-    @DBRef //to reference to users collection
-    private User userId;      //must be changed this field and getters/ setters according to this field
+    private String title;
+
+    @DBRef
+    private User user;
+
+    public Advertisement() {
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    // @DBRef //to reference to users collection
+   // private User userId;      //must be changed this field and getters/ setters according to this field
     //@NotBlank(message="Field can not be blank")
     //private String userId;
 
-    @NotBlank(message="Field can not be blank")
-    private String title;
+   // @NotBlank(message="Field can not be blank")
 
-    @NotBlank(message="Field can not be blank")
+
+   /* @NotBlank(message="Field can not be blank")
     private String description;
 
 
@@ -52,12 +79,12 @@ public class Advertisement {
      private Date createdAt;
 
      private Date updatedAt;
+*/
+ //    private boolean isActive=true;
 
-     private boolean isActive=true;
 
-
-    public Advertisement() {
-    }
+   /* public Advertisement() {
+    }*/
 
 
     //public String getId() {
@@ -68,23 +95,23 @@ public class Advertisement {
        // this.id = id;
     //}
 
-    public User getUserId() {
+    /*public User getUserId() {
         return userId;
     }
 
     public void setUserId(User userId) {
         this.userId = userId;
-    }
+    }*/
 
-    public String getTitle() {
+   /* public String getTitle() {
         return title;
     }
 
     public void setTitle(String title) {
         this.title = title;
-    }
+    }*/
 
-    public String getDescription() {
+    /*public String getDescription() {
         return description;
     }
 
@@ -155,13 +182,29 @@ public class Advertisement {
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
     }
+*/
 
-
-    public boolean isActive() {
+   /* public boolean isActive() {
         return isActive;
     }
 
     public void setActive(boolean active) {
         isActive = active;
     }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }*/
 }
