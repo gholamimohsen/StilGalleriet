@@ -12,6 +12,8 @@ public interface AdvertisementRepository extends MongoRepository<Advertisement, 
 
     List<Advertisement> findAdvertisementByActive(boolean advertisementIsActive);
     List<Advertisement> findAdvertisementByCategory(ECategory advertisementCategory);
+
+    // Can this be like a search function?
     List<Advertisement> findAdvertisementByTitle(String advertisementTitle );
     List <Advertisement> findAdvertisementByGender(EGender advertisementGender);
     List <Advertisement> findAdvertisementBySize(ESize advertisementSize);
@@ -19,7 +21,8 @@ public interface AdvertisementRepository extends MongoRepository<Advertisement, 
     List <Advertisement> findAdvertisementByPriceLessThan(double maxPrice);
     List<Advertisement> findAdvertisementByPriceGreaterThan(double minPrice);
     List <Advertisement> findAdvertisementByPriceBetween(double minPrice, double maxPrice);
-    List <Advertisement> findAdvertisementByCreatedAtAfter(Date date);
+    List <Advertisement> findAdvertisementByCreatedAtAfter(Date startedDate, Date endDate);
+    List <Advertisement> findAdvertisementByCreatedAtBefore(Date startedDate, Date endDate);
 
 
 

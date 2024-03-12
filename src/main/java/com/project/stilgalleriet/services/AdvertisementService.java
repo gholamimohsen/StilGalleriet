@@ -117,9 +117,14 @@ public class AdvertisementService {
         return advertisementRepository.findAdvertisementByPriceBetween(minPrice, maxPrice);
     }
 
-    //Get advertisement list by date that is created after
-    public List<Advertisement> findAdvertisementByCreatedAtAfter(Date date){
-        return advertisementRepository.findAdvertisementByCreatedAtAfter(date);
+    //Get advertisement list by date that is created at after the date
+    public List<Advertisement> findAdvertisementByCreatedAtAfter(Date startedDate, Date endDate){
+        return advertisementRepository.findAdvertisementByCreatedAtAfter(startedDate, endDate);
+    }
+
+    //Get advertisement list by date that is created at before the date
+    public List<Advertisement> findAdvertisementByCreatedAtBefore(Date startedDate, Date endDate){
+        return advertisementRepository.findAdvertisementByCreatedAtBefore(startedDate, endDate);
     }
 
 

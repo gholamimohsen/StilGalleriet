@@ -142,19 +142,37 @@ public class AdvertisementController {
 
     //GET advertisement list by date after created at
      @GetMapping("/date/createdAfter")
-    public List <Advertisement> findAdvertisementByCreatedAtAfter(@RequestParam("date") String dateString){ // take date String typ
-         SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd");
-        try {
-            Date date= dateFormat.parse(dateString); // to convert String to Date format
-            List <Advertisement> filteredDate=advertisementService.findAdvertisementByCreatedAtAfter(date);
-            return new ResponseEntity<>(filteredDate, HttpStatus.OK).getBody();
+    public ResponseEntity <List <Advertisement>> findAdvertisementByCreatedAtAfter(@RequestParam("date") String dateString){ // take date String typ
+         try {
+             // to convert String to Date format
+             SimpleDateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd");
+            Date startDate=dateFormat.parse(dateString);// requested date
+             Date endDate=new Date(); //now
+             List<Advertisement> filteredAdvertisementsByDateAfter=advertisementService.findAdvertisementByCreatedAtAfter(startDate, endDate);
+             return ResponseEntity.ok(filteredAdvertisementsByDateAfter);
+         }catch (ParseException e){
 
-        }catch (ParseException e){
-            //if there is aan error
-            return (List<Advertisement>) new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return ResponseEntity.badRequest().build();
         }
 
      }
+
+     //GET advertisement list by  created date before the date
+    @GetMapping("/date/createdBefore")
+    public ResponseEntity <List <Advertisement>> findAdvertisementByCreatedAtBefore(@RequestParam("date") String dateString){
+
+        try {
+            SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd");
+            Date startDate=dateFormat.parse(dateString);
+            Date endDate= new Date();
+            List<Advertisement> filteredAdvertisementByDateBefore=advertisementService.findAdvertisementByCreatedAtBefore(startDate, endDate);
+            return  ResponseEntity.ok(filteredAdvertisementByDateBefore);
+
+        } catch (ParseException e){
+            return ResponseEntity.badRequest().build();
+
+        }
+    }
 
     }
 
