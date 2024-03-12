@@ -60,6 +60,7 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests(auth ->
                         auth.requestMatchers("/api/stilgalleriet/**").permitAll()
                                 .requestMatchers("/api/test/**").permitAll()
+                                .requestMatchers("/api/stilgalleriet/advertisements").permitAll()
                                 .anyRequest().authenticated()
                 );
 
