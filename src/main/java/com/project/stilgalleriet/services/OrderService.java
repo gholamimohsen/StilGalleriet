@@ -11,7 +11,6 @@ import com.project.stilgalleriet.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -30,51 +29,40 @@ public class OrderService {
     AdvertisementRepository advertisementRepository;
 
 
+
+
     // Method to add a new Order
     public Order addOrder(OrderDTO orderDTO) {
-        Optional<User> seller = Optional.of(userRepository.findById(orderDTO.getSellerUserId())).orElseThrow(()->new RuntimeException("Invalid  seller user id"));
-        Optional<User> buyer = Optional.of(userRepository.findById(orderDTO.getBuyerUserId())).orElseThrow(()->new RuntimeException("Invalid  buyer user id"));
-
-
-        List<Advertisement> advertisement = new ArrayList<>();
-        for (String AdvertisementId : orderDTO.getAdvertisementId()) {
-            advertisement.add(advertisementRepository.findById(AdvertisementId)
-                    .orElseThrow(() -> new IllegalArgumentException("Invalid advertisement id")));
-        }
-
-
-
-
-
-        //Optional List<Advertisement> advertisement = Optional.of(advertisementRepository.findById(orderDTO.getAdvertisementId())).orElseThrow(()->new RuntimeException("Invalid "));
-       /* User seller= userRepository.findById(orderDTO.getSellerUserId())
-                .orElseThrow(() -> new IllegalArgumentException("Invalid  seller user id: " + orderDTO.getSellerUserId()));
+        User seller = userRepository.findById(orderDTO.getSellerUserId())
+                .orElseThrow(() -> new RuntimeException("Invalid seller user id"));
         User buyer = userRepository.findById(orderDTO.getBuyerUserId())
-                .orElseThrow(() -> new IllegalArgumentException("Invalid buyer user ID: " +  orderDTO.getBuyerUserId()));
+                .orElseThrow(() -> new RuntimeException("Invalid buyer user id"));
 
-
-
-        Optional List<Advertisement> advertisement = Optional.of(advertisementRepository.findById(orderDTO.getAdvertisementId())).orElseThrow(()->new RuntimeException("Invalid "));
+        List<Advertisement> advertisements = orderDTO.getAdvertisementId().stream()
                 .map(adId -> advertisementRepository.findById(adId)
-                        .orElseThrow(() -> new IllegalArgumentException("Advertisement not found with ID: " + adId)))
+                        .orElseThrow(() -> new IllegalArgumentException("Invalid advertisement id: " + adId)))
                 .collect(Collectors.toList());
-          */
-       // private OrderResponse convertToDTO(Order order){
 
         Order order= new Order();
-        order.setSellerUserId(seller.get());
-        order.setBuyerUserId(buyer.get());
-        order.setAdvertisementId(advertisement);
+        order.setSellerUserId(seller);
+        order.setBuyerUserId(buyer);
+        order.setAdvertisementId(advertisements);
         order.setQuantity(orderDTO.getQuantity());
         order.setTotalPrice(orderDTO.getTotalPrice());
         return orderRepository.save(order);
+       // Order savedOrder = orderRepository.save(order);
+        //return convertToOrderResponse(savedOrder);
 
     }
+   /* private OrderResponse convertToDTO(Order order) {
+        return ;
+    }*/
 
     // Method to retrieve all  Orders
     public List<OrderResponse > getAllOrders() {
         List<Order> orders= orderRepository.findAll();
-        return  orders.stream().map(this::convertToDTO).collect(Collectors.toList());
+        return  orders.stream()
+                .map(this::convertToDTO).collect(Collectors.toList());
 
     }
 
@@ -83,6 +71,12 @@ public class OrderService {
         Optional<Order> orders =orderRepository.findById(id);
         return orders.stream().map(this::convertToDTO).collect(Collectors.toList());
     }
+   /* public OrderResponse getOrderById(String id) {
+        Order order = orderRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Order not found with ID: " + id));
+        return convertToOrderResponse(order);
+    }*/
+
 
     private OrderResponse convertToDTO(Order order) {
         return convertToDTO(order);
@@ -94,9 +88,6 @@ public class OrderService {
         return orderRepository.findById(id)
                 .map(order -> {
 
-                    /*Have to consider what you can update in Order, for example don't think IDs should be updated.
-                    This time I just use all the setters, to quickly finish this.
-                    */
                     order.setSellerUserId(updatedOrder.getSellerUserId());
                     order.setBuyerUserId(updatedOrder.getBuyerUserId());
                     order.setAdvertisementId(updatedOrder.getAdvertisementId());
@@ -104,12 +95,11 @@ public class OrderService {
                     order.setQuantity(updatedOrder.getQuantity());
                     order.setTotalPrice(updatedOrder.getTotalPrice());
                     order.setSold(updatedOrder.isSold());
-
-
                     return orderRepository.save(order);
 
                 })
-                .orElseThrow();
+                .orElseThrow(()-> new RuntimeException("Order not found with ID: " + id));
+
     }
 
     // Method to delete an Order by its ID
