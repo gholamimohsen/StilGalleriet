@@ -3,21 +3,26 @@ package com.project.stilgalleriet.models;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 @Document(collection = "orders")
 public class Order {
     @Id
     private String id;
-    private String sellerUserId;
-    private String buyerUserId;
-    private String advertisementId;
+    @DBRef
+    private User sellerUserId;
+    @DBRef
+    private User buyerUserId;
+    @DBRef
+    private List<Advertisement> advertisementId;
+    @CreatedDate
     private Date orderDate; //Might consider removing this in the future if same as createdAt
     private int quantity;
-    private BigDecimal totalPrice;
+    private double totalPrice;
     private boolean isSold;
 
     @CreatedDate
@@ -34,29 +39,6 @@ public class Order {
         return id;
     }
 
-    public String getSellerUserId() {
-        return sellerUserId;
-    }
-
-    public void setSellerUserId(String sellerUserId) {
-        this.sellerUserId = sellerUserId;
-    }
-
-    public String getBuyerUserId() {
-        return buyerUserId;
-    }
-
-    public void setBuyerUserId(String buyerUserId) {
-        this.buyerUserId = buyerUserId;
-    }
-
-    public String getAdvertisementId() {
-        return advertisementId;
-    }
-
-    public void setAdvertisementId(String advertisementId) {
-        this.advertisementId = advertisementId;
-    }
 
     public Date getOrderDate() {
         return orderDate;
@@ -74,11 +56,11 @@ public class Order {
         this.quantity = quantity;
     }
 
-    public BigDecimal getTotalPrice() {
+    public double getTotalPrice() {
         return totalPrice;
     }
 
-    public void setTotalPrice(BigDecimal totalPrice) {
+    public void setTotalPrice(double totalPrice) {
         this.totalPrice = totalPrice;
     }
 
@@ -106,6 +88,27 @@ public class Order {
         this.updatedAt = updatedAt;
     }
 
+    public User getSellerUserId() {
+        return sellerUserId;
+    }
 
+    public void setSellerUserId(User sellerUserId) {
+        this.sellerUserId = sellerUserId;
+    }
+
+    public User getBuyerUserId() {
+        return buyerUserId;
+    }
+
+    public void setBuyerUserId(User buyerUserId) {
+        this.buyerUserId = buyerUserId;
+    }
+
+    public List<Advertisement> getAdvertisementId() {
+        return advertisementId;
+    }
+
+    public void setAdvertisementId(List<Advertisement> advertisementId) {
+        this.advertisementId = advertisementId;
+    }
 }
-
