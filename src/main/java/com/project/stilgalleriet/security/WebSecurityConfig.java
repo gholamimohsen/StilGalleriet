@@ -18,9 +18,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
-@EnableMethodSecurity(
-
-)
+@EnableMethodSecurity
 public class WebSecurityConfig {
 
     @Autowired
@@ -61,6 +59,7 @@ public class WebSecurityConfig {
                 .sessionManagement(session-> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth ->
                         auth.requestMatchers("/api/stilgalleriet/**").permitAll()
+                                .requestMatchers("/api/test/**").permitAll()
                                 .anyRequest().authenticated()
                 );
 

@@ -3,6 +3,8 @@ package com.project.stilgalleriet.controllers;
 
 import com.project.stilgalleriet.models.Advertisement;
 import com.project.stilgalleriet.services.AdvertisementService;
+import com.project.stilgalleriet.services.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,11 +17,14 @@ import java.util.Optional;
 @RequestMapping("/api/advertisements")
 public class AdvertisementController {
     @Autowired
-     private AdvertisementService advertisementService;
+     AdvertisementService advertisementService;
+
+    @Autowired
+    UserService userService;
 
     //POST  new advertisement
     @PostMapping("/add")
-    public ResponseEntity<Advertisement> addAdvertisement(@RequestBody Advertisement advertisement){
+    public ResponseEntity<Advertisement> addAdvertisement(@Valid @RequestBody Advertisement advertisement){
         Advertisement newAdvertisement=advertisementService.addAdvertisement(advertisement);
         return new ResponseEntity<>(newAdvertisement, HttpStatus.CREATED);
 
