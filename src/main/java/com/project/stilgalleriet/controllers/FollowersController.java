@@ -34,7 +34,7 @@ public class FollowersController {
     }
 
     //PUT
-    @PutMapping
+    @PutMapping("/update/{id}")
     public Followers uddateFollower(@PathVariable String id, @RequestBody Followers followers) {
         return followersService.updateFollower(id, followers);
 
