@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/stilgalleriet/reviews")
+@RequestMapping("/api/reviews")
 public class ReviewController {
     @Autowired
     private ReviewService reviewService;
