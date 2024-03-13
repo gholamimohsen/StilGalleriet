@@ -56,6 +56,7 @@ public class ReviewService {
 
     //Find review by ID
     public ReviewDTO getReviewById(String id) {
+        //No convert method for Optional to DTO
         Optional<Review> review = reviewRepository.findById(id);
         ReviewDTO reviewDTO = new ReviewDTO();
         reviewDTO.setRatingUserId(review.get().getRatingUserId().getId());
@@ -66,20 +67,24 @@ public class ReviewService {
     }
 
     //Update a review
-    public Review updateReview(String id, Review updatedReview){
+    public ReviewDTO updateReview(String id, Review updatedReview){
 
-        return reviewRepository.findById(id)
+         return reviewRepository.findById(id)
                 .map(review -> {
 
-                    //Validation annotations in model already check this value, we don't need to check it here
+                    //Validation annotations in DTO already check this value, we don't need to check it here
                     review.setRating(updatedReview.getRating());
 
                     if (updatedReview.getComment() != null){
                         review.setComment(updatedReview.getComment());
                     }
-                    return reviewRepository.save(review);
+                    reviewRepository.save(review);
+
+                    //Create ReviewDTO object to return as response
+                    return convertToDTO(review);
                 })
                 .orElseThrow(); //Add exception handling
+
     }
 
     //Delete review
