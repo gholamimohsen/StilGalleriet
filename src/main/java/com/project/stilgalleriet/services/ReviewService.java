@@ -25,7 +25,7 @@ public class ReviewService {
     UserRepository userRepository;
 
     //Create a new review, takes DTO as input
-    public Review addReview(ReviewDTO reviewDTO){
+    public Review createReview(ReviewDTO reviewDTO){
 
         //Check if user already made review(Can be done with exception handling)
 

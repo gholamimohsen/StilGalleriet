@@ -19,8 +19,8 @@ public class ReviewController {
     private ReviewService reviewService;
 
     @PostMapping
-    public ResponseEntity<Review> addReview(@Valid @RequestBody ReviewDTO reviewDTO){
-        Review newReview = reviewService.addReview(reviewDTO); //Change to take user IDs from orders and put it in Review object
+    public ResponseEntity<Review> createReview(@Valid @RequestBody ReviewDTO reviewDTO){
+        Review newReview = reviewService.createReview(reviewDTO); //Change to take user IDs from orders and put it in Review object
         return new ResponseEntity<>(HttpStatus.CREATED); //Removed returning newReview as it would show reference User documents(Data leak)
     }
 
