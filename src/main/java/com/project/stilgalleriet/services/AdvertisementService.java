@@ -1,7 +1,9 @@
 package com.project.stilgalleriet.services;
 
+import com.project.stilgalleriet.dto.AdvertisementDTO;
 import com.project.stilgalleriet.models.*;
 import com.project.stilgalleriet.repositories.AdvertisementRepository;
+import com.project.stilgalleriet.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,10 +18,33 @@ public class AdvertisementService {
     @Autowired
     AdvertisementRepository advertisementRepository;
 
+    @Autowired
+    UserRepository userRepository;
+
     //create an advertisement
-    public Advertisement addAdvertisement(Advertisement advertisement){
-        return advertisementRepository.save(advertisement);
+    public Advertisement createAdvertisement(AdvertisementDTO advertisementDTO) {
+        User user = userRepository.findById(advertisementDTO.getSellerId())
+                .orElseThrow(() -> new IllegalArgumentException("Invalid user id"));
+
+        Advertisement newAd = new Advertisement();
+        newAd.setUserId(user);
+        newAd.setTitle(advertisementDTO.getAdvertisementTitles());
+        newAd.setActive(advertisementDTO.isAdvertisementIsActive());
+        newAd.setCategory(advertisementDTO.getAdvertisementCategory());
+        newAd.setColor(advertisementDTO.getAdvertisementColor());
+        newAd.setDescription(advertisementDTO.getAdvertisementDescriptions());
+        newAd.setGender(advertisementDTO.getAdvertisementGender());
+        newAd.setSize(advertisementDTO.getAdvertisementSize());
+        newAd.setPrice(advertisementDTO.getAdvertisementPrice());
+        newAd.setCreatedAt(advertisementDTO.getAdvertisementDate());
+        newAd.setImgUrl(advertisementDTO.getAdvertisementImgUrls());
+        newAd.setUpdatedAt(advertisementDTO.getAdvertisementUpdatedDate());
+
+        // to add more fields first add the in the AdvertisementDT0
+        // then add them here
+        return advertisementRepository.save(newAd);
     }
+
 
 
     //get all advertisements
@@ -68,7 +93,7 @@ public class AdvertisementService {
 
                     }
                    if (updatedAdvertisement.isActive()==false ){
-                        existingAdvertisement.setIsActive(false);
+                        existingAdvertisement.setActive(false);
                     }
                     return advertisementRepository.save(existingAdvertisement);
 

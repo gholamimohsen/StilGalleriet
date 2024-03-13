@@ -1,8 +1,10 @@
 package com.project.stilgalleriet.controllers;
 
 
+import com.project.stilgalleriet.dto.AdvertisementDTO;
 import com.project.stilgalleriet.models.Advertisement;
 import com.project.stilgalleriet.services.AdvertisementService;
+import com.project.stilgalleriet.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,13 +21,14 @@ import java.util.Optional;
 public class AdvertisementController {
     @Autowired
      private AdvertisementService advertisementService;
+    @Autowired
+    private UserService userService;
 
     //POST  new advertisement
     @PostMapping("/add")
-    public ResponseEntity<Advertisement> addAdvertisement(@RequestBody Advertisement advertisement){
-        Advertisement newAdvertisement=advertisementService.addAdvertisement(advertisement);
-        return new ResponseEntity<>(newAdvertisement, HttpStatus.CREATED);
-
+    public ResponseEntity<Advertisement> createAdvertisement(@RequestBody AdvertisementDTO advertisementDTO) {
+        Advertisement advertisement = advertisementService.createAdvertisement(advertisementDTO);
+        return ResponseEntity.ok(advertisement);
     }
 
     // GET all advertisements
@@ -38,8 +41,8 @@ public class AdvertisementController {
     //GET an advertisement by id
     @GetMapping("/{id}")
     public ResponseEntity<Advertisement> getAdvertisementById(@PathVariable String id){
-        Optional<Advertisement> advertisment= advertisementService.getAdvertisementById(id);
-        return advertisment.map(ResponseEntity::ok)
+        Optional<Advertisement> advertisement= advertisementService.getAdvertisementById(id);
+        return advertisement.map(ResponseEntity::ok)
                 .orElseGet(()-> ResponseEntity.notFound().build());
 
     }

@@ -17,7 +17,8 @@ public class Advertisement {
     @Id
     private String id;
 
-   @DBRef
+
+    @DBRef
     @NotBlank(message="Field can not be blank")
     private User userId;
 
@@ -135,25 +136,6 @@ public class Advertisement {
     }
 
 
-
-    public boolean isActive() {
-        return isActive;
-    }
-
-    public void setIsActive(boolean isActive) {
-        isActive = isActive;
-    }
-
-    public User getUserId() {
-        return userId;
-    }
-
-    public void setUserId(User userId) {
-        this.userId = userId;
-    }
-
-
-
     public Date getCreatedAt() {
         return createdAt;
     }
@@ -168,5 +150,22 @@ public class Advertisement {
 
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
+    }
+
+    public User getUserId() {
+        return userId;
+    }
+
+    public void setUserId(User userId) {
+        this.userId = userId;
     }
 }
