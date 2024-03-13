@@ -49,13 +49,20 @@ public class ReviewService {
     }
 
     //Get all reviews
-    public List<Review> getAllReviews(){
-        return reviewRepository.findAll();
+    public List<ReviewDTO> getAllReviews(){
+        List<Review> reviews = reviewRepository.findAll();
+        return reviews.stream().map(this::convertToDTO).collect(Collectors.toList());
     }
 
     //Find review by ID
-    public Optional<Review> getReviewById(String id) {
-        return reviewRepository.findById(id);
+    public ReviewDTO getReviewById(String id) {
+        Optional<Review> review = reviewRepository.findById(id);
+        ReviewDTO reviewDTO = new ReviewDTO();
+        reviewDTO.setRatingUserId(review.get().getRatingUserId().getId());
+        reviewDTO.setRatedUserId(review.get().getRatedUserId().getId());
+        reviewDTO.setRating(review.get().getRating());
+        reviewDTO.setComment(review.get().getComment());
+        return reviewDTO;
     }
 
     //Update a review

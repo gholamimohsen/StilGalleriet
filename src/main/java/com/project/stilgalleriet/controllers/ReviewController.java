@@ -10,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/reviews")
@@ -26,15 +25,14 @@ public class ReviewController {
 
     //Maybe remove this later, check comment in ReviewService
     @GetMapping("/all")
-    public List<Review> getAllReviews(){
+    public List<ReviewDTO> getAllReviews(){
         return reviewService.getAllReviews();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Review> getReviewById(@PathVariable String id){
-        Optional<Review> review = reviewService.getReviewById(id); //Optional prevents null value
-        return review.map(ResponseEntity::ok)
-                .orElseGet(()-> ResponseEntity.notFound().build()); //Return status code 404 if review is not found
+    public ResponseEntity<ReviewDTO> getReviewById(@PathVariable String id){
+        ReviewDTO reviewDTO = reviewService.getReviewById(id);
+        return new ResponseEntity<>(reviewDTO, HttpStatus.FOUND);
     }
 
     @PutMapping("/{id}")
