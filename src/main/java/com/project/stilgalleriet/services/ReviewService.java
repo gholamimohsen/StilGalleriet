@@ -25,7 +25,7 @@ public class ReviewService {
     UserRepository userRepository;
 
     //Create a new review, takes DTO as input
-    public Review createReview(ReviewDTO reviewDTO){
+    public ReviewDTO createReview(ReviewDTO reviewDTO){
 
         //Check if user already made review(Can be done with exception handling)
 
@@ -44,8 +44,9 @@ public class ReviewService {
         review.setRating(reviewDTO.getRating());
         review.setComment(reviewDTO.getComment());
 
-        //Return and save Review object
-        return reviewRepository.save(review);
+        //Save Review object and return DTO as response
+        reviewRepository.save(review);
+        return convertToDTO(review);
     }
 
     //Get all reviews
