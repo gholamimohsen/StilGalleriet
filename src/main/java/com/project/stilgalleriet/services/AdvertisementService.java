@@ -149,7 +149,7 @@ public class AdvertisementService {
 
     //Get advertisement list by date that is created at before the date
     public List<Advertisement> findAdvertisementByCreatedAtBefore(Date startedDate, Date endDate){
-        return advertisementRepository.findAdvertisementByCreatedAtBefore(startedDate, endDate);
+        return advertisementRepository.findAdvertisementByCreatedAtBefore(startedDate,endDate);
     }
 
 
