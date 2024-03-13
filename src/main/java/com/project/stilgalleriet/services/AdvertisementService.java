@@ -1,7 +1,10 @@
 package com.project.stilgalleriet.services;
 
+import com.project.stilgalleriet.dto.AdvertisementDTO;
 import com.project.stilgalleriet.models.Advertisement;
+import com.project.stilgalleriet.models.User;
 import com.project.stilgalleriet.repositories.AdvertisementRepository;
+import com.project.stilgalleriet.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,9 +17,41 @@ public class AdvertisementService {
 
     @Autowired
     AdvertisementRepository advertisementRepository;
+    @Autowired
+    UserRepository userRepository;
+
+    public Advertisement createAdvertisement(AdvertisementDTO advertisementDTO) {
+        User user = userRepository.findById(advertisementDTO.getSellerId())
+                .orElseThrow(() -> new IllegalArgumentException("Invalid user id"));
+
+        Advertisement newAd = new Advertisement();
+        newAd.setUser(user);
+        newAd.setTitle(advertisementDTO.getTitle());
+        // to add more fields first add the in the AdvertisementDT0
+        // then add them here
+        return advertisementRepository.save(newAd);
+    }
+
+
+    //get all advertisements
+    public List<Advertisement> getAllAdvertisements(){
+        return advertisementRepository.findAll();
+
+    }
+
+    //get an advertisement by id
+    public Optional<Advertisement> getAdvertisementById(String id){
+        return advertisementRepository.findById(id);
+    }
+
+    //delete an advertisement
+
+    public void deleteAdvertisement(String id){
+        advertisementRepository.deleteById(id);
+    }
 
     //create an advertisement
-    public Advertisement addAdvertisement(Advertisement advertisement){
+  /*  public Advertisement addAdvertisement(Advertisement advertisement){
         return advertisementRepository.save(advertisement);
     }
 
@@ -124,6 +159,8 @@ public class AdvertisementService {
 
     public Advertisement updatedAdvertisement (String id, Advertisement updatedAdvertisement){
         return advertisementRepository.save(updatedAdvertisement);
+
+ */
     }
-*/
+
 

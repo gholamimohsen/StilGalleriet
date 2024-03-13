@@ -32,23 +32,33 @@ public class OrderService {
 
 
     // Method to add a new Order
-    public Order addOrder(OrderDTO orderDTO) {
-        User seller = userRepository.findById(orderDTO.getSellerUserId())
-                .orElseThrow(() -> new RuntimeException("Invalid seller user id"));
-        User buyer = userRepository.findById(orderDTO.getBuyerUserId())
-                .orElseThrow(() -> new RuntimeException("Invalid buyer user id"));
+    public Order createOrder(OrderDTO orderDTO) {
+       // User seller = userRepository.findById(orderDTO.getSellerUserId())
+                //.orElseThrow(() -> new RuntimeException("Invalid seller user id"));
 
-        List<Advertisement> advertisements = orderDTO.getAdvertisementId().stream()
+        User buyer = userRepository.findById(orderDTO.getBuyerUserId())
+                .orElseThrow(() -> new RuntimeException("Invalid  user id"));
+
+      /*  List<Advertisement> advertisements = orderDTO.getAdvertisementId().stream()
                 .map(adId -> advertisementRepository.findById(adId)
                         .orElseThrow(() -> new IllegalArgumentException("Invalid advertisement id: " + adId)))
-                .collect(Collectors.toList());
+                .collect(Collectors.toList());*/
+        Advertisement advertisement = advertisementRepository.findById(orderDTO.getAdvertisementId())
+                .orElseThrow(()-> new IllegalArgumentException("Invalid advertisement id"));
 
         Order order= new Order();
-        order.setSellerUserId(seller);
+        // since the ad already has a user that is by default the seller of the ad
+        // and since I implemented check mon user i ad service no need to check again
+        // we can be sure the user exists
+        // and we set the seller from the user in the ad
+
+        //order.setSellerUserId(seller);
+
         order.setBuyerUserId(buyer);
-        order.setAdvertisementId(advertisements);
-        order.setQuantity(orderDTO.getQuantity());
-        order.setTotalPrice(orderDTO.getTotalPrice());
+        order.setAdvertisementId(advertisement);
+        order.getSellerUserId(advertisement.getUser());
+       // order.setQuantity(orderDTO.getQuantity());
+        //order.setTotalPrice(orderDTO.getTotalPrice());
         return orderRepository.save(order);
        // Order savedOrder = orderRepository.save(order);
         //return convertToOrderResponse(savedOrder);

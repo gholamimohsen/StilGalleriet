@@ -8,7 +8,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.List;
 
 @Document(collection = "orders")
 public class Order {
@@ -19,7 +18,9 @@ public class Order {
     @DBRef
     private User buyerUserId;
     @DBRef
-    private List<Advertisement> advertisementId;
+   // private List<Advertisement> advertisementId;
+    private  Advertisement advertisementId;
+    @CreatedDate
     private Date orderDate; //Might consider removing this in the future if same as createdAt
     private int quantity;
     private BigDecimal totalPrice;
@@ -104,11 +105,27 @@ public class Order {
         this.buyerUserId = buyerUserId;
     }
 
-    public List<Advertisement> getAdvertisementId() {
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public Advertisement getAdvertisementId() {
+        return advertisementId;
+    }
+
+    public void setAdvertisementId(Advertisement advertisementId) {
+        this.advertisementId = advertisementId;
+    }
+
+    public void getSellerUserId(User user) {
+        return;
+    }
+
+  /*  public List<Advertisement> getAdvertisementId() {
         return advertisementId;
     }
 
     public void setAdvertisementId(List<Advertisement> advertisementId) {
         this.advertisementId = advertisementId;
-    }
+    }*/
 }

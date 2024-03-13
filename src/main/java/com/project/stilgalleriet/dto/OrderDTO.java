@@ -1,19 +1,32 @@
 package com.project.stilgalleriet.dto;
 
-import java.math.BigDecimal;
-import java.util.Date;
-import java.util.List;
-
 public class OrderDTO {
-    private String sellerUserId;
+   // private String sellerUserId;
     private String buyerUserId;
-    private List<String> advertisementId;
-    private int quantity;
-    private BigDecimal totalPrice;
-    private Date orderedDate;
+    private String advertisementId;
+
+    public String getBuyerUserId() {
+        return buyerUserId;
+    }
+
+    public void setBuyerUserId(String buyerUserId) {
+        this.buyerUserId = buyerUserId;
+    }
+
+    public String getAdvertisementId() {
+        return advertisementId;
+    }
+
+    public void setAdvertisementId(String advertisementId) {
+        this.advertisementId = advertisementId;
+    }
+    //private int quantity;
+
+   // private BigDecimal totalPrice;
+    //private Date orderedDate;
 
 
-    public String getSellerUserId() {
+   /* public String getSellerUserId() {
         return sellerUserId;
     }
 
@@ -57,5 +70,5 @@ public class OrderDTO {
 
    // public String getUserId() {
       //  return getUserId();/
-
+*/
     }

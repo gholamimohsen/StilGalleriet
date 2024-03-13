@@ -25,10 +25,11 @@ public class OrderController {
 
 
     @PostMapping
-    public ResponseEntity<Order>addOrder(@Valid @RequestBody OrderDTO orderDTO){
-        Order newOrder= orderService.addOrder(orderDTO);
+    public ResponseEntity<Order>createOrder(@Valid @RequestBody OrderDTO orderDTO){
+        Order newOrder= orderService.createOrder(orderDTO);
+        return  ResponseEntity.ok(newOrder);
        // OrderResponse response = convertToOrderResponse (newOrder);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        //return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @GetMapping
@@ -38,8 +39,9 @@ public class OrderController {
     }
 
     @GetMapping ("/{id}")
-    public ResponseEntity<OrderResponse> getOrderById(@PathVariable String id){
-        OrderResponse orders = (OrderResponse) orderService.getOrderById(id);
+    public ResponseEntity<List<OrderResponse>>getOrderById(@PathVariable String id){
+        List<OrderResponse>orders = orderService.getAllOrders();
+       // OrderResponse orders = (OrderResponse) orderService.getOrderById(id);
         return ResponseEntity.ok(orders);
 
     }

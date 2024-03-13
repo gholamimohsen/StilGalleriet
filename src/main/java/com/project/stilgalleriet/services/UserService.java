@@ -58,4 +58,11 @@ public class UserService {
         return "User successfully deleted";
     }
 
+    public List<User> findAll() {
+        return getAllUsers();
+    }
+
+    public User findById(String id) {
+        return getUserById(id);
+    }
 }

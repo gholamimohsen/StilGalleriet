@@ -1,16 +1,37 @@
 package com.project.stilgalleriet.dto;
 
-import com.project.stilgalleriet.models.ECategory;
-import com.project.stilgalleriet.models.EColor;
-import com.project.stilgalleriet.models.EGender;
-import com.project.stilgalleriet.models.ESize;
-
-import java.util.Date;
-import java.util.List;
-
 public class AdvertisementDTO {
+    private String sellerId;
+    private String title;
 
-    private String userId;
+    private String adId;
+
+    public String getSellerId() {
+        return sellerId;
+    }
+
+    public void setSellerId(String sellerId) {
+        this.sellerId = sellerId;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getAdId() {
+        return adId;
+    }
+
+    public void setAdId(String adId) {
+        this.adId = adId;
+    }
+
+
+   /* private String userId;
     private String advertisementId;
     private String advertisementTitles;
     private String advertisementDescriptions;
@@ -129,5 +150,5 @@ public class AdvertisementDTO {
 
     public void setAdvertisementId(String advertisementId) {
         this.advertisementId = advertisementId;
-    }
+    }*/
 }
