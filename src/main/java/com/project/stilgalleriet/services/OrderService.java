@@ -43,7 +43,7 @@ public class OrderService {
         // and since I implemented check mon user i ad service no need to check again
         // we can be sure the user exists
         // and we set the seller from the user in the ad
-        order.setSellerUserId(advertisement.getUser());
+      //  order.setSellerUserId(advertisement.getUser());
 
         return orderRepository.save(order);
     }
