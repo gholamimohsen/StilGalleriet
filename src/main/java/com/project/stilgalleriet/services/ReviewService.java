@@ -1,6 +1,7 @@
 package com.project.stilgalleriet.services;
 
 import com.project.stilgalleriet.dto.ReviewDTO;
+import com.project.stilgalleriet.models.Order;
 import com.project.stilgalleriet.models.Review;
 import com.project.stilgalleriet.models.User;
 import com.project.stilgalleriet.repositories.OrderRepository;
@@ -31,6 +32,8 @@ public class ReviewService {
 
         //Check if user is eligible for making a review(See if an order match the seller id)
         //Might need custom query for Order similar to the one in getReviewBySeller
+
+
 
         //Use User ID strings from DTO to get User objects to feed into Review object
         Optional<User> ratingUser = Optional.of(userRepository.findById(reviewDTO.getRatingUserId())).orElseThrow(() -> new RuntimeException("User not found"));
@@ -109,6 +112,17 @@ public class ReviewService {
         reviewDTO.setComment(review.getComment());
 
         return reviewDTO;
+    }
+
+    //Method for checking if user have finished purchase by checking if order exist.
+    private boolean isOrderDone(ReviewDTO reviewDTO){
+        try {
+            Order order = orderRepository.findOrderByBuyerUserIdAndSellerUserId(reviewDTO.getRatingUserId(), reviewDTO.getRatedUserId());
+            return order.isSold();
+        }
+        catch (Exception e){
+            throw new RuntimeException("Error");
+        }
     }
 
 }
