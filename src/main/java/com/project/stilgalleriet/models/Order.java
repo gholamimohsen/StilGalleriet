@@ -18,6 +18,7 @@ public class Order {
     private User buyerUserId;
     @DBRef
     private Advertisement advertisementId;
+
     //private List<Advertisement> advertisementId;
     @CreatedDate
     private Date orderDate; //Might consider removing this in the future if same as createdAt
