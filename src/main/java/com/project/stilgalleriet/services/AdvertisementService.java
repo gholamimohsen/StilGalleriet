@@ -43,8 +43,6 @@ public class AdvertisementService {
         return advertisementRepository.save(newAd);
     }
 
-
-
     //get all advertisements
     public List<Advertisement> getAllAdvertisements(){
         return advertisementRepository.findAll();
@@ -60,10 +58,63 @@ public class AdvertisementService {
 
     public void deleteAdvertisement(String id){
         advertisementRepository.deleteById(id);
+
     }
 
     //update an advertisement
-    public Advertisement updateAdvertisement(String id, Advertisement updatedAdvertisement) throws Exception {
+    public Advertisement updateAdvertisement(String id, AdvertisementDTO updatedAdvertisement) throws Exception {
+        return advertisementRepository.findById(id)
+                .map(existingAdvertisement -> {
+                    if (updatedAdvertisement.getAdTitles() != null) {
+                        existingAdvertisement.setTitle(updatedAdvertisement.getAdTitles());
+                    }
+                    if (updatedAdvertisement.getAdDescriptions() != null) {
+                        existingAdvertisement.setDescription(updatedAdvertisement.getAdDescriptions());
+                    }
+                    if (updatedAdvertisement.getAdCategory() != null) {
+                        existingAdvertisement.setCategory(updatedAdvertisement.getAdCategory());
+                    }
+
+                    if (updatedAdvertisement.getAdColor() != null) {
+                        existingAdvertisement.setColor(updatedAdvertisement.getAdColor());
+                    }
+                    if (updatedAdvertisement.getAdGender() != null) {
+                        existingAdvertisement.setGender(updatedAdvertisement.getAdGender());
+                    }
+                    if (updatedAdvertisement.getAdImgUrls() != null) {
+                        existingAdvertisement.setImgUrl(updatedAdvertisement.getAdImgUrls());
+                    }
+                    if (updatedAdvertisement.getAdPrice() != 0.00) {
+                        existingAdvertisement.setPrice(updatedAdvertisement.getAdPrice());
+
+                    }
+                    if (updatedAdvertisement.isAdIsActive() != existingAdvertisement.isActive()) {
+                        existingAdvertisement.setActive(updatedAdvertisement.isAdIsActive());
+                    }
+                    return advertisementRepository.save(existingAdvertisement);
+
+                })
+                .orElseThrow(()-> new IllegalArgumentException("Advertisement with id: "+ id + " was not found to update!"));
+    }
+
+    private AdvertisementDTO convertToDTO(Advertisement advertisement) {
+        AdvertisementDTO advertisementDTO = new AdvertisementDTO();
+        advertisementDTO.setAdId(advertisement.getId());
+        advertisementDTO.setSellerId(advertisement.getUserId().getId());
+        advertisementDTO.setAdTitles(advertisement.getTitle());
+        advertisementDTO.setAdDescriptions(advertisement.getDescription());
+        advertisementDTO.setAdCategory(advertisement.getCategory());
+        advertisementDTO.setAdColor(advertisement.getColor());
+        advertisementDTO.setAdGender(advertisement.getGender());
+        advertisementDTO.setAdPrice(advertisement.getPrice());
+        advertisementDTO.setAdSize(advertisement.getSize());
+        advertisementDTO.setAdImgUrls(advertisement.getImgUrl());
+        advertisementDTO.setAdIsActive(true);
+        return advertisementDTO;
+    }
+
+    //update method with advertisement class
+    /*public Advertisement updateAdvertisement(String id, Advertisement updatedAdvertisement) throws Exception {
         return advertisementRepository.findById(id)
                 .map(existingAdvertisement->{
                     if (updatedAdvertisement.getTitle() !=null){
@@ -97,7 +148,7 @@ public class AdvertisementService {
 
                 })
                 .orElseThrow(()-> new Exception("Advertisement with id: "+ id + " was not found to update!"));
-    }
+    }*/
 
     //Get advertisement list by color
     public List <Advertisement> findAdvertisementByColor(String color){

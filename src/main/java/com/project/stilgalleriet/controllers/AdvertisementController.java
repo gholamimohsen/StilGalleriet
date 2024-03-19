@@ -20,6 +20,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/advertisements")
 public class AdvertisementController {
+
     @Autowired
     private AdvertisementService advertisementService;
 
@@ -31,7 +32,6 @@ public class AdvertisementController {
     public ResponseEntity<Advertisement> createAdvertisement(@RequestBody AdvertisementDTO advertisementDTO) {
         Advertisement advertisement = advertisementService.createAdvertisement(advertisementDTO);
         return ResponseEntity.ok(advertisement);
-
     }
 
     // GET all advertisements
@@ -40,14 +40,12 @@ public class AdvertisementController {
         return advertisementService.getAllAdvertisements();
     }
 
-
     //GET an advertisement by id
     @GetMapping("/{id}")
     public ResponseEntity<Advertisement> getAdvertisementById(@PathVariable String id) {
         Optional<Advertisement> advertisement = advertisementService.getAdvertisementById(id);
         return advertisement.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
-
     }
 
     //DELETE an advertisement by id
@@ -58,6 +56,17 @@ public class AdvertisementController {
     }
 
     //UPDATE an advertisement by id
+    @PutMapping("update/{id}")
+    public ResponseEntity <Advertisement> updateAdvertisement(@PathVariable String id, @RequestBody AdvertisementDTO advertisementDetails) throws Exception {
+        try {
+            Advertisement updatedAdvertisement=advertisementService.updateAdvertisement(id, advertisementDetails);
+            return ResponseEntity.ok(updatedAdvertisement);
+        } catch (Exception e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+    }
+
+    /*UPDATE an advertisement by id
     @PutMapping("update/{id}") // need for @valid ??
     public ResponseEntity<Advertisement> updateAdvertisement(@PathVariable String id, @RequestBody Advertisement advertisementDetails) {
         try {
@@ -66,7 +75,7 @@ public class AdvertisementController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
-    }
+    }*/
 
     // GET advertisement list by color
     @GetMapping("/color/{color}")

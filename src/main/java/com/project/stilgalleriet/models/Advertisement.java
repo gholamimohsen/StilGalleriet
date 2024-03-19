@@ -1,6 +1,8 @@
 package com.project.stilgalleriet.models;
 
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -16,34 +18,37 @@ public class Advertisement {
     @Id
     private String id;
 
+
+
     @DBRef
-    //@NotBlank(message="Field can not be blank")
+    @NotBlank(message="Field can not be blank")
     private User userId;
 
-   // @NotBlank(message="Field can not be blank")
+    @NotBlank(message="Field can not be blank")
     private String title;
 
     private String description;
 
 
-    //@NotBlank(message="Field can not be blank")
+    @NotBlank(message="Field can not be blank")
     private EGender gender;
 
 
-    //@NotBlank(message="Field can not be blank")
+    @NotBlank(message="Field can not be blank")
     private ECategory category;
 
-    //@NotEmpty(message="Field can not be empty")
+
+    @NotEmpty(message="Field can not be empty")
     private List<String > imgUrl;
 
 
-   // @NotBlank(message="Field can not be blank")
+    @NotBlank(message="Field can not be blank")
     private ESize size;
 
-    //@NotBlank(message="Field can not be blank")
+    @NotBlank(message="Field can not be blank")
     private EColor color;
 
-    //@NotBlank(message="Field can not be blank")
+    @NotBlank(message="Field can not be blank")
     private double price;
 
     @CreatedDate
