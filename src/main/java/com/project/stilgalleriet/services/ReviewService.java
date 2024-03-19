@@ -33,23 +33,25 @@ public class ReviewService {
         //Check if user is eligible for making a review(See if an order match the seller id)
         //Might need custom query for Order similar to the one in getReviewBySeller
 
+        if(isOrderDone(reviewDTO)) {
 
+            //Use User ID strings from DTO to get User objects to feed into Review object
+            Optional<User> ratingUser = Optional.of(userRepository.findById(reviewDTO.getRatingUserId())).orElseThrow(() -> new RuntimeException("User not found"));
+            Optional<User> ratedUser = Optional.of(userRepository.findById(reviewDTO.getRatedUserId()).orElseThrow(() -> new RuntimeException("User not found")));
 
-        //Use User ID strings from DTO to get User objects to feed into Review object
-        Optional<User> ratingUser = Optional.of(userRepository.findById(reviewDTO.getRatingUserId())).orElseThrow(() -> new RuntimeException("User not found"));
-        Optional<User> ratedUser = Optional.of(userRepository.findById(reviewDTO.getRatedUserId()).orElseThrow(() -> new RuntimeException("User not found")));
+            //Insert values into Review object
+            Review review = new Review();
 
-        //Insert values into Review object
-        Review review = new Review();
+            review.setRatingUserId(ratingUser.get());
+            review.setRatedUserId(ratedUser.get());
+            review.setRating(reviewDTO.getRating());
+            review.setComment(reviewDTO.getComment());
 
-        review.setRatingUserId(ratingUser.get());
-        review.setRatedUserId(ratedUser.get());
-        review.setRating(reviewDTO.getRating());
-        review.setComment(reviewDTO.getComment());
-
-        //Save Review object and return DTO as response
-        reviewRepository.save(review);
-        return convertToDTO(review);
+            //Save Review object and return DTO as response
+            reviewRepository.save(review);
+            return convertToDTO(review);
+        }
+        else throw new RuntimeException("test");
     }
 
     //Get all reviews
@@ -116,13 +118,12 @@ public class ReviewService {
 
     //Method for checking if user have finished purchase by checking if order exist.
     private boolean isOrderDone(ReviewDTO reviewDTO){
-        try {
+
             Order order = orderRepository.findOrderByBuyerUserIdAndSellerUserId(reviewDTO.getRatingUserId(), reviewDTO.getRatedUserId());
             return order.isSold();
-        }
-        catch (Exception e){
-            throw new RuntimeException("Error");
-        }
+
+            //NullPointerException
+
     }
 
 }
