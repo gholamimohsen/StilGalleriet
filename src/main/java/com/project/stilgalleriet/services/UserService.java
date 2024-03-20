@@ -1,17 +1,26 @@
 
 package com.project.stilgalleriet.services;
 
+import com.project.stilgalleriet.exception.EntityNotFoundExeception;
+import com.project.stilgalleriet.models.Advertisement;
 import com.project.stilgalleriet.models.User;
+import com.project.stilgalleriet.repositories.AdvertisementRepository;
 import com.project.stilgalleriet.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    AdvertisementRepository advertisementRepository;
+
 
 
     //create / Post user
@@ -59,4 +68,25 @@ public class UserService {
         return "User successfully deleted";
     }
 
+    //post favorites
+
+    public void addFavorites (String usernameId, String advertisementId ) {
+        Optional<User> userOptional = userRepository.findByUsername(usernameId);
+        Optional<Advertisement> advertisementOptional = advertisementRepository.findById(advertisementId);
+
+        if (userOptional.isPresent() && advertisementOptional.isPresent()) {
+            User user = userOptional.get();
+            user.getFavorites().add(advertisementId);
+            userRepository.save(user);
+
+        }else {
+
+            if (!userOptional.isPresent()){
+                throw new UsernameNotFoundException("User not found");
+            }
+            if (!advertisementOptional.isPresent()){
+                throw new EntityNotFoundExeception("Advertisement not found");
+            }
+        }
+    }
 }

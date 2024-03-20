@@ -4,6 +4,7 @@ package com.project.stilgalleriet.controllers;
 import com.project.stilgalleriet.models.User;
 import com.project.stilgalleriet.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -55,4 +56,15 @@ public class UserController {
     public String deleteUser(@PathVariable String id) {
         return userService.deleteUser(id);
     }
+
+
+    // FAVORITES
+
+    //POST
+    @PostMapping("/{username}/favorites")
+    public ResponseEntity<Void> addFavorite(@PathVariable String username, @RequestBody String adId) {
+        userService.addFavorites(username, adId);
+        return ResponseEntity.ok().build();
+    }
+
 }

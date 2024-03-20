@@ -51,7 +51,7 @@ public class User {
 
     private boolean isActive = true;
 
-    //Add DBRef
+    @DBRef
     private ArrayList<String> favorites = new ArrayList<>(); //Stores advertisement references(advertisementId)
 
     public User(String username, String firstName, String lastName, String email, String password, String street, String city, String state, String zipcode) {
