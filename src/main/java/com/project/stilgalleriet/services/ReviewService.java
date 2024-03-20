@@ -1,6 +1,7 @@
 package com.project.stilgalleriet.services;
 
 import com.project.stilgalleriet.dto.ReviewDTO;
+import com.project.stilgalleriet.exception.EntityNotFoundException;
 import com.project.stilgalleriet.models.Order;
 import com.project.stilgalleriet.models.Review;
 import com.project.stilgalleriet.models.User;
@@ -30,9 +31,8 @@ public class ReviewService {
 
         //Check if user already made review(Can be done with exception handling)
 
-        //Check if user is eligible for making a review(See if an order match the seller id)
-        //Might need custom query for Order similar to the one in getReviewBySeller
 
+        //Checks if order exists and if transaction is done(isSold = true). If false throws exception
         if(isOrderDone(reviewDTO)) {
 
             //Use User ID strings from DTO to get User objects to feed into Review object
@@ -51,7 +51,7 @@ public class ReviewService {
             reviewRepository.save(review);
             return convertToDTO(review);
         }
-        else throw new RuntimeException("test");
+        else throw new EntityNotFoundException("You are not eligible to review this user");
     }
 
     //Get all reviews
@@ -118,12 +118,12 @@ public class ReviewService {
 
     //Method for checking if user have finished purchase by checking if order exist.
     private boolean isOrderDone(ReviewDTO reviewDTO){
-
+        try {
             Order order = orderRepository.findOrderByBuyerUserIdAndSellerUserId(reviewDTO.getRatingUserId(), reviewDTO.getRatedUserId());
             return order.isSold();
-
-            //NullPointerException
-
+        } catch (NullPointerException e){
+            return false;
+        }
     }
 
 }

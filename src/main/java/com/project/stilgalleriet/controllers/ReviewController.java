@@ -1,6 +1,7 @@
 package com.project.stilgalleriet.controllers;
 
 import com.project.stilgalleriet.dto.ReviewDTO;
+import com.project.stilgalleriet.exception.EntityNotFoundException;
 import com.project.stilgalleriet.models.Review;
 import com.project.stilgalleriet.services.ReviewService;
 import jakarta.validation.Valid;
@@ -18,9 +19,13 @@ public class ReviewController {
     private ReviewService reviewService;
 
     @PostMapping
-    public ResponseEntity<ReviewDTO> createReview(@Valid @RequestBody ReviewDTO reviewDTO){
-        ReviewDTO newReview = reviewService.createReview(reviewDTO); //Change to take user IDs from orders and put it in Review object
-        return new ResponseEntity<>(newReview, HttpStatus.CREATED);
+    public ResponseEntity<?> createReview(@Valid @RequestBody ReviewDTO reviewDTO){
+        try {
+            ReviewDTO newReview = reviewService.createReview(reviewDTO);
+            return new ResponseEntity<>(newReview, HttpStatus.CREATED);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
+        }
     }
 
     //Maybe remove this later, check comment in ReviewService
