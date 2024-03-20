@@ -117,11 +117,5 @@ public class Order {
         this.id = id;
     }
 
-   /* public List<Advertisement> getAdvertisementId() {
-        return advertisementId;
-    }
 
-    public void setAdvertisementId(List<Advertisement> advertisementId) {
-        this.advertisementId = advertisementId;
-    }*/
 }
