@@ -1,11 +1,14 @@
 package com.project.stilgalleriet.repositories;
 
-import com.project.stilgalleriet.models.Advertisement;
+import com.project.stilgalleriet.models.*;
 import org.springframework.data.mongodb.repository.MongoRepository;
+
+import java.util.Date;
+import java.util.List;
 
 public interface AdvertisementRepository extends MongoRepository<Advertisement, String> {
 
-   /* NEW CODES TO FILTER BY ID CATEGORY ETC FOR DTO CLASSES CODE ??
+
 
     List<Advertisement> findAdvertisementById(String advertisementId);
 
@@ -16,8 +19,13 @@ public interface AdvertisementRepository extends MongoRepository<Advertisement, 
     List <Advertisement> findAdvertisementByGender(EGender advertisementGender);
     List <Advertisement> findAdvertisementBySize(ESize advertisementSize);
     List <Advertisement> findAdvertisementByColor (EColor advertisementColor);
+    List <Advertisement>findAdvertisementByPriceLessThan(double maxPrice);
+    List <Advertisement>findAdvertisementByPriceGreaterThan(double minPrice);
+    List<Advertisement> findAdvertisementByPriceBetween(double minPrice, double maxprice);
+    List<Advertisement> findAdvertisementByCreatedAtAfter(Date startedDate, Date endDate);
+    List<Advertisement> findAdvertisementByCreatedAtBefore(Date startedDate, Date endDate);
 
-*/
+
 
 
 }
