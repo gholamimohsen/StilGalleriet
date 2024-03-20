@@ -1,9 +1,15 @@
 package com.project.stilgalleriet.models;
 
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.util.Date;
+import java.util.List;
 
 
 @Document(collection="advertisements")
@@ -12,47 +18,15 @@ public class Advertisement {
     @Id
     private String id;
 
-    private String title;
+
 
     @DBRef
-    private User user;
+    @NotBlank(message="Field can not be blank")
+    private User userId;
 
-    public Advertisement() {
-    }
+    @NotBlank(message="Field can not be blank")
+    private String title;
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    // @DBRef //to reference to users collection
-   // private User userId;      //must be changed this field and getters/ setters according to this field
-    //@NotBlank(message="Field can not be blank")
-    //private String userId;
-
-   // @NotBlank(message="Field can not be blank")
-
-
-   /* @NotBlank(message="Field can not be blank")
     private String description;
 
 
@@ -63,55 +37,58 @@ public class Advertisement {
     @NotBlank(message="Field can not be blank")
     private ECategory category;
 
+
     @NotEmpty(message="Field can not be empty")
     private List<String > imgUrl;
 
 
     @NotBlank(message="Field can not be blank")
-     private ESize size;
+    private ESize size;
 
     @NotBlank(message="Field can not be blank")
-     private EColor color;
+    private EColor color;
 
     @NotBlank(message="Field can not be blank")
-     private double price;
+    private double price;
 
-     private Date createdAt;
-
-     private Date updatedAt;
-*/
- //    private boolean isActive=true;
+    @CreatedDate
+    private Date createdAt;
 
 
-   /* public Advertisement() {
-    }*/
+    private Date updatedAt=new Date();
+
+    private boolean isActive=true;
 
 
-    //public String getId() {
-        //return id;
-    //}
+    public Advertisement() {
+    }
 
-    //public void setId(String id) {
-       // this.id = id;
-    //}
 
-    /*public User getUserId() {
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public User getUserId() {
         return userId;
     }
 
     public void setUserId(User userId) {
         this.userId = userId;
-    }*/
+    }
 
-   /* public String getTitle() {
+    public String getTitle() {
         return title;
     }
 
     public void setTitle(String title) {
         this.title = title;
-    }*/
+    }
 
-    /*public String getDescription() {
+    public String getDescription() {
         return description;
     }
 
@@ -182,29 +159,12 @@ public class Advertisement {
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
     }
-*/
 
-   /* public boolean isActive() {
+    public boolean isActive() {
         return isActive;
     }
 
     public void setActive(boolean active) {
         isActive = active;
     }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }*/
 }

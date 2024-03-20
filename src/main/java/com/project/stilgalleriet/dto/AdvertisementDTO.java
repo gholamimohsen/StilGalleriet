@@ -1,11 +1,32 @@
 package com.project.stilgalleriet.dto;
 
+import com.project.stilgalleriet.models.ECategory;
+import com.project.stilgalleriet.models.EColor;
+import com.project.stilgalleriet.models.EGender;
+import com.project.stilgalleriet.models.ESize;
+
+import java.util.Date;
+import java.util.List;
+
 public class AdvertisementDTO {
-
     private String sellerId;
-    private String title;
-
     private String adId;
+    private String adTitles;
+    private String adDescriptions;
+    private EGender adGender;
+    private ECategory adCategory;
+    private List<String> adImgUrls;
+    private ESize adSize;
+    private EColor adColor;
+    private double adPrice;
+    private Date adDate;
+    private Date adUpdatedDate;
+    private boolean adIsActive;
+
+
+    public AdvertisementDTO() {
+    }
+
 
     public String getSellerId() {
         return sellerId;
@@ -13,14 +34,6 @@ public class AdvertisementDTO {
 
     public void setSellerId(String sellerId) {
         this.sellerId = sellerId;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
     }
 
     public String getAdId() {
@@ -31,124 +44,91 @@ public class AdvertisementDTO {
         this.adId = adId;
     }
 
-    /*private String userId;
-    private String advertisementId;
-    private String advertisementTitles;
-    private String advertisementDescriptions;
-    private EGender advertisementGender;
-    private ECategory advertisementCategory;
-    private List <String> advertisementImgUrls;
-    private ESize advertisementSize;
-    private EColor advertisementColor;
-    private double advertisementPrice;
-    private Date advertisementDate;
-    private Date advertisementUpdatedDate;
-    private boolean advertisementIsActive;
-
-    public AdvertisementDTO() {
+    public String getAdTitles() {
+        return adTitles;
     }
 
-    public String getUserId() {
-        return userId;
+    public void setAdTitles(String adTitles) {
+        this.adTitles = adTitles;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public String getAdDescriptions() {
+        return adDescriptions;
     }
 
-    public String getAdvertisementTitles() {
-        return advertisementTitles;
+    public void setAdDescriptions(String adDescriptions) {
+        this.adDescriptions = adDescriptions;
     }
 
-    public void setAdvertisementTitles(String advertisementTitles) {
-        this.advertisementTitles = advertisementTitles;
+    public EGender getAdGender() {
+        return adGender;
     }
 
-    public String getAdvertisementDescriptions() {
-        return advertisementDescriptions;
+    public void setAdGender(EGender adGender) {
+        this.adGender = adGender;
     }
 
-    public void setAdvertisementDescriptions(String advertisementDescriptions) {
-        this.advertisementDescriptions = advertisementDescriptions;
+    public ECategory getAdCategory() {
+        return adCategory;
     }
 
-    public EGender getAdvertisementGender() {
-        return advertisementGender;
+    public void setAdCategory(ECategory adCategory) {
+        this.adCategory = adCategory;
     }
 
-    public void setAdvertisementGender(EGender advertisementGender) {
-        this.advertisementGender = advertisementGender;
+    public List<String> getAdImgUrls() {
+        return adImgUrls;
     }
 
-    public ECategory getAdvertisementCategory() {
-        return advertisementCategory;
+    public void setAdImgUrls(List<String> adImgUrls) {
+        this.adImgUrls = adImgUrls;
     }
 
-    public void setAdvertisementCategory(ECategory advertisementCategory) {
-        this.advertisementCategory = advertisementCategory;
+    public ESize getAdSize() {
+        return adSize;
     }
 
-    public List<String> getAdvertisementImgUrls() {
-        return advertisementImgUrls;
+    public void setAdSize(ESize adSize) {
+        this.adSize = adSize;
     }
 
-    public void setAdvertisementImgUrls(List<String> advertisementImgUrls) {
-        this.advertisementImgUrls = advertisementImgUrls;
+    public EColor getAdColor() {
+        return adColor;
     }
 
-    public ESize getAdvertisementSize() {
-        return advertisementSize;
+    public void setAdColor(EColor adColor) {
+        this.adColor = adColor;
     }
 
-    public void setAdvertisementSize(ESize advertisementSize) {
-        this.advertisementSize = advertisementSize;
+    public double getAdPrice() {
+        return adPrice;
     }
 
-    public EColor getAdvertisementColor() {
-        return advertisementColor;
+    public void setAdPrice(double adPrice) {
+        this.adPrice = adPrice;
     }
 
-    public void setAdvertisementColor(EColor advertisementColor) {
-        this.advertisementColor = advertisementColor;
+    public Date getAdDate() {
+        return adDate;
     }
 
-    public double getAdvertisementPrice() {
-        return advertisementPrice;
+    public void setAdDate(Date adDate) {
+        this.adDate = adDate;
     }
 
-    public void setAdvertisementPrice(double advertisementPrice) {
-        this.advertisementPrice = advertisementPrice;
+    public Date getAdUpdatedDate() {
+        return adUpdatedDate;
     }
 
-    public Date getAdvertisementDate() {
-        return advertisementDate;
+    public void setAdUpdatedDate(Date adUpdatedDate) {
+        this.adUpdatedDate = adUpdatedDate;
     }
 
-    public void setAdvertisementDate(Date advertisementDate) {
-        this.advertisementDate = advertisementDate;
+    public boolean isAdIsActive() {
+        return adIsActive;
     }
 
-    public Date getAdvertisementUpdatedDate() {
-        return advertisementUpdatedDate;
+    public void setAdIsActive(boolean adIsActive) {
+        this.adIsActive = adIsActive;
     }
-
-    public void setAdvertisementUpdatedDate(Date advertisementUpdatedDate) {
-        this.advertisementUpdatedDate = advertisementUpdatedDate;
-    }
-
-    public boolean isAdvertisementIsActive() {
-        return advertisementIsActive;
-    }
-
-    public void setAdvertisementIsActive(boolean advertisementIsActive) {
-        this.advertisementIsActive = advertisementIsActive;
-    }
-
-    public String getAdvertisementId() {
-        return advertisementId;
-    }
-
-    public void setAdvertisementId(String advertisementId) {
-        this.advertisementId = advertisementId;
-    }*/
 }

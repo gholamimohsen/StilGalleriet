@@ -41,7 +41,9 @@ public class OrderService {
         order.setBuyerUserId(buyer);
         // set ad
         order.setAdvertisementId(advertisement);
+
         order.setSellerUserId(advertisement.getUser());
+
 
         return orderRepository.save(order);
     }
