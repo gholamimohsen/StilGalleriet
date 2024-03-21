@@ -22,7 +22,6 @@ public class UserService {
     AdvertisementRepository advertisementRepository;
 
 
-
     //create / Post user
     public User createUser(User user) {
         return userRepository.save(user);
@@ -39,7 +38,7 @@ public class UserService {
     }
 
     //Update user. Replaced with an update method. The previous "update" method was a create operation.
-    public User updateUser(String id, User updatedUser){
+    public User updateUser(String id, User updatedUser) {
 
         //No exception handling added!
         return userRepository.findById(id)
@@ -70,7 +69,7 @@ public class UserService {
 
     //post favorites
 
-    public void addFavorites (String usernameId, String advertisementId ) {
+    public void addFavorites(String usernameId, String advertisementId) {
         Optional<User> userOptional = userRepository.findByUsername(usernameId);
         Optional<Advertisement> advertisementOptional = advertisementRepository.findById(advertisementId);
 
@@ -79,12 +78,12 @@ public class UserService {
             user.getFavorites().add(advertisementId);
             userRepository.save(user);
 
-        }else {
+        } else {
 
-            if (!userOptional.isPresent()){
+            if (!userOptional.isPresent()) {
                 throw new UsernameNotFoundException("User not found");
             }
-            if (!advertisementOptional.isPresent()){
+            if (!advertisementOptional.isPresent()) {
                 throw new EntityNotFoundExeception("Advertisement not found");
             }
         }
