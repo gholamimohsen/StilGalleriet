@@ -48,7 +48,6 @@ public class User {
 
     private boolean isActive = true;
 
-    @DBRef
     private List<Advertisement> favorites = new ArrayList<>(); //Stores advertisement references(advertisementId)
 
 

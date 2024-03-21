@@ -1,7 +1,6 @@
 package com.project.stilgalleriet.models;
 
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 
 
 public class Favorites {
@@ -10,9 +9,9 @@ public class Favorites {
     private String id;
 
 
-    @DBRef
+
     private User userIdFav;
-    @DBRef
+
     private Advertisement advertisementId;
 
 
