@@ -14,9 +14,12 @@ public class FavoriteService {
     @Autowired
     private FavoriteRepository favoriteRepository;
 
+
+
     public Favorites addFavorite(Favorites favorite) {
         return favoriteRepository.save(favorite);
     }
+
     public List<Favorites> getFavoritesByUser(User user) {
         return favoriteRepository.findByUserIdFav(user);
     }

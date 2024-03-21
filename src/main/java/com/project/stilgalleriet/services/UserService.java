@@ -1,6 +1,7 @@
 
 package com.project.stilgalleriet.services;
 
+import com.project.stilgalleriet.models.Advertisement;
 import com.project.stilgalleriet.models.User;
 import com.project.stilgalleriet.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,7 +48,10 @@ public class UserService {
                     user.setState(updatedUser.getState());
                     user.setZipcode(updatedUser.getZipcode());
                     user.setActive(updatedUser.isActive());
-                    user.setFavorites(updatedUser.getFavorites()); //This might overwrite favorites, probably need .add method from ArrayList
+                    List<Advertisement> favorites = user.getFavorites();
+                    favorites.addAll(updatedUser.getFavorites());
+                    user.setFavorites(favorites);
+                   // user.setFavorites(updatedUser.getFavorites()); //This might overwrite favorites, probably need .add method from ArrayList
 
                     return userRepository.save(user);
 
@@ -61,6 +65,8 @@ public class UserService {
         return "User successfully deleted";
     }
 
+
+    //Favorites
     public User findById(String id) {
         return userRepository.findById(id).orElse(null);
     }
