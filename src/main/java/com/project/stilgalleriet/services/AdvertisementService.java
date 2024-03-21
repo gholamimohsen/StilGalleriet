@@ -207,4 +207,11 @@ public class AdvertisementService {
 
 
 
+     //Favorites
+    public Advertisement findById(String id) {
+        return advertisementRepository.findById(id).orElse(null);
+    }
+
+
+
 }

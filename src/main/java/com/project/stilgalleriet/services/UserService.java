@@ -14,6 +14,8 @@ public class UserService {
     UserRepository userRepository;
 
 
+
+
     //create / Post user
     public User createUser(User user) {
         return userRepository.save(user);
@@ -57,6 +59,10 @@ public class UserService {
     public String deleteUser(String id) {
         userRepository.deleteById(id);
         return "User successfully deleted";
+    }
+
+    public User findById(String id) {
+        return userRepository.findById(id).orElse(null);
     }
 
 }
