@@ -1,6 +1,7 @@
 package com.project.stilgalleriet.services;
 
 import com.project.stilgalleriet.dto.OrderDTO;
+import com.project.stilgalleriet.exception.EntityNotFoundExeception;
 import com.project.stilgalleriet.models.Advertisement;
 import com.project.stilgalleriet.models.Order;
 import com.project.stilgalleriet.models.User;
@@ -8,9 +9,14 @@ import com.project.stilgalleriet.payload.response.OrderResponse;
 import com.project.stilgalleriet.repositories.AdvertisementRepository;
 import com.project.stilgalleriet.repositories.OrderRepository;
 import com.project.stilgalleriet.repositories.UserRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -24,73 +30,30 @@ public class OrderService {
     UserRepository userRepository;
     @Autowired
     AdvertisementRepository advertisementRepository;
+    private static final Logger logger = LoggerFactory.getLogger(OrderService.class);
 
     public Order createOrder(OrderDTO orderDTO) {
+        logger.debug("Creating order for buyerId: {} and advertisementId: {}", orderDTO.getBuyerUserId(), orderDTO.getAdvertisementId());
         // check that buyer exists in db
         User buyer = userRepository.findById(orderDTO.getBuyerUserId())
-                .orElseThrow(() -> new IllegalArgumentException("Invalid user id"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Buyer with provided user ID does not exist"));
 
         // check that the ad exists in db
         Advertisement advertisement = advertisementRepository.findById(orderDTO.getAdvertisementId())
-                .orElseThrow(() -> new IllegalArgumentException("Invalid advertisement id"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Advertisement with provided ID does not exist"));
 
+
+    User seller = advertisement.getUserId();
+        if (seller == null) {
+            throw new EntityNotFoundExeception("Seller not found for advertisement");
+        }
         Order order = new Order();
-        // set buyer
         order.setBuyerUserId(buyer);
-        // set ad
         order.setAdvertisementId(advertisement);
-        // since the ad already has a user that is by default the seller of the ad
-        // and since I implemented check mon user i ad service no need to check again
-        // we can be sure the user exists
-        // and we set the seller from the user in the ad
-      //  order.setSellerUserId(advertisement.getUser());
-
+        order.setSellerUserId(advertisement.getUserId());
+        logger.info("Order created successfully with ID: {}", order.getId());
         return orderRepository.save(order);
     }
-
-    /*
-    * public Order createOrder(OrderDTO orderDTO) {
-
-        User user = userRepository.findById(orderDTO.getUserId())
-                .orElseThrow(() -> new IllegalArgumentException("Invalid user id"));
-
-        // lista med produkter, då måste mappa/loopa igenom listan och hitta idn
-        List<Product> products = new ArrayList<>();
-        for (String productId : orderDTO.getProductIds()) {
-            products.add(productRepository.findById(productId)
-                    .orElseThrow(() -> new IllegalArgumentException("Invalid product id")));
-        }
-
-        Order newOrder = new Order();
-        newOrder.setUser(user);
-        newOrder.setProducts(products);
-        newOrder.setOrderedDate(orderDTO.getOrderedDate());
-
-        return  orderRepository.save(newOrder);
-    }
-    * */
-
-    // Method to add a new Order
-    /*public Order createOrder(OrderDTO orderDTO) {
-        Optional<User> seller = Optional.of(userRepository.findById(orderDTO.getSellerUserId())).orElseThrow(()->new RuntimeException("Invalid  seller user id"));
-        Optional<User> buyer = Optional.of(userRepository.findById(orderDTO.getBuyerUserId())).orElseThrow(()->new RuntimeException("Invalid  buyer user id"));
-
-
-        List<Advertisement> advertisements = new ArrayList<>();
-        for (String AdvertisementId : orderDTO.getAdvertisementId()) {
-            advertisements.add(advertisementRepository.findById(AdvertisementId)
-                    .orElseThrow(() -> new IllegalArgumentException("Invalid advertisement id")));
-        }
-
-        Order order= new Order();
-        order.setSellerUserId(seller.get());
-        order.setBuyerUserId(buyer.get());
-        order.setAdvertisementId(advertisements);
-       // order.setQuantity(orderDTO.getQuantity());
-        //order.setTotalPrice(orderDTO.getTotalPrice());
-        return orderRepository.save(order);
-
-    }*/
 
 
     // Method to retrieve all  Orders
@@ -99,46 +62,54 @@ public class OrderService {
         return  orders.stream().map(this::convertToDTO).collect(Collectors.toList());
 
     }
-
     // Method to find an Order by its ID
     public List<OrderResponse> getOrderById(String id){
         Optional<Order> orders =orderRepository.findById(id);
-        return orders.stream().map(this::convertToDTO).collect(Collectors.toList());
+
+        //If the order is not found, throw an exception that results in a 404 Not Found response
+        if (orders.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Order with ID " + id + " not found.");
+        }
+        return orders.stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
     }
 
-    private OrderResponse convertToDTO(Order order) {
-        return convertToDTO(order);
+   private OrderResponse convertToDTO(Order order) {
+       OrderDTO orderDTO = new OrderDTO();
+       orderDTO.setBuyerUserId(order.getBuyerUserId() != null ? order.getBuyerUserId().getId(): null);
+       orderDTO.setAdvertisementId(order.getAdvertisementId()!= null ? order.getAdvertisementId().getId(): null);
+       orderDTO.setSellerUserId(order.getSellerUserId()!= null ? order.getSellerUserId().getId(): null);
+       orderDTO.setOrderDate(order.getOrderDate());
+       orderDTO.setQuantity(order.getQuantity());
+       orderDTO.setTotalPrice(order.getTotalPrice());
+       orderDTO.setSold(order.isSold());
+       orderDTO.setCreatedAt(order.getCreatedAt());
+       orderDTO.setUpdatedAt(order.getUpdatedAt());
+       return orderDTO ;
     }
 
-    public Order updateOrder(String id, Order updatedOrder){
-
-        //No exception handling added!
+    public Order updateOrder(String id, Order updatedOrder) {
         return orderRepository.findById(id)
-                .map(order -> {
-
-                    /*Have to consider what you can update in Order, for example don't think IDs should be updated.
-                    This time I just use all the setters, to quickly finish this.
-                    */
-                    order.setSellerUserId(updatedOrder.getSellerUserId());
-                    order.setBuyerUserId(updatedOrder.getBuyerUserId());
-                    order.setAdvertisementId(updatedOrder.getAdvertisementId());
-                    order.setOrderDate(updatedOrder.getOrderDate());
-                    order.setQuantity(updatedOrder.getQuantity());
-                    order.setTotalPrice(updatedOrder.getTotalPrice());
-                    order.setSold(updatedOrder.isSold());
-
-
-                    return orderRepository.save(order);
-
+                .map(existingOrder -> {
+                    //Have to consider what you can update in Order, for example don't think IDs should be updated.
+                    existingOrder.setQuantity(updatedOrder.getQuantity());
+                    existingOrder.setTotalPrice(updatedOrder.getTotalPrice());
+                    existingOrder.setSold(updatedOrder.isSold());
+                    // Automatically update the updatedAt timestamp to the current date/time
+                    existingOrder.setUpdatedAt(new Date());
+                    return orderRepository.save(existingOrder);
                 })
-                .orElseThrow();
+                .orElseThrow(() -> new EntityNotFoundExeception(Order.class, id));
     }
 
-    // Method to delete an Order by its ID
-    public void  deleteOrder(String id) {
-        orderRepository.deleteById(id);
+
+        // Method to delete an Order by its ID
+        public void deleteOrder (String id){
+            Order order = orderRepository.findById(id)
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Order with ID " + id + " not found."));
+            orderRepository.deleteById(id);
 
 
-
+        }
     }
-}
