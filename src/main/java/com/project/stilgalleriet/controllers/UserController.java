@@ -9,6 +9,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/users")
@@ -62,9 +63,11 @@ public class UserController {
 
     //POST
     @PostMapping("/{username}/favorites")
-    public ResponseEntity<Void> addFavorite(@PathVariable String username, @RequestBody String adId) {
-        userService.addFavorites(username, adId);
-        return ResponseEntity.ok().build();
+    public  ResponseEntity<?> addFavorite(@PathVariable String username, @RequestBody Map<String, String> body) {
+        String adId = body.get("adId");
+        userService.addFavorites(username,adId);
+
+        return ResponseEntity.ok("Advertisement has been added to your favorites");
     }
 
 }

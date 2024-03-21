@@ -71,20 +71,26 @@ public class UserService {
     //post favorites
 
     public void addFavorites (String usernameId, String advertisementId ) {
+       // System.out.println("Username ID: " + usernameId);
+       //System.out.println("Advertisement ID: " + advertisementId);
+
         Optional<User> userOptional = userRepository.findByUsername(usernameId);
-        Optional<Advertisement> advertisementOptional = advertisementRepository.findById(advertisementId);
+        //System.out.println("findByUsername returned: " + userOptional);
+        Optional<Advertisement> advertisementOptional = advertisementRepository.findAdvertisementById(advertisementId);
+        //System.out.println("findById returned: " + advertisementOptional);
 
         if (userOptional.isPresent() && advertisementOptional.isPresent()) {
             User user = userOptional.get();
-            user.getFavorites().add(advertisementId);
+            Advertisement advertisement = advertisementOptional.get();
+            user.getFavorites().add(advertisement);
             userRepository.save(user);
 
-        }else {
+        } else {
 
-            if (!userOptional.isPresent()){
+            if (!userOptional.isPresent()) {
                 throw new UsernameNotFoundException("User not found");
             }
-            if (!advertisementOptional.isPresent()){
+            if (!advertisementOptional.isPresent()) {
                 throw new EntityNotFoundExeception("Advertisement not found");
             }
         }

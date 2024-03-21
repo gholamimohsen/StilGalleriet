@@ -9,10 +9,7 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Document(collection = "users")
 public class User {
@@ -52,7 +49,7 @@ public class User {
     private boolean isActive = true;
 
     @DBRef
-    private ArrayList<String> favorites = new ArrayList<>(); //Stores advertisement references(advertisementId)
+    private List<Advertisement> favorites = new ArrayList<>(); //Stores advertisement references(advertisementId)
 
     public User(String username, String firstName, String lastName, String email, String password, String street, String city, String state, String zipcode) {
         this.username = username;
@@ -167,11 +164,11 @@ public class User {
         isActive = active;
     }
 
-    public ArrayList<String> getFavorites() {
+    public List<Advertisement> getFavorites() {
         return favorites;
     }
 
-    public void setFavorites(ArrayList<String> favorites) {
+    public void setFavorites(List<Advertisement> favorites) {
         this.favorites = favorites;
     }
 
