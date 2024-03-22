@@ -12,9 +12,7 @@ import com.project.stilgalleriet.repositories.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Date;
 import java.util.List;
@@ -37,12 +35,12 @@ public class OrderService {
         // check that buyer exists in db
         User buyer = userRepository.findById(orderDTO.getBuyerUserId())
                 .orElseThrow(() -> new EntityNotFoundException("Buyer with provided user ID does not exist"));
-                //.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Buyer with provided user ID does not exist"));
+
 
         // check that the ad exists in db
         Advertisement advertisement = advertisementRepository.findById(orderDTO.getAdvertisementId())
                 .orElseThrow(() -> new EntityNotFoundException("Advertisement with provided ID does not exist"));
-                //.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Advertisement with provided ID does not exist"));
+
 
         User seller = advertisement.getUserId();
         if (seller == null) {
@@ -52,7 +50,7 @@ public class OrderService {
         userRepository.findById(seller.getId())
                 .orElseThrow(() -> new EntityNotFoundException("Seller with provided user ID does not exist"));
 
-        //.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Seller with provided user ID does not exist"));
+
 
 
         Order order = new Order();
@@ -75,7 +73,7 @@ public class OrderService {
 
         //If the order is not found, throw an exception that results in a 404 Not Found response
         if (orders.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Order with ID " + id + " not found.");
+            throw new EntityNotFoundException( "Order with ID " + id + " not found.");
         }
         return orders.stream()
                 .map(this::convertToDTO)
@@ -114,7 +112,7 @@ public class OrderService {
         // Method to delete an Order by its ID
         public void deleteOrder (String id){
             Order order = orderRepository.findById(id)
-                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Order with ID " + id + " not found."));
+                    .orElseThrow(() -> new EntityNotFoundException("Order with ID " + id + " not found."));
             orderRepository.deleteById(id);
 
 
