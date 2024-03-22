@@ -57,6 +57,7 @@ public class OrderService {
         order.setBuyerUserId(buyer);
         order.setAdvertisementId(advertisement);
         order.setSellerUserId(advertisement.getUserId());
+        order.setIsSold(true);
         logger.info("Order created successfully with ID: {}", order.getId());
         return orderRepository.save(order);
     }
