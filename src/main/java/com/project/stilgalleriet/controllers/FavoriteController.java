@@ -39,11 +39,16 @@ public class FavoriteController {
             User user = userService.findById(favoriteDTO.getUserId());
             Advertisement advertisement = advertisementService.findById(favoriteDTO.getAdvertisementId());
 
+            // Kontrollera om användaren redan har 20 favoriter
+            if (user.getFavorites().size() >= 20) {
+                return new ResponseEntity<>("Användaren kan inte ha mer än 20 favoriter", HttpStatus.BAD_REQUEST);
+            }
+
             Favorites favorite = new Favorites();
             favorite.setUserIdFav(user);
             favorite.setAdvertisementId(advertisement);
 
-            // Lägg till den nya favoriten till användarens lista av favoriter
+            // Lägger till den nya favoriten till användarens lista av favoriter
             List<Advertisement> favorites = user.getFavorites();
             favorites.add(favorite.getAdvertisementId());
             user.setFavorites(favorites);
@@ -53,44 +58,13 @@ public class FavoriteController {
 
             return new ResponseEntity<>(updatedUser, HttpStatus.CREATED);
         } catch (Exception e) {
-            // Logga felet här
-            return new ResponseEntity<>("Det gick inte att lägga till favoriten", HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-
-    /*
-    @PostMapping
-    public ResponseEntity<?> addFavorite(@RequestBody FavoritesDTO favoriteDTO) {
-        try {
-            User user = userService.findById(favoriteDTO.getUserId());
-            Advertisement advertisement = advertisementService.findById(favoriteDTO.getAdvertisementId());
-
-            Favorites favorite = new Favorites();
-            favorite.setUserIdFav(user);
-            favorite.setAdvertisementId(advertisement);
-
-            Favorites savedFavorite = favoriteService.addFavorite(favorite);
-            return new ResponseEntity<>(savedFavorite, HttpStatus.CREATED);
-        } catch (Exception e) {
 
             return new ResponseEntity<>("Det gick inte att lägga till favoriten", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-/*
-    /*
-    @PostMapping
-    public Favorites addFavorite(@RequestBody FavoritesDTO favoriteDTO) {
-        User user = userService.findById(favoriteDTO.getUserId());
-        Advertisement advertisement = advertisementService.findById(favoriteDTO.getAdvertisementId());
 
-        Favorites favorite = new Favorites();
-        favorite.setUserIdFav(user);
-        favorite.setAdvertisementId(advertisement);
 
-        return favoriteService.addFavorite(favorite);
-    }
-*/
+
     @DeleteMapping("/{id}")
     public void removeFavorite(@PathVariable String id) {
         favoriteService.removeFavorite(id);
