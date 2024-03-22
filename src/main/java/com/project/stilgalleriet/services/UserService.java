@@ -1,7 +1,7 @@
 
 package com.project.stilgalleriet.services;
 
-import com.project.stilgalleriet.exception.EntityNotFoundExeception;
+import com.project.stilgalleriet.exception.EntityNotFoundException;
 import com.project.stilgalleriet.models.Advertisement;
 import com.project.stilgalleriet.models.User;
 import com.project.stilgalleriet.repositories.AdvertisementRepository;
@@ -80,7 +80,7 @@ public class UserService {
             throw new UsernameNotFoundException("User not found");
         }
         if (advertisementOptional.isEmpty()) {
-            throw  new EntityNotFoundExeception("Advertisement not found");
+            throw  new EntityNotFoundException("Advertisement not found");
         }
 
         User user = userOptional.get();
@@ -115,7 +115,7 @@ public class UserService {
             throw new UsernameNotFoundException("User not found");
         }
         if (advertisementOptional.isEmpty()) {
-            throw new EntityNotFoundExeception("Advertisement not found");
+            throw new EntityNotFoundException("Advertisement not found");
         }
         User user = userOptional.get();
         Advertisement advertisement = advertisementOptional.get();
