@@ -1,7 +1,7 @@
 package com.project.stilgalleriet.services;
 
 import com.project.stilgalleriet.dto.OrderDTO;
-import com.project.stilgalleriet.exception.EntityNotFoundExeception;
+import com.project.stilgalleriet.exception.EntityNotFoundException;
 import com.project.stilgalleriet.models.Advertisement;
 import com.project.stilgalleriet.models.Order;
 import com.project.stilgalleriet.models.User;
@@ -36,17 +36,25 @@ public class OrderService {
         logger.debug("Creating order for buyerId: {} and advertisementId: {}", orderDTO.getBuyerUserId(), orderDTO.getAdvertisementId());
         // check that buyer exists in db
         User buyer = userRepository.findById(orderDTO.getBuyerUserId())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Buyer with provided user ID does not exist"));
+                .orElseThrow(() -> new EntityNotFoundException("Buyer with provided user ID does not exist"));
+                //.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Buyer with provided user ID does not exist"));
 
         // check that the ad exists in db
         Advertisement advertisement = advertisementRepository.findById(orderDTO.getAdvertisementId())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Advertisement with provided ID does not exist"));
+                .orElseThrow(() -> new EntityNotFoundException("Advertisement with provided ID does not exist"));
+                //.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Advertisement with provided ID does not exist"));
 
-
-    User seller = advertisement.getUserId();
+        User seller = advertisement.getUserId();
         if (seller == null) {
-            throw new EntityNotFoundExeception("Seller not found for advertisement");
+            throw new EntityNotFoundException("Seller not found for advertisement");
         }
+        // Verify that the seller exists in the database
+        userRepository.findById(seller.getId())
+                .orElseThrow(() -> new EntityNotFoundException("Seller with provided user ID does not exist"));
+
+        //.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Seller with provided user ID does not exist"));
+
+
         Order order = new Order();
         order.setBuyerUserId(buyer);
         order.setAdvertisementId(advertisement);
@@ -54,7 +62,6 @@ public class OrderService {
         logger.info("Order created successfully with ID: {}", order.getId());
         return orderRepository.save(order);
     }
-
 
     // Method to retrieve all  Orders
     public List<OrderResponse> getAllOrders() {
@@ -100,7 +107,7 @@ public class OrderService {
                     existingOrder.setUpdatedAt(new Date());
                     return orderRepository.save(existingOrder);
                 })
-                .orElseThrow(() -> new EntityNotFoundExeception(Order.class, id));
+                .orElseThrow(() -> new EntityNotFoundException(Order.class, id));
     }
 
 

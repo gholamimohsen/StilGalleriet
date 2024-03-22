@@ -1,11 +1,13 @@
 package com.project.stilgalleriet.controllers;
 
 import com.project.stilgalleriet.dto.OrderDTO;
+import com.project.stilgalleriet.exception.EntityNotFoundException;
 import com.project.stilgalleriet.models.Order;
 import com.project.stilgalleriet.payload.response.OrderResponse;
 import com.project.stilgalleriet.services.OrderService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,9 +24,13 @@ public class OrderController {
 
 
     @PostMapping
-    public ResponseEntity<Order>createOrder(@Valid @RequestBody OrderDTO orderDTO){
-        Order newOrder= orderService.createOrder(orderDTO);
-        return ResponseEntity.ok(newOrder);
+    public ResponseEntity<?>createOrder(@Valid @RequestBody OrderDTO orderDTO) {
+        try {
+            Order newOrder = orderService.createOrder(orderDTO);
+            return ResponseEntity.ok(newOrder);
+        } catch (EntityNotFoundException e) {
+            return  ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
     }
 
     @GetMapping("/all")
