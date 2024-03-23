@@ -18,7 +18,7 @@ public class Order {
     private User buyerUserId;
     @DBRef
     private Advertisement advertisementId;
-    //private List<Advertisement> advertisementId;
+
     @CreatedDate
     private Date orderDate; //Might consider removing this in the future if same as createdAt
     private int quantity;
@@ -116,11 +116,8 @@ public class Order {
         this.id = id;
     }
 
-   /* public List<Advertisement> getAdvertisementId() {
-        return advertisementId;
-    }
 
-    public void setAdvertisementId(List<Advertisement> advertisementId) {
-        this.advertisementId = advertisementId;
-    }*/
+    public void setIsSold(boolean b) {
+        setSold(b);
+    }
 }

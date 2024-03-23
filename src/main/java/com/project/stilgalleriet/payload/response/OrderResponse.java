@@ -1,27 +1,19 @@
 package com.project.stilgalleriet.payload.response;
 
-import java.util.List;
+import java.util.Date;
 
 public class OrderResponse {
-   // private String id;
+    // private String id;
     private String sellerUserId;
     private String buyerUserId;
-    private List<String> advertisementId;
-   /* private Date orderDate;
+    private String advertisementId;
+    private Date orderDate;
     private int quantity;
-    private BigDecimal totalPrice;
+    private double totalPrice;
     private boolean isSold;
     private Date createdAt;
-    private Date updatedAt;*/
+    private Date updatedAt;
 
-
-   /* public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }*/
 
     public String getSellerUserId() {
         return sellerUserId;
@@ -39,15 +31,15 @@ public class OrderResponse {
         this.buyerUserId = buyerUserId;
     }
 
-    public List<String> getAdvertisementId() {
+    public String getAdvertisementId() {
         return advertisementId;
     }
 
-    public void setAdvertisementId(List<String> advertisementId) {
+    public void setAdvertisementId(String advertisementId) {
         this.advertisementId = advertisementId;
     }
 
-   /* public Date getOrderDate() {
+    public Date getOrderDate() {
         return orderDate;
     }
 
@@ -63,11 +55,11 @@ public class OrderResponse {
         this.quantity = quantity;
     }
 
-    public BigDecimal getTotalPrice() {
+    public double getTotalPrice() {
         return totalPrice;
     }
 
-    public void setTotalPrice(BigDecimal totalPrice) {
+    public void setTotalPrice(double totalPrice) {
         this.totalPrice = totalPrice;
     }
 
@@ -93,5 +85,5 @@ public class OrderResponse {
 
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
-    }*/
+    }
 }

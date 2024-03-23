@@ -111,7 +111,11 @@ public class AdvertisementService {
         advertisementDTO.setAdImgUrls(advertisement.getImgUrl());
         advertisementDTO.setAdIsActive(true);
         return advertisementDTO;
+
     }
+
+
+
 
     //update method with advertisement class
     /*public Advertisement updateAdvertisement(String id, Advertisement updatedAdvertisement) throws Exception {

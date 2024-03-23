@@ -5,12 +5,13 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 public interface AdvertisementRepository extends MongoRepository<Advertisement, String> {
 
 
 
-    List<Advertisement> findAdvertisementById(String advertisementId);
+    Optional<Advertisement> findAdvertisementById(String advertisementId);
 
     List<Advertisement> findAdvertisementByActive(Boolean advertisementIsActive);
     List<Advertisement> findAdvertisementByCategory(ECategory advertisementCategory);

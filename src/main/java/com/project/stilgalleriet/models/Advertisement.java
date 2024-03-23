@@ -10,6 +10,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 
 @Document(collection="advertisements")
@@ -166,5 +167,18 @@ public class Advertisement {
 
     public void setActive(boolean active) {
         isActive = active;
+    }
+
+    //Method to determine if two objects are equal if they have the same id
+    //Works for addFavorites method in UserService.
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        Advertisement that = (Advertisement) o;
+        return Objects.equals(id, that.id);
     }
 }
