@@ -28,11 +28,11 @@ public class AdvertisementService {
 
         Advertisement newAd = new Advertisement();
         newAd.setUserId(user);
-        newAd.setTitle(advertisementDTO.getAdTitles());
+        newAd.setTitle(advertisementDTO.getAdTitle());
         //newAd.setActive(advertisementDTO.isAdvIsActive());
         newAd.setCategory(advertisementDTO.getAdCategory());
         newAd.setColor(advertisementDTO.getAdColor());
-        newAd.setDescription(advertisementDTO.getAdDescriptions());
+        newAd.setDescription(advertisementDTO.getAdDescription());
         newAd.setGender(advertisementDTO.getAdGender());
         newAd.setSize(advertisementDTO.getAdSize());
         newAd.setPrice(advertisementDTO.getAdPrice());
@@ -65,11 +65,11 @@ public class AdvertisementService {
     public Advertisement updateAdvertisement(String id, AdvertisementDTO updatedAdvertisement) throws Exception {
         return advertisementRepository.findById(id)
                 .map(existingAdvertisement -> {
-                    if (updatedAdvertisement.getAdTitles() != null) {
-                        existingAdvertisement.setTitle(updatedAdvertisement.getAdTitles());
+                    if (updatedAdvertisement.getAdTitle() != null) {
+                        existingAdvertisement.setTitle(updatedAdvertisement.getAdTitle());
                     }
-                    if (updatedAdvertisement.getAdDescriptions() != null) {
-                        existingAdvertisement.setDescription(updatedAdvertisement.getAdDescriptions());
+                    if (updatedAdvertisement.getAdDescription() != null) {
+                        existingAdvertisement.setDescription(updatedAdvertisement.getAdDescription());
                     }
                     if (updatedAdvertisement.getAdCategory() != null) {
                         existingAdvertisement.setCategory(updatedAdvertisement.getAdCategory());
@@ -101,8 +101,8 @@ public class AdvertisementService {
         AdvertisementDTO advertisementDTO = new AdvertisementDTO();
         advertisementDTO.setAdId(advertisement.getId());
         advertisementDTO.setSellerId(advertisement.getUserId().getId());
-        advertisementDTO.setAdTitles(advertisement.getTitle());
-        advertisementDTO.setAdDescriptions(advertisement.getDescription());
+        advertisementDTO.setAdTitle(advertisement.getTitle());
+        advertisementDTO.setAdDescription(advertisement.getDescription());
         advertisementDTO.setAdCategory(advertisement.getCategory());
         advertisementDTO.setAdColor(advertisement.getColor());
         advertisementDTO.setAdGender(advertisement.getGender());

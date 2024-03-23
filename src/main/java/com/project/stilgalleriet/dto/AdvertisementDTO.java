@@ -11,8 +11,8 @@ import java.util.List;
 public class AdvertisementDTO {
     private String sellerId;
     private String adId;
-    private String adTitles;
-    private String adDescriptions;
+    private String adTitle;
+    private String adDescription;
     private EGender adGender;
     private ECategory adCategory;
     private List<String> adImgUrls;
@@ -44,20 +44,20 @@ public class AdvertisementDTO {
         this.adId = adId;
     }
 
-    public String getAdTitles() {
-        return adTitles;
+    public String getAdTitle() {
+        return adTitle;
     }
 
-    public void setAdTitles(String adTitles) {
-        this.adTitles = adTitles;
+    public void setAdTitle(String adTitle) {
+        this.adTitle = adTitle;
     }
 
-    public String getAdDescriptions() {
-        return adDescriptions;
+    public String getAdDescription() {
+        return adDescription;
     }
 
-    public void setAdDescriptions(String adDescriptions) {
-        this.adDescriptions = adDescriptions;
+    public void setAdDescription(String adDescription) {
+        this.adDescription = adDescription;
     }
 
     public EGender getAdGender() {
