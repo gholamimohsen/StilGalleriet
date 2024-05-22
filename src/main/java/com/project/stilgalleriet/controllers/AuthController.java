@@ -11,6 +11,7 @@ import com.project.stilgalleriet.repositories.RoleRepository;
 import com.project.stilgalleriet.repositories.UserRepository;
 import com.project.stilgalleriet.security.jwt.JwtUtils;
 import com.project.stilgalleriet.security.services.UserDetailsImpl;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -28,7 +29,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@CrossOrigin(origins = "*", maxAge = 3600)
+//@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/auth/")
 public class AuthController {
@@ -49,7 +50,7 @@ public class AuthController {
 
     //Logga in
     @PostMapping("/signin")
-    public ResponseEntity<?> authenticateUser(@Valid @RequestBody SigninRequest signinRequest) {
+    public ResponseEntity<?> authenticateUser(@Valid @RequestBody SigninRequest signinRequest, HttpServletResponse response) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(signinRequest.getUsername(), signinRequest.getPassword()));
 
@@ -61,6 +62,9 @@ public class AuthController {
 
         //För jwt i cookie
         ResponseCookie jwtCookie = jwtUtils.generateJwtCookie(userDetails);
+
+        response.setHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_CREDENTIALS, "true");
+        response.setHeader(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS, HttpHeaders.SET_COOKIE);
 
         List<String> roles = userDetails.getAuthorities().stream()
                 .map(item -> item.getAuthority())
