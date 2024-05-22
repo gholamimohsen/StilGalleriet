@@ -118,4 +118,17 @@ public class OrderService {
 
 
         }
+        //Find orders by buyerUserId(User purchases)
+        public List<OrderResponse> getOrderByBuyer(String id){
+        List<Order> buyerOrders = orderRepository.findOrderByBuyerUserId_Id(id);
+
+            if (buyerOrders.isEmpty()) {
+                throw new EntityNotFoundException("No orders found");
+            }
+            return buyerOrders.stream()
+                    .map(this::convertToDTO)
+                    .collect(Collectors.toList());
+
+        }
+
     }

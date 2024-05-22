@@ -67,5 +67,12 @@ public class OrderController {
         }
 
     }
+
+        //Get buyer orders
+        @GetMapping("/purchases/{id}")
+        public ResponseEntity<List<OrderResponse>> getOrderByBuyer(@PathVariable String id){
+        List<OrderResponse> orders = orderService.getOrderByBuyer(id);
+        return ResponseEntity.ok(orders);
+        }
     }
 
