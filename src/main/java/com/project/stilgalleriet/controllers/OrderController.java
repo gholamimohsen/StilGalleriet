@@ -70,8 +70,8 @@ public class OrderController {
 
         //Get buyer orders
         @GetMapping("/purchases/{id}")
-        public ResponseEntity<List<OrderResponse>> getOrderByBuyer(@PathVariable String id){
-        List<OrderResponse> orders = orderService.getOrderByBuyer(id);
+        public ResponseEntity<List<Order>> getOrderByBuyer(@PathVariable String id){
+        List<Order> orders = orderService.getOrderByBuyer(id);
         return ResponseEntity.ok(orders);
         }
     }
