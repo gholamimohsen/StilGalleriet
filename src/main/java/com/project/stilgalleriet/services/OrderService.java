@@ -83,9 +83,9 @@ public class OrderService {
 
    private OrderResponse convertToDTO(Order order) {
        OrderDTO orderDTO = new OrderDTO();
-       orderDTO.setBuyerUserId(order.getBuyerUserId().getId());
-       orderDTO.setAdvertisementId(order.getAdvertisementId().getId());
-       orderDTO.setSellerUserId(order.getSellerUserId().getId());
+       orderDTO.setBuyerUserId(order.getBuyerUserId() != null ? order.getBuyerUserId().getId(): null);
+       orderDTO.setAdvertisementId(order.getAdvertisementId()!= null ? order.getAdvertisementId().getId(): null);
+       orderDTO.setSellerUserId(order.getSellerUserId()!= null ? order.getSellerUserId().getId(): null);
        orderDTO.setOrderDate(order.getOrderDate());
        orderDTO.setQuantity(order.getQuantity());
        orderDTO.setTotalPrice(order.getTotalPrice());
@@ -119,8 +119,9 @@ public class OrderService {
 
         }
         //Find orders by buyerUserId(User purchases)
-        public List<Order> getOrderByBuyer(String id){
-            return orderRepository.findOrderByBuyerUserId_Id(id);
+        public List<OrderResponse> getOrderByBuyer(String id){
+            List<Order> buyerOrders = orderRepository.findOrderByBuyerUserId_Id(id);
+            return buyerOrders.stream().map(this::convertToDTO).collect(Collectors.toList());
         }
 
     }
