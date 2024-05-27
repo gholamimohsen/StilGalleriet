@@ -115,9 +115,4 @@ public class Order {
     public void setId(String id) {
         this.id = id;
     }
-
-
-    public void setIsSold(boolean b) {
-        setSold(b);
-    }
 }
