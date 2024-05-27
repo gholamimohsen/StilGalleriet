@@ -1,8 +1,8 @@
 package com.project.stilgalleriet.controllers;
 
-import com.project.stilgalleriet.dto.OrderDTO;
 import com.project.stilgalleriet.exception.EntityNotFoundException;
 import com.project.stilgalleriet.models.Order;
+import com.project.stilgalleriet.payload.request.OrderRequest;
 import com.project.stilgalleriet.payload.response.OrderResponse;
 import com.project.stilgalleriet.services.OrderService;
 import jakarta.validation.Valid;
@@ -24,9 +24,9 @@ public class OrderController {
 
 
     @PostMapping
-    public ResponseEntity<?> createOrder(@Valid @RequestBody OrderDTO orderDTO) {
+    public ResponseEntity<?> createOrder(@Valid @RequestBody OrderRequest order) {
         try {
-            Order newOrder = orderService.createOrder(orderDTO);
+            OrderResponse newOrder = orderService.newCreateOrder(order);
             return ResponseEntity.ok(newOrder);
         } catch (EntityNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());

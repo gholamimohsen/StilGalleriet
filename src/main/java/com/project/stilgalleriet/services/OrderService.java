@@ -1,10 +1,10 @@
 package com.project.stilgalleriet.services;
 
-import com.project.stilgalleriet.dto.OrderDTO;
 import com.project.stilgalleriet.exception.EntityNotFoundException;
 import com.project.stilgalleriet.models.Advertisement;
 import com.project.stilgalleriet.models.Order;
 import com.project.stilgalleriet.models.User;
+import com.project.stilgalleriet.payload.request.OrderRequest;
 import com.project.stilgalleriet.payload.response.OrderResponse;
 import com.project.stilgalleriet.repositories.AdvertisementRepository;
 import com.project.stilgalleriet.repositories.OrderRepository;
@@ -30,15 +30,16 @@ public class OrderService {
     AdvertisementRepository advertisementRepository;
     private static final Logger logger = LoggerFactory.getLogger(OrderService.class);
 
-    public Order createOrder(OrderDTO orderDTO) {
-        logger.debug("Creating order for buyerId: {} and advertisementId: {}", orderDTO.getBuyerUserId(), orderDTO.getAdvertisementId());
+    /*
+    public Order createOrder(Order order) {
+        logger.debug("Creating order for buyerId: {} and advertisementId: {}", order.getBuyerUserId(), order.getAdvertisementId());
         // check that buyer exists in db
-        User buyer = userRepository.findById(orderDTO.getBuyerUserId())
+        User buyer = userRepository.findById(order.getBuyerUserId().getId())
                 .orElseThrow(() -> new EntityNotFoundException("Buyer with provided user ID does not exist"));
 
 
         // check that the ad exists in db
-        Advertisement advertisement = advertisementRepository.findById(orderDTO.getAdvertisementId())
+        Advertisement advertisement = advertisementRepository.findById(order.getAdvertisementId().getId())
                 .orElseThrow(() -> new EntityNotFoundException("Advertisement with provided ID does not exist"));
 
 
@@ -53,13 +54,33 @@ public class OrderService {
 
 
 
+        Order newOrder = new Order();
+        newOrder.setBuyerUserId(buyer);
+        newOrder.setAdvertisementId(advertisement);
+        newOrder.setSellerUserId(advertisement.getUserId());
+        newOrder.setIsSold(true);
+        logger.info("Order created successfully with ID: {}", newOrder.getId());
+        return orderRepository.save(newOrder);
+    }
+
+     */
+
+    //New method to replace the original createOrder
+    public OrderResponse newCreateOrder(OrderRequest newOrder){
+
+        Optional<User> buyingUser = Optional.of(userRepository.findById(newOrder.getBuyerUserId())).orElseThrow(() -> new RuntimeException("User not found"));
+        Optional<Advertisement> advertisement = Optional.of(advertisementRepository.findById(newOrder.getAdvertisementId())).orElseThrow(() -> new RuntimeException("User not found"));
+
         Order order = new Order();
-        order.setBuyerUserId(buyer);
-        order.setAdvertisementId(advertisement);
-        order.setSellerUserId(advertisement.getUserId());
-        order.setIsSold(true);
-        logger.info("Order created successfully with ID: {}", order.getId());
-        return orderRepository.save(order);
+        order.setBuyerUserId(buyingUser.get());
+        order.setAdvertisementId(advertisement.get());
+        order.setSellerUserId(advertisement.get().getUserId());
+        order.setTotalPrice(advertisement.get().getPrice());
+        //orderResponse.setQuantity();    - Not used field, excluded. Might have to remove the field later on.
+        order.setSold(true);
+        orderRepository.save(order);
+
+        return convertToDTO(order);
     }
 
     // Method to retrieve all  Orders
@@ -82,7 +103,7 @@ public class OrderService {
     }
 
    private OrderResponse convertToDTO(Order order) {
-       OrderDTO orderDTO = new OrderDTO();
+       OrderResponse orderDTO = new OrderResponse();
        orderDTO.setBuyerUserId(order.getBuyerUserId() != null ? order.getBuyerUserId().getId(): null);
        orderDTO.setAdvertisementId(order.getAdvertisementId()!= null ? order.getAdvertisementId().getId(): null);
        orderDTO.setSellerUserId(order.getSellerUserId()!= null ? order.getSellerUserId().getId(): null);
