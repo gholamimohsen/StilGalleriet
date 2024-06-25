@@ -55,6 +55,8 @@ Refer to the Postman documentation above for APIs.
 In order to start using you this application you need to register users and login with a user account.
 Once you have logged in you can start to use the various APIs for Advertisement, Orders etc.
 
+Can also be used with [StilGalleriet Frontend](https://github.com/Ilhamfeysel/StilGalleriet).
+
 ## What can be implemented
 - Proper DTO for all APIs
 - More exception handling
