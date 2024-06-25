@@ -25,8 +25,11 @@ StilGalleriet is a simulation of an online marketplace. The theme behind it is t
 - Git and GitHub
 
 ## Features
-RESTful API
-Spring Security (Authentication and Authorization)
+- User accounts
+- Advertisements
+- Orders
+- Reviews
+- Favorites
 
 ## Installation
 1. Clone this repository and open it in an IDE with support for Java(IntellJ IDEA, Visual Studio Code etc.).
