@@ -1,6 +1,5 @@
 # StilGalleriet Backend
 
-## Description
 Project StilGalleriet is a project done as part of education. This is the backend of the StilGalleriet project.
 StilGalleriet is a simulation of an online marketplace. The theme behind it is to have a place where you can trade old or unwanted clothing.
 
