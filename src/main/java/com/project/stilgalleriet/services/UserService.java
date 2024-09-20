@@ -2,20 +2,73 @@
 package com.project.stilgalleriet.services;
 
 import com.project.stilgalleriet.exception.EntityNotFoundException;
-import com.project.stilgalleriet.models.Advertisement;
 import com.project.stilgalleriet.models.User;
-import com.project.stilgalleriet.repositories.AdvertisementRepository;
 import com.project.stilgalleriet.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UserService {
+
+    private  final UserRepository userRepository;
+
+    @Autowired
+    public UserService (UserRepository userRepository) {
+        this.userRepository =userRepository;
+
+    }
+    public User createUser(User user) {
+        return userRepository.save(user);
+    }
+
+    // Get all users
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
+    }
+
+    // Get user by ID
+    public User getUserById(String id) {
+        return userRepository.findById(id)
+                .orElseThrow(() ->
+                        new EntityNotFoundException("User not found with id: " + id));
+    }
+    public User updateUser(String id, User userDetails) {
+        // Find the user by ID, if not found, throw an exception
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + id));
+
+
+
+
+            user.setUsername(userDetails.getUsername());
+            user.setEmail(userDetails.getEmail());
+            user.setFirstName(userDetails.getFirstName());
+            user.setLastName(userDetails.getLastName());
+            user.setPassword(userDetails.getPassword());
+            user.setStreet(userDetails.getStreet());
+            user.setCity(userDetails.getCity());
+            user.setState(userDetails.getState());
+            user.setZipcode(userDetails.getZipcode());
+            user.setActive(userDetails.isActive());
+            user.setFavorites(userDetails.getFavorites()); //This might overwrite favorites, probably need .add method from ArrayList
+
+            return userRepository.save(user);
+        }
+
+        // Delete user
+        public String deleteUser(String id) {
+            User user = userRepository.findById(id)
+                    .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + id));
+            userRepository.delete(user);
+            return "User deleted successfully";
+        }
+
+}
+
+
+    /*
     @Autowired
     UserRepository userRepository;
 

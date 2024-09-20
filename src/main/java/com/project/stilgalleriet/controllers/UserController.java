@@ -1,28 +1,59 @@
 
 package com.project.stilgalleriet.controllers;
 
-import com.project.stilgalleriet.models.Advertisement;
 import com.project.stilgalleriet.models.User;
 import com.project.stilgalleriet.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 //@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/users")
 
 public class UserController {
+
+    private final UserService userService;
     @Autowired
-    UserService userService;
+ public UserController (UserService userService) {
+        this.userService = userService;
+    }
+
+    @PostMapping
+        public ResponseEntity<User> createUser(@RequestBody User user) {
+        User newUser = userService.createUser(user);
+        return ResponseEntity.ok(newUser);
+    }
+    @GetMapping("/{id}")
+    public ResponseEntity<User> getUserById(@PathVariable String id) {
+        User user = userService.getUserById(id);
+        return ResponseEntity.ok(user);
+    }
+    @PutMapping("/{id}")
+    public ResponseEntity<User> updateUser(@PathVariable String id, @RequestBody User userDetails) {
+        User updatedUser = userService.updateUser(id, userDetails);
+        return ResponseEntity.ok(updatedUser);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteUser(@PathVariable String id) {
+        String result = userService.deleteUser(id);
+        return ResponseEntity.ok(result);
+    }
+
+
+
+
+}
+
+
+
+
 
 
     //POST
     // ta bort ni har register
-    @PostMapping()
+   /* @PostMapping()
     public User createUser(@RequestBody User user) {
         return userService.createUser(user);
         }
@@ -84,6 +115,6 @@ public class UserController {
         userService.removeAddFavorite(username, advertisementId);
         return ResponseEntity.ok("Advertisement has been removed from you favorites");
     }
+*/
 
 
-}
