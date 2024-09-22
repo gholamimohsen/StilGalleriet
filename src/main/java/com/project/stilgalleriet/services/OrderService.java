@@ -1,5 +1,6 @@
 package com.project.stilgalleriet.services;
 
+import Mappers.OrderMapper;
 import com.project.stilgalleriet.dto.OrderDTO;
 import com.project.stilgalleriet.exception.EntityNotFoundException;
 import com.project.stilgalleriet.models.Advertisement;
@@ -16,7 +17,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -24,6 +24,8 @@ public class OrderService {
     // Dependency on OrderRepository
     @Autowired
      OrderRepository orderRepository;
+
+
     @Autowired
     UserRepository userRepository;
     @Autowired
@@ -65,23 +67,34 @@ public class OrderService {
     // Method to retrieve all  Orders
     public List<OrderResponse> getAllOrders() {
         List<Order> orders= orderRepository.findAll();
-        return  orders.stream().map(this::convertToDTO).collect(Collectors.toList());
+        return  orders.stream()
+                .map(OrderMapper::toDto)
+                .collect(Collectors.toList());
+               // (this::convertToDTO).collect(Collectors.toList());
 
     }
     // Method to find an Order by its ID
-    public List<OrderResponse> getOrderById(String id){
+    public OrderResponse getOrderById(String id) {
+        Order order = orderRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Order with ID " + id + " not found."));
+
+        return OrderMapper.toDto(order);
+    /*public List<OrderResponse> getOrderById(String id){
         Optional<Order> orders =orderRepository.findById(id);
 
+        return OrderMapper.toDto(order);
+
         //If the order is not found, throw an exception that results in a 404 Not Found response
-        if (orders.isEmpty()) {
+      /*  if (orders.isEmpty()) {
             throw new EntityNotFoundException( "Order with ID " + id + " not found.");
         }
-        return orders.stream()
-                .map(this::convertToDTO)
-                .collect(Collectors.toList());
+       // return orders.stream()
+
+               /* .map(this::convertToDTO)
+                .collect(Collectors.toList());*/
     }
 
-   private OrderResponse convertToDTO(Order order) {
+   /*private OrderResponse convertToDTO(Order order) {
        OrderDTO orderDTO = new OrderDTO();
        orderDTO.setBuyerUserId(order.getBuyerUserId() != null ? order.getBuyerUserId().getId(): null);
        orderDTO.setAdvertisementId(order.getAdvertisementId()!= null ? order.getAdvertisementId().getId(): null);
@@ -93,7 +106,7 @@ public class OrderService {
        orderDTO.setCreatedAt(order.getCreatedAt());
        orderDTO.setUpdatedAt(order.getUpdatedAt());
        return orderDTO ;
-    }
+    }*/
 
     public Order updateOrder(String id, Order updatedOrder) {
         return orderRepository.findById(id)

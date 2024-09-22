@@ -1,5 +1,6 @@
 package com.project.stilgalleriet.services;
 
+import Mappers.ReviewMapper;
 import com.project.stilgalleriet.dto.ReviewDTO;
 import com.project.stilgalleriet.exception.EntityNotFoundException;
 import com.project.stilgalleriet.models.Order;
@@ -49,13 +50,28 @@ public class ReviewService {
 
             //Save Review object and return DTO as response
             reviewRepository.save(review);
-            return convertToDTO(review);
+           // return convertToDTO(review);
+            return ReviewMapper.toDto(review);
         }
         else throw new EntityNotFoundException("You are not eligible to review this user");
     }
+    // Get all reviews
+    public List<ReviewDTO> getAllReviews() {
+        return reviewRepository.findAll()
+                .stream()
+                .map(ReviewMapper::toDto)
+                .collect(Collectors.toList());
+    }
+
+    // Get review by ID
+    public ReviewDTO getReviewById(String id) {
+        Review review = reviewRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Review not found with ID: " + id));
+        return ReviewMapper.toDto(review);
+    }
 
     //Get all reviews
-    public List<ReviewDTO> getAllReviews(){
+  /*  public List<ReviewDTO> getAllReviews(){
         List<Review> reviews = reviewRepository.findAll();
         return reviews.stream().map(this::convertToDTO).collect(Collectors.toList());
     }
@@ -70,7 +86,7 @@ public class ReviewService {
         reviewDTO.setRating(review.get().getRating());
         reviewDTO.setComment(review.get().getComment());
         return reviewDTO;
-    }
+    }*/
 
     //Update a review
     public ReviewDTO updateReview(String id, Review updatedReview){
@@ -87,9 +103,9 @@ public class ReviewService {
                     reviewRepository.save(review);
 
                     //Create ReviewDTO object to return as response
-                    return convertToDTO(review);
+                    return ReviewMapper.toDto(review);
                 })
-                .orElseThrow(); //Add exception handling
+                .orElseThrow(() -> new EntityNotFoundException("Review not found with ID: " + id)); //Add exception handling
 
     }
 
@@ -98,23 +114,31 @@ public class ReviewService {
         reviewRepository.deleteById(id);
     }
 
+    // Get reviews by seller (rated user ID)
+    public List<ReviewDTO> getReviewBySeller(String id) {
+        return reviewRepository.findByRatedUserId(id)
+                .stream()
+                .map(ReviewMapper::toDto)
+                .collect(Collectors.toList());
+    }
+
     //Show all reviews for a seller(ratedUserId)
-    public List<ReviewDTO> getReviewBySeller(String id){
+   /* public List<ReviewDTO> getReviewBySeller(String id){
         List<Review> reviews = reviewRepository.findByRatedUserId(id);
         return reviews.stream().map(this::convertToDTO).collect(Collectors.toList());
-    }
+    }*/
 
 
     //Convert Review object to ReviewDTO object
-    private ReviewDTO convertToDTO(Review review){
+   /* private ReviewDTO convertToDTO(Review review){
         ReviewDTO reviewDTO = new ReviewDTO();
         reviewDTO.setRatingUserId(review.getRatingUserId().getId());
         reviewDTO.setRatedUserId(review.getRatedUserId().getId());
         reviewDTO.setRating(review.getRating());
         reviewDTO.setComment(review.getComment());
 
-        return reviewDTO;
-    }
+        return reviewDTO;*
+    }*/
 
     //Method for checking if user have finished purchase by checking if order exist.
     private boolean isOrderDone(ReviewDTO reviewDTO){

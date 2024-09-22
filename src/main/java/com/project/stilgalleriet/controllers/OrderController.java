@@ -40,8 +40,8 @@ public class OrderController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<List<OrderResponse>> getOrderById(@PathVariable String id) {
-        List<OrderResponse> orders = orderService.getOrderById(id);
+    public ResponseEntity<OrderResponse> getOrderById(@PathVariable String id) {
+        OrderResponse orders = orderService.getOrderById(id);
         return ResponseEntity.ok(orders);
     }
 

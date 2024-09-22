@@ -5,6 +5,7 @@ import com.project.stilgalleriet.exception.EntityNotFoundException;
 import com.project.stilgalleriet.models.User;
 import com.project.stilgalleriet.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,6 +25,7 @@ public class UserService {
     }
 
     // Get all users
+    @PreAuthorize("hasRole('ADMIN')")
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
@@ -181,5 +183,6 @@ public class UserService {
         userRepository.save(user);
 
 
-    }
-}
+    }*/
+
+
