@@ -2,6 +2,7 @@
 package com.project.stilgalleriet.services;
 
 import com.project.stilgalleriet.exception.EntityNotFoundException;
+import com.project.stilgalleriet.exception.UserNotFoundException;
 import com.project.stilgalleriet.models.Advertisement;
 import com.project.stilgalleriet.models.User;
 import com.project.stilgalleriet.repositories.AdvertisementRepository;
@@ -35,7 +36,9 @@ public class UserService {
 
     //Get user by specific id
     public User getUserById(String id) {
-        return userRepository.findById(id).get();
+        return userRepository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException("User with id: " + id + " was not found"));
+
     }
 
     //Update user. Replaced with an update method. The previous "update" method was a create operation.
