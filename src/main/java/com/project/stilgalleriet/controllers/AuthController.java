@@ -56,34 +56,38 @@ public class AuthController {
 
     //Logga in
     @PostMapping("/signin")
-    public ResponseEntity<?> authenticateUser(@Valid @RequestBody SigninRequest signinRequest, HttpServletResponse response) {
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(signinRequest.getUsername(), signinRequest.getPassword()));
+    public ResponseEntity<?> authenticateUser(@Valid @RequestBody SigninRequest signinRequest,
+                                              HttpServletResponse response) {
+        try {
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(signinRequest.getUsername(), signinRequest.getPassword()));
 
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        //Jwt token utan cookie
-        //String jwt = jwtUtils.generateJwtToken((authentication));
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            //Jwt token utan cookie
+            //String jwt = jwtUtils.generateJwtToken((authentication));
 
-        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+            UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
 
-        //För jwt i cookie
-        ResponseCookie jwtCookie = jwtUtils.generateJwtCookie(userDetails);
+            //För jwt i cookie
+            ResponseCookie jwtCookie = jwtUtils.generateJwtCookie(userDetails);
 
-        response.setHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_CREDENTIALS, "true");
-        response.setHeader(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS, HttpHeaders.SET_COOKIE);
+            response.setHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_CREDENTIALS, "true");
+            response.setHeader(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS, HttpHeaders.SET_COOKIE);
 
-        List<String> roles = userDetails.getAuthorities().stream()
-                .map(item -> item.getAuthority())
-                .collect(Collectors.toList());
+            List<String> roles = userDetails.getAuthorities().stream()
+                    .map(item -> item.getAuthority())
+                    .collect(Collectors.toList());
 
 
-
-        //Jwt med cookie
-        return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, jwtCookie.toString())
-                .body(new UserInfoRespons(userDetails.getId(),
-                        userDetails.getUsername(),
-                        userDetails.getEmail(),
-                        roles));
+            //Jwt med cookie
+            return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, jwtCookie.toString())
+                    .body(new UserInfoRespons(userDetails.getId(),
+                            userDetails.getUsername(),
+                            userDetails.getEmail(),
+                            roles));
+        } catch (Exception e) {
+            throw new InvalidUserDataException("Invalid username or password"); // Try catch som hanteras av GlobalExceptionhandler.
+        }
     }
 
 

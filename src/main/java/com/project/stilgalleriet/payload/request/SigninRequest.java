@@ -3,9 +3,9 @@ package com.project.stilgalleriet.payload.request;
 import jakarta.validation.constraints.NotBlank;
 
 public class SigninRequest {
-    @NotBlank
+    @NotBlank(message = "Username is mandatory") // meddelande som skrivs ut vid felhantering
     private String username;
-    @NotBlank
+    @NotBlank(message = "Password is mandatory")
     private String password;
 
     public String getUsername() {
