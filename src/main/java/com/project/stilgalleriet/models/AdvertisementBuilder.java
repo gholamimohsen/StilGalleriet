@@ -1,12 +1,8 @@
 package com.project.stilgalleriet.models;
 
-import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
-
-import java.util.Date;
-import java.util.List;
 
 @Document(collection = "advertisements")
 public class AdvertisementBuilder {
@@ -18,44 +14,41 @@ public class AdvertisementBuilder {
     private String title;
     private String description;
 
-    private EGender gender;
+    private AdvertisementBuilder(Builder builder)
+    {
+        this.userId = builder.userId;
+        this.title = builder.title;
+        this.description = builder.description;
+    }
 
-    private ECategory category;
+    public static Builder builder(User userId, String title)
+    {
+        return new Builder(userId, title);
+    }
 
-    private List<String > imgUrl;
+    public User getUserId()
+    {
+        return userId;
+    }
 
-    private ESize size;
+    public String getTitle()
+    {
+        return title;
+    }
 
-    private EColor color;
+    public String getDescription()
+    {
+        return description;
+    }
 
-    private double price;
-    @CreatedDate
-    private Date createdAt;
 
-    private Date updatedAt=new Date();
-
-    private boolean isActive=true;
-
-    //No annotations in builder in case, not sure how it would interact.
     public static class Builder
     {
         private User userId;
         private String title;
         private String description;
-        private EGender gender;
-
-        /* Start testing with fewer fields
-        private ECategory category;
-        private List<String > imgUrl;
-        private ESize size;
-        private EColor color;
-        private double price;
-        private Date createdAt;
-        private Date updatedAt;
-        private boolean isActive;
 
 
-         */
         public Builder(User userId, String title){
             this.userId = userId;
             this.title = title;
@@ -67,11 +60,9 @@ public class AdvertisementBuilder {
             return this;
         }
 
-        public Builder gender(EGender gender){
-            this.gender = gender;
-            return this;
+
+        public AdvertisementBuilder build(){
+        return new AdvertisementBuilder(this);
         }
-
-
     }
 }
