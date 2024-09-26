@@ -114,46 +114,6 @@ public class AdvertisementService {
 
     }
 
-
-
-
-    //update method with advertisement class
-    /*public Advertisement updateAdvertisement(String id, Advertisement updatedAdvertisement) throws Exception {
-        return advertisementRepository.findById(id)
-                .map(existingAdvertisement->{
-                    if (updatedAdvertisement.getTitle() !=null){
-                        existingAdvertisement.setTitle(updatedAdvertisement.getTitle());
-                    }
-
-                    if (updatedAdvertisement.getDescription()!=null){
-                        existingAdvertisement.setDescription(updatedAdvertisement.getDescription());
-                    }
-                    if (updatedAdvertisement.getCategory()!=null){
-                        existingAdvertisement.setCategory(updatedAdvertisement.getCategory());
-                    }
-
-                    if (updatedAdvertisement.getColor()!=null){
-                        existingAdvertisement.setColor(updatedAdvertisement.getColor());
-                    }
-                    if (updatedAdvertisement.getGender()!=null){
-                        existingAdvertisement.setGender(updatedAdvertisement.getGender());
-                    }
-                    if (updatedAdvertisement.getImgUrl()!=null){
-                        existingAdvertisement.setImgUrl(updatedAdvertisement.getImgUrl());
-                    }
-                    if (updatedAdvertisement.getPrice()!=0.00){
-                        existingAdvertisement.setPrice(updatedAdvertisement.getPrice());
-
-                    }
-                    if (updatedAdvertisement.isActive()==false ){
-                        existingAdvertisement.setActive(false);
-                    }
-                    return advertisementRepository.save(existingAdvertisement);
-
-                })
-                .orElseThrow(()-> new Exception("Advertisement with id: "+ id + " was not found to update!"));
-    }*/
-
     //Get advertisement list by color
     public List <Advertisement> findAdvertisementByColor(String color){
         return advertisementRepository.findAdvertisementByColor(EColor.fromString(color.toUpperCase()));

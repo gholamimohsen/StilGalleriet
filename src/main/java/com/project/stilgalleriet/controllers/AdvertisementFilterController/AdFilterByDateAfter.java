@@ -1,0 +1,32 @@
+package com.project.stilgalleriet.controllers.AdvertisementFilterController;
+
+import com.project.stilgalleriet.models.Advertisement;
+import com.project.stilgalleriet.services.AdvertisementService;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import java.text.ParseException;
+
+public class AdFilterByDateAfter implements AdvertisementFilterStrategy{
+
+    private String dateString;
+
+    public AdFilterByDateAfter(String dateString) {
+        this.dateString = dateString;
+    }
+
+
+    @Override
+    public List<Advertisement> filterAdvertisements(AdvertisementService advertisementService) {
+        try{
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            Date startDate = dateFormat.parse(dateString);
+            Date endDate = new Date();
+            return advertisementService.findAdvertisementByCreatedAtAfter(startDate, endDate);
+        } catch (ParseException e) {
+            throw new RuntimeException("Invalid date format", e);
+        }
+
+        }
+    }

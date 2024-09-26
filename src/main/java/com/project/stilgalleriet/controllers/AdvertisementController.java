@@ -1,6 +1,7 @@
 package com.project.stilgalleriet.controllers;
 
 
+import com.project.stilgalleriet.controllers.AdvertisementFilterController.*;
 import com.project.stilgalleriet.dto.AdvertisementDTO;
 import com.project.stilgalleriet.models.Advertisement;
 import com.project.stilgalleriet.services.AdvertisementService;
@@ -10,10 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 //@CrossOrigin(origins = "*", maxAge = 3600)
@@ -26,6 +25,7 @@ public class AdvertisementController {
 
     @Autowired
     private UserService userService;
+
 
     //POST  new advertisement
     @PostMapping("/add")
@@ -66,19 +66,51 @@ public class AdvertisementController {
         }
     }
 
-    /*UPDATE an advertisement by id
-    @PutMapping("update/{id}") // need for @valid ??
-    public ResponseEntity<Advertisement> updateAdvertisement(@PathVariable String id, @RequestBody Advertisement advertisementDetails) {
-        try {
-            Advertisement updatedAdvertisement = advertisementService.updateAdvertisement(id, advertisementDetails);
-            return ResponseEntity.ok(updatedAdvertisement);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-        }
-    }*/
 
-    // GET advertisement list by color
-    @GetMapping("/color/{color}")
+    @GetMapping("/filter") // new endpoint for all filter functions --Strategi Pattern--
+    public List<Advertisement> filterAdvertisements(@RequestParam("filterType") String filterType,
+                                                    @RequestParam Map<String, String> params) {
+        AdvertisementFilterStrategy strategy = getFilterStrategy(filterType, params);
+        return strategy.filterAdvertisements(advertisementService);
+    }
+    private AdvertisementFilterStrategy getFilterStrategy (String filterType, Map<String, String> params){
+        switch (filterType){
+            case "color":
+            String color=params.get("color");
+            return new AdFilterByColor(color);
+            case "gender":
+                String gender=params.get("gender");
+                return new AdFilterByGender(gender);
+            case "size":
+                String size=params.get("size");
+                return new AdFilterBySize(size);
+            case "category":
+                String category=params.get("category");
+                return new AdFilterByCategory(category);
+            case "priceGreaterThan":
+                double minPrice=Double.parseDouble(params.get("minPrice"));
+                return new AdFilterByMinPrice(minPrice);
+            case "priceBetween":
+                double minPrice2=Double.parseDouble(params.get("minPrice"));
+                double maxPrice2=Double.parseDouble(params.get("maxPrice2"));
+                return new AdFilterByPriceBetween(minPrice2, maxPrice2);
+            case "priceLessThan":
+                double maxPrice=Double.parseDouble(params.get("maxPrice"));
+                return new AdFilterByMaxPrice(maxPrice);
+            case "createdBefore":
+                String dateStringBefore = params.get("date");
+                return new AdFilterByDateBefore(dateStringBefore);
+            case "createdAfter":
+                String dateStringAfter=params.get("date");
+                return new AdFilterByDateAfter(dateStringAfter);
+            default:
+                throw new IllegalArgumentException("Unknown filter type");
+
+        }
+    }
+    // Old seperate methods. But all of them run
+
+    /*@GetMapping("/color/{color}")
 
     public ResponseEntity<List<Advertisement>> findAdvertisementByColor(@PathVariable String color) {
         List<Advertisement> advertisementByColor = advertisementService.findAdvertisementByColor(color);
@@ -186,5 +218,5 @@ public class AdvertisementController {
             return ResponseEntity.badRequest().build();
 
         }
-    }
+    }*/
 }
