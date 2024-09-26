@@ -25,9 +25,11 @@ public class UserService {
 
 
     //create / Post user
+    //create / Post user
     public User createUser(User user) {
         return userRepository.save(user);
     }
+
 
     //read / Get user
     public List<User> getAllUsers() {

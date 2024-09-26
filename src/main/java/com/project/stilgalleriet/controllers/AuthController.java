@@ -1,5 +1,6 @@
 package com.project.stilgalleriet.controllers;
 
+import com.project.stilgalleriet.exception.InvalidUserDataException;
 import com.project.stilgalleriet.models.ERole;
 import com.project.stilgalleriet.models.Role;
 import com.project.stilgalleriet.models.User;
@@ -22,7 +23,10 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashSet;
 import java.util.List;
@@ -33,6 +37,8 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/auth/")
 public class AuthController {
+
+
     @Autowired
     AuthenticationManager authenticationManager;
 
@@ -86,9 +92,10 @@ public class AuthController {
     @PostMapping("/signup")
     public ResponseEntity<?> signupUser(@Valid @RequestBody SignupRequest signupRequest) {
         if (userRepository.existsByUsername((signupRequest.getUsername()))) {
-            return ResponseEntity
-                    .badRequest()
-                    .body(new MessageResponse("Error: username already exists!"));
+           throw new InvalidUserDataException("Error: Username already exists!");
+        }
+        if (userRepository.existsByEmail((signupRequest.getEmail()))) {
+            throw new InvalidUserDataException("Error: Email already exists!");
         }
 
         //Skapa userns konto
@@ -102,31 +109,17 @@ public class AuthController {
                 signupRequest.getState(),
                 signupRequest.getZipcode());
 
-        Set<String> strRoles = signupRequest.getRoles();
+        //tilldela standardroll
         Set<Role> roles = new HashSet<>();
 
-        if (strRoles == null) {
+
             Role userRole = roleRepository.findByRolePermission(ERole.ROLE_USER)
                     .orElseThrow(() -> new RuntimeException("Error: roles is not found"));
             roles.add(userRole);
-        } else {
-            strRoles.forEach(role -> {
-                switch (role) {
-                    case "admin" -> {
-                        Role adminRole = roleRepository.findByRolePermission(ERole.ROLE_ADMIN)
-                                .orElseThrow(() -> new RuntimeException("Error: Role not found"));
-                        roles.add(adminRole);
-                    }
-                    default -> {
-                        Role userRole = roleRepository.findByRolePermission(ERole.ROLE_USER)
-                                .orElseThrow(() -> new RuntimeException("Error: Role not found"));
-                        roles.add(userRole);
-                    }
-                }
-            });
-        }
-        user.setRoles(roles);
-        userRepository.save(user);
+            user.setRoles(roles);
+
+            userRepository.save(user);
+
 
         return ResponseEntity.ok(new MessageResponse("User registered successfully"));
     }
