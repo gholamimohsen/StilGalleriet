@@ -10,13 +10,13 @@ import java.util.Date;
 import java.util.Set;
 
 public class SignupRequest {
-    @NotBlank
-    @Size(min = 3, max = 20)
+    @NotBlank(message = "Username is mandatory")
+    @Size(min = 3, max = 20, message = "Username must be between 3 and 20 characters" )
     private String username;
-    @NotBlank
-    @Email
+    @NotBlank(message = "Email is mandatory")
+    @Email(message = "Email should be valid")
     private String email;
-    @NotBlank
+    @NotBlank(message = "Password is mandatory")
     @Pattern(regexp =
             "^" + //Början av strängan.
             "(?=.*\\d)" + // En positiv lookahead som kräver minst en siffra i strängen.
@@ -24,14 +24,14 @@ public class SignupRequest {
             "(?=.*[A-Z])" + //En positiv lookahead som kräver minst en stor bokstav i strängen.
             ".{8,40}" + // En positiv lookahead som kräver på att strängen måste innehålla mellan 8 och 40 tecken lång.
             "$", //Slutet av strängen.
-            message = "The password must contain at least one uppercase letter and one digit.")
+            message = "The password must contain at least one uppercase letter, one lowercase letter, one digit and be between 8 to 40 characters long .")
 
     private String password;
-    @NotBlank
-    @Size(max = 20)
+    @NotBlank(message = "First name is mandatory")
+    @Size(max = 20, message = "First namne must be less than 20 characters")
     private String firstName;
-    @NotBlank
-    @Size(max = 20)
+    @NotBlank(message = "Last name is mandatory")
+    @Size(max = 20, message = "Last name must be less than 20 characters")
     private String lastName;
     private Set<String> roles;
     @Size(max = 40)
