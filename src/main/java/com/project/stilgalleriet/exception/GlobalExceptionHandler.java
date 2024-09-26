@@ -12,9 +12,10 @@ import java.util.Map;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
-
+    //annotering som används för att markera en metod som en undantagshanterar, specifikt UserNotFoundException.
     @ExceptionHandler(UserNotFoundException.class)
     public ResponseEntity<String> handleUserNotFoundException(UserNotFoundException e) {
+        //skapar och returnerar ett ResponseEntity-objekt med felmeddelandet och HTTP-statuskoden 404 (NOT_FOUND)
         return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
     }
 

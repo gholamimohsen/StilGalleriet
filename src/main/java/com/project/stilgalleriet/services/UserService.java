@@ -39,6 +39,7 @@ public class UserService {
     //Get user by specific id
     public User getUserById(String id) {
         return userRepository.findById(id)
+                // Detta undantag kommer att hanteras av vår globala controller-felhanterare
                 .orElseThrow(() -> new UserNotFoundException("User with id: " + id + " was not found"));
 
     }
@@ -69,8 +70,13 @@ public class UserService {
 
     //Delete user
     public String deleteUser(String id) {
+        if (!userRepository.existsById(id)) {
+            // Detta undantag kommer att hanteras av vår globala controller-felhanterare
+            throw new UsernameNotFoundException("Error: User with id " + id + " not found."); //
+        }
         userRepository.deleteById(id);
         return "User successfully deleted";
+
     }
 
 

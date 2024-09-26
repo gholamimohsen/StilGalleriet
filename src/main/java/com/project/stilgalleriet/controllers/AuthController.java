@@ -86,7 +86,7 @@ public class AuthController {
                             userDetails.getEmail(),
                             roles));
         } catch (Exception e) {
-            throw new InvalidUserDataException("Invalid username or password"); // Try catch som hanteras av GlobalExceptionhandler.
+            throw new InvalidUserDataException("Invalid username or password"); // Try catch som hanteras av vår globala controller-felhanterare.
         }
     }
 
@@ -96,9 +96,11 @@ public class AuthController {
     @PostMapping("/signup")
     public ResponseEntity<?> signupUser(@Valid @RequestBody SignupRequest signupRequest) {
         if (userRepository.existsByUsername((signupRequest.getUsername()))) {
+            // Detta undantag kommer att hanteras av vår globala controller-felhanterare
            throw new InvalidUserDataException("Error: Username already exists!");
         }
         if (userRepository.existsByEmail((signupRequest.getEmail()))) {
+            // Detta undantag kommer att hanteras av vår globala controller-felhanterare
             throw new InvalidUserDataException("Error: Email already exists!");
         }
 
