@@ -1,7 +1,6 @@
 package com.project.stilgalleriet.controllers;
 
 
-import com.project.stilgalleriet.controllers.AdvertisementFilterController.*;
 import com.project.stilgalleriet.dto.AdvertisementDTO;
 import com.project.stilgalleriet.models.Advertisement;
 import com.project.stilgalleriet.services.AdvertisementService;
@@ -12,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 //@CrossOrigin(origins = "*", maxAge = 3600)
@@ -67,7 +65,7 @@ public class AdvertisementController {
     }
 
 
-    @GetMapping("/filter") // new endpoint for all filter functions --Strategi Pattern--
+    /*@GetMapping("/filter") // new endpoint for all filter functions --Strategi Pattern--
     public List<Advertisement> filterAdvertisements(@RequestParam("filterType") String filterType,
                                                     @RequestParam Map<String, String> params) {
         AdvertisementFilterStrategy strategy = getFilterStrategy(filterType, params);
@@ -107,7 +105,7 @@ public class AdvertisementController {
                 throw new IllegalArgumentException("Unknown filter type");
 
         }
-    }
+    }*/
     // Old seperate methods. But all of them run
 
     /*@GetMapping("/color/{color}")
