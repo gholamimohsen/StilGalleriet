@@ -1,8 +1,14 @@
 package com.project.stilgalleriet.models;
 
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
 
 @Document(collection = "advertisements")
 public class AdvertisementBuilder {
@@ -13,8 +19,17 @@ public class AdvertisementBuilder {
     private User userId;
     private String title;
     private String description;
-
     private double price;
+    private List<String> images;
+    private ECategory category;
+    private EColor color;
+    private EGender gender;
+    private ESize size;
+    @CreatedDate
+    private Date createdAt;
+    @LastModifiedDate //No idea if this is what I think it is and how it works
+    private Date updatedAt;
+    private boolean isActive;
 
     private AdvertisementBuilder(Builder builder)
     {
@@ -22,6 +37,11 @@ public class AdvertisementBuilder {
         this.title = builder.title;
         this.description = builder.description;
         this.price = builder.price;
+        this.images = builder.images;
+        this.category = builder.category;
+        this.color = builder.color;
+        this.gender = builder.gender;
+        this.size = builder.size;
     }
 
     public static UserIdSetter builder()
@@ -49,8 +69,32 @@ public class AdvertisementBuilder {
         return price;
     }
 
+    public List<String> getImages()
+    {
+        return images;
+    }
+
+    public ECategory getCategory()
+    {
+        return category;
+    }
+
+    public EColor getColor()
+    {
+        return color;
+    }
+
+    public EGender getGender()
+    {
+        return gender;
+    }
+    public ESize getSize() {
+        return size;
+    }
+
     //Interface chaining
-    public interface UserIdSetter
+    //Want to try setting required fields after set category. For example shoes must have shoe size.
+    public interface UserIdSetter //Set so you must have userId and title, have to test this properly
     {
         TitleSetter userId(User userId);
     }
@@ -65,6 +109,14 @@ public class AdvertisementBuilder {
         OptionalFieldsSetter description(String description);
         OptionalFieldsSetter price(double price);
 
+        OptionalFieldsSetter images(List<String> images);
+
+        OptionalFieldsSetter category(ECategory category);
+        OptionalFieldsSetter color(EColor color);
+        OptionalFieldsSetter gender(EGender gender);
+
+        OptionalFieldsSetter size(ESize size);
+
         AdvertisementBuilder build();
     }
 
@@ -74,7 +126,11 @@ public class AdvertisementBuilder {
         private String title;
         private String description;
         private double price;
-
+        private List<String> images = Collections.emptyList();
+        private ECategory category;
+        private EColor color;
+        private EGender gender;
+        private ESize size;
 
         @Override
         public Builder userId(User userId){
@@ -97,6 +153,36 @@ public class AdvertisementBuilder {
         public Builder price(double price)
         {
             this.price = price;
+            return this;
+        }
+
+        @Override
+        public Builder images(List<String> images)
+        {
+            this.images = images;
+            return this;
+        }
+        @Override
+        public Builder category(ECategory category)
+        {
+            this.category = category;
+            return this;
+        }
+        @Override
+        public Builder color(EColor color)
+        {
+            this.color = color;
+            return this;
+        }
+        @Override
+        public Builder gender(EGender gender)
+        {
+            this.gender = gender;
+            return this;
+        }
+
+        public Builder size(ESize size) {
+            this.size = size;
             return this;
         }
 

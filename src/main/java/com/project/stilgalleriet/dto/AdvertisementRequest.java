@@ -14,14 +14,14 @@ public class AdvertisementRequest {
     private String title;
     private String description;
     private EGender gender;
-    private ECategory adCategory;
-    private List<String> adImgUrls;
-    private ESize adSize;
-    private EColor adColor;
+    private ECategory category;
+    private List<String> images;
+    private ESize size;
+    private EColor color;
     private double price;
-    private Date adDate;
-    private Date adUpdatedDate;
-    private boolean adIsActive;
+    private Date createdAt;
+    private Date updatedAt;
+    private boolean isActive;
 
 
     public AdvertisementRequest() {
@@ -68,36 +68,36 @@ public class AdvertisementRequest {
         this.gender = gender;
     }
 
-    public ECategory getAdCategory() {
-        return adCategory;
+    public ECategory getCategory() {
+        return category;
     }
 
-    public void setAdCategory(ECategory adCategory) {
-        this.adCategory = adCategory;
+    public void setCategory(ECategory category) {
+        this.category = category;
     }
 
-    public List<String> getAdImgUrls() {
-        return adImgUrls;
+    public List<String> getImages() {
+        return images;
     }
 
-    public void setAdImgUrls(List<String> adImgUrls) {
-        this.adImgUrls = adImgUrls;
+    public void setImages(List<String> images) {
+        this.images = images;
     }
 
-    public ESize getAdSize() {
-        return adSize;
+    public ESize getSize() {
+        return size;
     }
 
-    public void setAdSize(ESize adSize) {
-        this.adSize = adSize;
+    public void setSize(ESize size) {
+        this.size = size;
     }
 
-    public EColor getAdColor() {
-        return adColor;
+    public EColor getColor() {
+        return color;
     }
 
-    public void setAdColor(EColor adColor) {
-        this.adColor = adColor;
+    public void setColor(EColor color) {
+        this.color = color;
     }
 
     public double getPrice() {
@@ -108,27 +108,27 @@ public class AdvertisementRequest {
         this.price = price;
     }
 
-    public Date getAdDate() {
-        return adDate;
+    public Date getCreatedAt() {
+        return createdAt;
     }
 
-    public void setAdDate(Date adDate) {
-        this.adDate = adDate;
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
     }
 
-    public Date getAdUpdatedDate() {
-        return adUpdatedDate;
+    public Date getUpdatedAt() {
+        return updatedAt;
     }
 
-    public void setAdUpdatedDate(Date adUpdatedDate) {
-        this.adUpdatedDate = adUpdatedDate;
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
-    public boolean isAdIsActive() {
-        return adIsActive;
+    public boolean isActive() {
+        return isActive;
     }
 
-    public void setAdIsActive(boolean adIsActive) {
-        this.adIsActive = adIsActive;
+    public void setActive(boolean active) {
+        this.isActive = active;
     }
 }

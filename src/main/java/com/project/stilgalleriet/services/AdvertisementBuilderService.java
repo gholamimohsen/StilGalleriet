@@ -24,6 +24,11 @@ public class AdvertisementBuilderService {
                 .title(advertisementRequest.getTitle())
                 .description(advertisementRequest.getDescription())
                 .price(advertisementRequest.getPrice())
+                .images(advertisementRequest.getImages())
+                .category(advertisementRequest.getCategory())
+                .color(advertisementRequest.getColor())
+                .gender(advertisementRequest.getGender())
+                .size(advertisementRequest.getSize())
                 .build();
         return advertisementBuilderRepository.save(advertisementBuilder);
     }

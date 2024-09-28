@@ -30,15 +30,15 @@ public class AdvertisementService {
         newAd.setUserId(user);
         newAd.setTitle(advertisementRequest.getTitle());
         //newAd.setActive(advertisementDTO.isAdvIsActive());
-        newAd.setCategory(advertisementRequest.getAdCategory());
-        newAd.setColor(advertisementRequest.getAdColor());
+        newAd.setCategory(advertisementRequest.getCategory());
+        newAd.setColor(advertisementRequest.getColor());
         newAd.setDescription(advertisementRequest.getDescription());
         newAd.setGender(advertisementRequest.getGender());
-        newAd.setSize(advertisementRequest.getAdSize());
+        newAd.setSize(advertisementRequest.getSize());
         newAd.setPrice(advertisementRequest.getPrice());
-        newAd.setCreatedAt(advertisementRequest.getAdDate());
-        newAd.setImgUrl(advertisementRequest.getAdImgUrls());
-        newAd.setUpdatedAt(advertisementRequest.getAdUpdatedDate());
+        newAd.setCreatedAt(advertisementRequest.getCreatedAt());
+        newAd.setImgUrl(advertisementRequest.getImages());
+        newAd.setUpdatedAt(advertisementRequest.getUpdatedAt());
 
         return advertisementRepository.save(newAd);
     }
@@ -71,25 +71,25 @@ public class AdvertisementService {
                     if (updatedAdvertisement.getDescription() != null) {
                         existingAdvertisement.setDescription(updatedAdvertisement.getDescription());
                     }
-                    if (updatedAdvertisement.getAdCategory() != null) {
-                        existingAdvertisement.setCategory(updatedAdvertisement.getAdCategory());
+                    if (updatedAdvertisement.getCategory() != null) {
+                        existingAdvertisement.setCategory(updatedAdvertisement.getCategory());
                     }
 
-                    if (updatedAdvertisement.getAdColor() != null) {
-                        existingAdvertisement.setColor(updatedAdvertisement.getAdColor());
+                    if (updatedAdvertisement.getColor() != null) {
+                        existingAdvertisement.setColor(updatedAdvertisement.getColor());
                     }
                     if (updatedAdvertisement.getGender() != null) {
                         existingAdvertisement.setGender(updatedAdvertisement.getGender());
                     }
-                    if (updatedAdvertisement.getAdImgUrls() != null) {
-                        existingAdvertisement.setImgUrl(updatedAdvertisement.getAdImgUrls());
+                    if (updatedAdvertisement.getImages() != null) {
+                        existingAdvertisement.setImgUrl(updatedAdvertisement.getImages());
                     }
                     if (updatedAdvertisement.getPrice() != 0.00) {
                         existingAdvertisement.setPrice(updatedAdvertisement.getPrice());
 
                     }
-                    if (updatedAdvertisement.isAdIsActive() != existingAdvertisement.isActive()) {
-                        existingAdvertisement.setActive(updatedAdvertisement.isAdIsActive());
+                    if (updatedAdvertisement.isActive() != existingAdvertisement.isActive()) {
+                        existingAdvertisement.setActive(updatedAdvertisement.isActive());
                     }
                     return advertisementRepository.save(existingAdvertisement);
 
@@ -103,13 +103,13 @@ public class AdvertisementService {
         advertisementRequest.setSellerId(advertisement.getUserId().getId());
         advertisementRequest.setTitle(advertisement.getTitle());
         advertisementRequest.setDescription(advertisement.getDescription());
-        advertisementRequest.setAdCategory(advertisement.getCategory());
-        advertisementRequest.setAdColor(advertisement.getColor());
+        advertisementRequest.setCategory(advertisement.getCategory());
+        advertisementRequest.setColor(advertisement.getColor());
         advertisementRequest.setGender(advertisement.getGender());
         advertisementRequest.setPrice(advertisement.getPrice());
-        advertisementRequest.setAdSize(advertisement.getSize());
-        advertisementRequest.setAdImgUrls(advertisement.getImgUrl());
-        advertisementRequest.setAdIsActive(true);
+        advertisementRequest.setSize(advertisement.getSize());
+        advertisementRequest.setImages(advertisement.getImgUrl());
+        advertisementRequest.setActive(true);
         return advertisementRequest;
 
     }
