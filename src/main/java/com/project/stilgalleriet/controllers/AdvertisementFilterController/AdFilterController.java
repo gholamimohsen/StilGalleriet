@@ -1,6 +1,7 @@
 package com.project.stilgalleriet.controllers.AdvertisementFilterController;
 
 import com.project.stilgalleriet.models.Advertisement;
+import com.project.stilgalleriet.repositories.AdvertisementRepository;
 import com.project.stilgalleriet.services.AdvertisementFilterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +18,8 @@ public class AdFilterController {
 
     @Autowired
     private AdvertisementFilterService advertisementFilterService;
-
+@Autowired
+private AdvertisementRepository advertisementRepository;
 
 
     @GetMapping("/filter") // new endpoint for all filter functions --Strategi Pattern--

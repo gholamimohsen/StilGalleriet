@@ -2,10 +2,13 @@ package com.project.stilgalleriet.services;
 
 
 import com.project.stilgalleriet.dto.AdvertisementDTO;
-import com.project.stilgalleriet.models.Advertisement;
+import com.project.stilgalleriet.models.*;
 import com.project.stilgalleriet.repositories.AdvertisementRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Date;
+import java.util.List;
 
 @Service
 public class AdvertisementFilterService {
@@ -28,7 +31,7 @@ public class AdvertisementFilterService {
         return advertisementDTO;
 
     }
-/* Old methods. They run without error
+
     //Get advertisement list by color
     public List<Advertisement> findAdvertisementByColor(String color){
         return advertisementRepository.findAdvertisementByColor(EColor.fromString(color.toUpperCase()));
@@ -79,6 +82,5 @@ public class AdvertisementFilterService {
     public List<Advertisement> findAdvertisementByCreatedAtBefore(Date startedDate, Date endDate){
         return advertisementRepository.findAdvertisementByCreatedAtBefore(startedDate,endDate);
     }
-    */
 
 }

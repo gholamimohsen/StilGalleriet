@@ -97,7 +97,8 @@ public class AdvertisementService {
                 .orElseThrow(()-> new IllegalArgumentException("Advertisement with id: "+ id + " was not found to update!"));
     }
 
-   /* private AdvertisementDTO convertToDTO(Advertisement advertisement) {
+   /* Old codes But they are running without error.
+   private AdvertisementDTO convertToDTO(Advertisement advertisement) {
         AdvertisementDTO advertisementDTO = new AdvertisementDTO();
         advertisementDTO.setAdId(advertisement.getId());
         advertisementDTO.setSellerId(advertisement.getUserId().getId());

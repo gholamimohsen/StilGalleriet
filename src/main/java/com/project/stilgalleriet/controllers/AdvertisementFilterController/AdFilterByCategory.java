@@ -6,6 +6,7 @@ import com.project.stilgalleriet.services.AdvertisementFilterService;
 import java.util.List;
 
 public class AdFilterByCategory implements AdvertisementFilterStrategy{
+
     private final String category;
 
     public AdFilterByCategory(String category){
