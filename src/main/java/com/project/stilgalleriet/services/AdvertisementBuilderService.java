@@ -1,6 +1,6 @@
 package com.project.stilgalleriet.services;
 
-import com.project.stilgalleriet.dto.AdvertisementDTO;
+import com.project.stilgalleriet.dto.AdvertisementRequest;
 import com.project.stilgalleriet.models.AdvertisementBuilder;
 import com.project.stilgalleriet.models.User;
 import com.project.stilgalleriet.repositories.AdvertisementBuilderRepository;
@@ -16,13 +16,13 @@ public class AdvertisementBuilderService {
 
     @Autowired
     UserRepository userRepository;
-    public AdvertisementBuilder createAdvertisementBuilder(AdvertisementDTO advertisementDTO){
-        User user = userRepository.findById(advertisementDTO.getSellerId())
+    public AdvertisementBuilder createAdvertisementBuilder(AdvertisementRequest advertisementRequest){
+        User user = userRepository.findById(advertisementRequest.getSellerId())
                 .orElseThrow(() -> new IllegalArgumentException("Invalid user id"));
         AdvertisementBuilder advertisementBuilder = new AdvertisementBuilder.Builder()
                 .userId(user)
-                .title("dark art test")
-                .description(advertisementDTO.getAdDescriptions()) //Not working, might even make my own DTO for this or remove DTO
+                .title(advertisementRequest.getTitle())
+                .description(advertisementRequest.getDescription()) //Not working, might even make my own DTO for this or remove DTO
                 .build();
         return advertisementBuilderRepository.save(advertisementBuilder);
     }

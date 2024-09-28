@@ -8,12 +8,12 @@ import com.project.stilgalleriet.models.ESize;
 import java.util.Date;
 import java.util.List;
 
-public class AdvertisementDTO {
+public class AdvertisementRequest {
     private String sellerId;
     private String adId;
-    private String adTitles;
-    private String adDescriptions;
-    private EGender adGender;
+    private String title;
+    private String description;
+    private EGender gender;
     private ECategory adCategory;
     private List<String> adImgUrls;
     private ESize adSize;
@@ -24,7 +24,7 @@ public class AdvertisementDTO {
     private boolean adIsActive;
 
 
-    public AdvertisementDTO() {
+    public AdvertisementRequest() {
     }
 
 
@@ -44,28 +44,28 @@ public class AdvertisementDTO {
         this.adId = adId;
     }
 
-    public String getAdTitles() {
-        return adTitles;
+    public String getTitle() {
+        return title;
     }
 
-    public void setAdTitles(String adTitles) {
-        this.adTitles = adTitles;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public String getAdDescriptions() {
-        return adDescriptions;
+    public String getDescription() {
+        return description;
     }
 
-    public void setAdDescriptions(String adDescriptions) {
-        this.adDescriptions = adDescriptions;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public EGender getAdGender() {
-        return adGender;
+    public EGender getGender() {
+        return gender;
     }
 
-    public void setAdGender(EGender adGender) {
-        this.adGender = adGender;
+    public void setGender(EGender gender) {
+        this.gender = gender;
     }
 
     public ECategory getAdCategory() {

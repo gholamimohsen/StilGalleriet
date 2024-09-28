@@ -1,6 +1,6 @@
 package com.project.stilgalleriet.controllers;
 
-import com.project.stilgalleriet.dto.AdvertisementDTO;
+import com.project.stilgalleriet.dto.AdvertisementRequest;
 import com.project.stilgalleriet.models.AdvertisementBuilder;
 import com.project.stilgalleriet.services.AdvertisementBuilderService;
 import com.project.stilgalleriet.services.UserService;
@@ -22,8 +22,8 @@ public class AdvertisementBuilderController {
     private UserService userService;
 
     @PostMapping("/add")
-    public ResponseEntity<AdvertisementBuilder> createAdvertisement(@RequestBody AdvertisementDTO advertisementDTO) {
-        AdvertisementBuilder advertisementBuilder = advertisementBuilderService.createAdvertisementBuilder(advertisementDTO);
+    public ResponseEntity<AdvertisementBuilder> createAdvertisement(@RequestBody AdvertisementRequest advertisementRequest) {
+        AdvertisementBuilder advertisementBuilder = advertisementBuilderService.createAdvertisementBuilder(advertisementRequest);
         return ResponseEntity.ok(advertisementBuilder);
     }
 

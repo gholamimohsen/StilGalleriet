@@ -1,7 +1,7 @@
 package com.project.stilgalleriet.controllers;
 
 
-import com.project.stilgalleriet.dto.AdvertisementDTO;
+import com.project.stilgalleriet.dto.AdvertisementRequest;
 import com.project.stilgalleriet.models.Advertisement;
 import com.project.stilgalleriet.services.AdvertisementService;
 import com.project.stilgalleriet.services.UserService;
@@ -29,8 +29,8 @@ public class AdvertisementController {
 
     //POST  new advertisement
     @PostMapping("/add")
-    public ResponseEntity<Advertisement> createAdvertisement(@RequestBody AdvertisementDTO advertisementDTO) {
-        Advertisement advertisement = advertisementService.createAdvertisement(advertisementDTO);
+    public ResponseEntity<Advertisement> createAdvertisement(@RequestBody AdvertisementRequest advertisementRequest) {
+        Advertisement advertisement = advertisementService.createAdvertisement(advertisementRequest);
         return ResponseEntity.ok(advertisement);
     }
 
@@ -57,7 +57,7 @@ public class AdvertisementController {
 
     //UPDATE an advertisement by id
     @PutMapping("update/{id}")
-    public ResponseEntity <Advertisement> updateAdvertisement(@PathVariable String id, @RequestBody AdvertisementDTO advertisementDetails) throws Exception {
+    public ResponseEntity <Advertisement> updateAdvertisement(@PathVariable String id, @RequestBody AdvertisementRequest advertisementDetails) throws Exception {
         try {
             Advertisement updatedAdvertisement=advertisementService.updateAdvertisement(id, advertisementDetails);
             return ResponseEntity.ok(updatedAdvertisement);

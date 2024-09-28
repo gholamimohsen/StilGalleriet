@@ -1,6 +1,6 @@
 package com.project.stilgalleriet.services;
 
-import com.project.stilgalleriet.dto.AdvertisementDTO;
+import com.project.stilgalleriet.dto.AdvertisementRequest;
 import com.project.stilgalleriet.models.*;
 import com.project.stilgalleriet.repositories.AdvertisementRepository;
 import com.project.stilgalleriet.repositories.UserRepository;
@@ -22,23 +22,23 @@ public class AdvertisementService {
     UserRepository userRepository;
 
     //create an advertisement
-    public Advertisement createAdvertisement(AdvertisementDTO advertisementDTO) {
-        User user = userRepository.findById(advertisementDTO.getSellerId())
+    public Advertisement createAdvertisement(AdvertisementRequest advertisementRequest) {
+        User user = userRepository.findById(advertisementRequest.getSellerId())
                 .orElseThrow(() -> new IllegalArgumentException("Invalid user id"));
 
         Advertisement newAd = new Advertisement();
         newAd.setUserId(user);
-        newAd.setTitle(advertisementDTO.getAdTitles());
+        newAd.setTitle(advertisementRequest.getTitle());
         //newAd.setActive(advertisementDTO.isAdvIsActive());
-        newAd.setCategory(advertisementDTO.getAdCategory());
-        newAd.setColor(advertisementDTO.getAdColor());
-        newAd.setDescription(advertisementDTO.getAdDescriptions());
-        newAd.setGender(advertisementDTO.getAdGender());
-        newAd.setSize(advertisementDTO.getAdSize());
-        newAd.setPrice(advertisementDTO.getAdPrice());
-        newAd.setCreatedAt(advertisementDTO.getAdDate());
-        newAd.setImgUrl(advertisementDTO.getAdImgUrls());
-        newAd.setUpdatedAt(advertisementDTO.getAdUpdatedDate());
+        newAd.setCategory(advertisementRequest.getAdCategory());
+        newAd.setColor(advertisementRequest.getAdColor());
+        newAd.setDescription(advertisementRequest.getDescription());
+        newAd.setGender(advertisementRequest.getGender());
+        newAd.setSize(advertisementRequest.getAdSize());
+        newAd.setPrice(advertisementRequest.getAdPrice());
+        newAd.setCreatedAt(advertisementRequest.getAdDate());
+        newAd.setImgUrl(advertisementRequest.getAdImgUrls());
+        newAd.setUpdatedAt(advertisementRequest.getAdUpdatedDate());
 
         return advertisementRepository.save(newAd);
     }
@@ -62,14 +62,14 @@ public class AdvertisementService {
     }
 
     //update an advertisement
-    public Advertisement updateAdvertisement(String id, AdvertisementDTO updatedAdvertisement) throws Exception {
+    public Advertisement updateAdvertisement(String id, AdvertisementRequest updatedAdvertisement) throws Exception {
         return advertisementRepository.findById(id)
                 .map(existingAdvertisement -> {
-                    if (updatedAdvertisement.getAdTitles() != null) {
-                        existingAdvertisement.setTitle(updatedAdvertisement.getAdTitles());
+                    if (updatedAdvertisement.getTitle() != null) {
+                        existingAdvertisement.setTitle(updatedAdvertisement.getTitle());
                     }
-                    if (updatedAdvertisement.getAdDescriptions() != null) {
-                        existingAdvertisement.setDescription(updatedAdvertisement.getAdDescriptions());
+                    if (updatedAdvertisement.getDescription() != null) {
+                        existingAdvertisement.setDescription(updatedAdvertisement.getDescription());
                     }
                     if (updatedAdvertisement.getAdCategory() != null) {
                         existingAdvertisement.setCategory(updatedAdvertisement.getAdCategory());
@@ -78,8 +78,8 @@ public class AdvertisementService {
                     if (updatedAdvertisement.getAdColor() != null) {
                         existingAdvertisement.setColor(updatedAdvertisement.getAdColor());
                     }
-                    if (updatedAdvertisement.getAdGender() != null) {
-                        existingAdvertisement.setGender(updatedAdvertisement.getAdGender());
+                    if (updatedAdvertisement.getGender() != null) {
+                        existingAdvertisement.setGender(updatedAdvertisement.getGender());
                     }
                     if (updatedAdvertisement.getAdImgUrls() != null) {
                         existingAdvertisement.setImgUrl(updatedAdvertisement.getAdImgUrls());
@@ -97,20 +97,20 @@ public class AdvertisementService {
                 .orElseThrow(()-> new IllegalArgumentException("Advertisement with id: "+ id + " was not found to update!"));
     }
 
-    private AdvertisementDTO convertToDTO(Advertisement advertisement) {
-        AdvertisementDTO advertisementDTO = new AdvertisementDTO();
-        advertisementDTO.setAdId(advertisement.getId());
-        advertisementDTO.setSellerId(advertisement.getUserId().getId());
-        advertisementDTO.setAdTitles(advertisement.getTitle());
-        advertisementDTO.setAdDescriptions(advertisement.getDescription());
-        advertisementDTO.setAdCategory(advertisement.getCategory());
-        advertisementDTO.setAdColor(advertisement.getColor());
-        advertisementDTO.setAdGender(advertisement.getGender());
-        advertisementDTO.setAdPrice(advertisement.getPrice());
-        advertisementDTO.setAdSize(advertisement.getSize());
-        advertisementDTO.setAdImgUrls(advertisement.getImgUrl());
-        advertisementDTO.setAdIsActive(true);
-        return advertisementDTO;
+    private AdvertisementRequest convertToDTO(Advertisement advertisement) {
+        AdvertisementRequest advertisementRequest = new AdvertisementRequest();
+        advertisementRequest.setAdId(advertisement.getId());
+        advertisementRequest.setSellerId(advertisement.getUserId().getId());
+        advertisementRequest.setTitle(advertisement.getTitle());
+        advertisementRequest.setDescription(advertisement.getDescription());
+        advertisementRequest.setAdCategory(advertisement.getCategory());
+        advertisementRequest.setAdColor(advertisement.getColor());
+        advertisementRequest.setGender(advertisement.getGender());
+        advertisementRequest.setAdPrice(advertisement.getPrice());
+        advertisementRequest.setAdSize(advertisement.getSize());
+        advertisementRequest.setAdImgUrls(advertisement.getImgUrl());
+        advertisementRequest.setAdIsActive(true);
+        return advertisementRequest;
 
     }
 
