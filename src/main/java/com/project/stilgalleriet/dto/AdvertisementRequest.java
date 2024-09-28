@@ -18,7 +18,7 @@ public class AdvertisementRequest {
     private List<String> adImgUrls;
     private ESize adSize;
     private EColor adColor;
-    private double adPrice;
+    private double price;
     private Date adDate;
     private Date adUpdatedDate;
     private boolean adIsActive;
@@ -100,12 +100,12 @@ public class AdvertisementRequest {
         this.adColor = adColor;
     }
 
-    public double getAdPrice() {
-        return adPrice;
+    public double getPrice() {
+        return price;
     }
 
-    public void setAdPrice(double adPrice) {
-        this.adPrice = adPrice;
+    public void setPrice(double price) {
+        this.price = price;
     }
 
     public Date getAdDate() {

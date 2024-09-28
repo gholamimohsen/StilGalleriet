@@ -22,7 +22,8 @@ public class AdvertisementBuilderService {
         AdvertisementBuilder advertisementBuilder = new AdvertisementBuilder.Builder()
                 .userId(user)
                 .title(advertisementRequest.getTitle())
-                .description(advertisementRequest.getDescription()) //Not working, might even make my own DTO for this or remove DTO
+                .description(advertisementRequest.getDescription())
+                .price(advertisementRequest.getPrice())
                 .build();
         return advertisementBuilderRepository.save(advertisementBuilder);
     }

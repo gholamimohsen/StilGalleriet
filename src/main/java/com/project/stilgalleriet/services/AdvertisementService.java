@@ -35,7 +35,7 @@ public class AdvertisementService {
         newAd.setDescription(advertisementRequest.getDescription());
         newAd.setGender(advertisementRequest.getGender());
         newAd.setSize(advertisementRequest.getAdSize());
-        newAd.setPrice(advertisementRequest.getAdPrice());
+        newAd.setPrice(advertisementRequest.getPrice());
         newAd.setCreatedAt(advertisementRequest.getAdDate());
         newAd.setImgUrl(advertisementRequest.getAdImgUrls());
         newAd.setUpdatedAt(advertisementRequest.getAdUpdatedDate());
@@ -84,8 +84,8 @@ public class AdvertisementService {
                     if (updatedAdvertisement.getAdImgUrls() != null) {
                         existingAdvertisement.setImgUrl(updatedAdvertisement.getAdImgUrls());
                     }
-                    if (updatedAdvertisement.getAdPrice() != 0.00) {
-                        existingAdvertisement.setPrice(updatedAdvertisement.getAdPrice());
+                    if (updatedAdvertisement.getPrice() != 0.00) {
+                        existingAdvertisement.setPrice(updatedAdvertisement.getPrice());
 
                     }
                     if (updatedAdvertisement.isAdIsActive() != existingAdvertisement.isActive()) {
@@ -106,7 +106,7 @@ public class AdvertisementService {
         advertisementRequest.setAdCategory(advertisement.getCategory());
         advertisementRequest.setAdColor(advertisement.getColor());
         advertisementRequest.setGender(advertisement.getGender());
-        advertisementRequest.setAdPrice(advertisement.getPrice());
+        advertisementRequest.setPrice(advertisement.getPrice());
         advertisementRequest.setAdSize(advertisement.getSize());
         advertisementRequest.setAdImgUrls(advertisement.getImgUrl());
         advertisementRequest.setAdIsActive(true);
