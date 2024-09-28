@@ -24,9 +24,9 @@ public class AdvertisementBuilder {
         this.price = builder.price;
     }
 
-    public static Builder builder(User userId, String title)
+    public static UserIdSetter builder()
     {
-        return new Builder(userId, title);
+        return new Builder();
     }
 
     public User getUserId()
@@ -49,33 +49,56 @@ public class AdvertisementBuilder {
         return price;
     }
 
+    //Interface chaining
+    public interface UserIdSetter
+    {
+        TitleSetter userId(User userId);
+    }
 
-    public static class Builder
+    public interface TitleSetter
+    {
+        OptionalFieldsSetter title(String title);
+    }
+
+    public interface OptionalFieldsSetter
+    {
+        OptionalFieldsSetter description(String description);
+        OptionalFieldsSetter price(double price);
+
+        AdvertisementBuilder build();
+    }
+
+    public static class Builder implements UserIdSetter, TitleSetter, OptionalFieldsSetter
     {
         private User userId;
         private String title;
         private String description;
-
         private double price;
 
 
-        public Builder(User userId, String title){
+        @Override
+        public Builder userId(User userId){
             this.userId = userId;
+            return this;
+        }
+        @Override
+        public Builder title(String title)
+        {
             this.title = title;
+            return this;
         }
 
-
+        @Override
         public Builder description(String description){
             this.description = description;
             return this;
         }
-
+        @Override
         public Builder price(double price)
         {
             this.price = price;
             return this;
         }
-
 
         public AdvertisementBuilder build(){
         return new AdvertisementBuilder(this);
