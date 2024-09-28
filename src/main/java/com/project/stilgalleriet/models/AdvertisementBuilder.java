@@ -14,11 +14,14 @@ public class AdvertisementBuilder {
     private String title;
     private String description;
 
+    private double price;
+
     private AdvertisementBuilder(Builder builder)
     {
         this.userId = builder.userId;
         this.title = builder.title;
         this.description = builder.description;
+        this.price = builder.price;
     }
 
     public static Builder builder(User userId, String title)
@@ -41,12 +44,19 @@ public class AdvertisementBuilder {
         return description;
     }
 
+    public double getPrice()
+    {
+        return price;
+    }
+
 
     public static class Builder
     {
         private User userId;
         private String title;
         private String description;
+
+        private double price;
 
 
         public Builder(User userId, String title){
@@ -57,6 +67,12 @@ public class AdvertisementBuilder {
 
         public Builder description(String description){
             this.description = description;
+            return this;
+        }
+
+        public Builder price(double price)
+        {
+            this.price = price;
             return this;
         }
 

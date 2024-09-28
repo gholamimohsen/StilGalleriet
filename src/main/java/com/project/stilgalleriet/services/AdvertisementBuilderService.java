@@ -19,8 +19,8 @@ public class AdvertisementBuilderService {
     public AdvertisementBuilder createAdvertisementBuilder(AdvertisementDTO advertisementDTO){
         User user = userRepository.findById(advertisementDTO.getSellerId())
                 .orElseThrow(() -> new IllegalArgumentException("Invalid user id"));
-        AdvertisementBuilder advertisementBuilder = new AdvertisementBuilder.Builder(user, "Test")
-                .description("testing").build();
+        AdvertisementBuilder advertisementBuilder = new AdvertisementBuilder.Builder(user, advertisementDTO.getAdTitles())
+                .description(advertisementDTO.getAdDescriptions()).build();
         return advertisementBuilderRepository.save(advertisementBuilder);
     }
 }
