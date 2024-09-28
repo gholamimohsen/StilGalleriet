@@ -1,13 +1,13 @@
 package com.project.stilgalleriet.services;
 
 import com.project.stilgalleriet.dto.AdvertisementDTO;
-import com.project.stilgalleriet.models.*;
+import com.project.stilgalleriet.models.Advertisement;
+import com.project.stilgalleriet.models.User;
 import com.project.stilgalleriet.repositories.AdvertisementRepository;
 import com.project.stilgalleriet.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -97,7 +97,7 @@ public class AdvertisementService {
                 .orElseThrow(()-> new IllegalArgumentException("Advertisement with id: "+ id + " was not found to update!"));
     }
 
-    private AdvertisementDTO convertToDTO(Advertisement advertisement) {
+   /* private AdvertisementDTO convertToDTO(Advertisement advertisement) {
         AdvertisementDTO advertisementDTO = new AdvertisementDTO();
         advertisementDTO.setAdId(advertisement.getId());
         advertisementDTO.setSellerId(advertisement.getUserId().getId());
@@ -164,7 +164,7 @@ public class AdvertisementService {
     public List<Advertisement> findAdvertisementByCreatedAtBefore(Date startedDate, Date endDate){
         return advertisementRepository.findAdvertisementByCreatedAtBefore(startedDate,endDate);
     }
-
+*/
 
 
 }

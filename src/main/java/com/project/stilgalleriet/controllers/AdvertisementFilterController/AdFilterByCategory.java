@@ -1,7 +1,7 @@
 package com.project.stilgalleriet.controllers.AdvertisementFilterController;
 
 import com.project.stilgalleriet.models.Advertisement;
-import com.project.stilgalleriet.services.AdvertisementService;
+import com.project.stilgalleriet.services.AdvertisementFilterService;
 
 import java.util.List;
 
@@ -13,7 +13,7 @@ public class AdFilterByCategory implements AdvertisementFilterStrategy{
     }
 
     @Override
-    public List<Advertisement> filterAdvertisements(AdvertisementService advertisementService) {
-        return advertisementService.findAdvertisementByCategory(category);
+    public List<Advertisement> filterAdvertisements(AdvertisementFilterService advertisementFilterService) {
+        return advertisementFilterService.findAdvertisementByCategory(category);
     }
 }

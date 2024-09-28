@@ -1,7 +1,7 @@
 package com.project.stilgalleriet.controllers.AdvertisementFilterController;
 
 import com.project.stilgalleriet.models.Advertisement;
-import com.project.stilgalleriet.services.AdvertisementService;
+import com.project.stilgalleriet.services.AdvertisementFilterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,14 +16,15 @@ import java.util.Map;
 public class AdFilterController {
 
     @Autowired
-    private AdvertisementService advertisementService;
+    private AdvertisementFilterService advertisementFilterService;
+
 
 
     @GetMapping("/filter") // new endpoint for all filter functions --Strategi Pattern--
     public List<Advertisement> filterAdvertisements(@RequestParam("filterType") String filterType,
                                                     @RequestParam Map<String, String> params) {
         AdvertisementFilterStrategy strategy = getFilterStrategy(filterType, params);
-        return strategy.filterAdvertisements(advertisementService);
+        return strategy.filterAdvertisements(advertisementFilterService);
     }
 
     private AdvertisementFilterStrategy getFilterStrategy(String filterType, Map<String, String> params) {
