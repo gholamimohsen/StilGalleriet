@@ -16,15 +16,15 @@ public class AdvertisementBuilder {
     private String id;
 
     @DBRef
-    private User userId;
-    private String title;
-    private String description;
-    private double price;
-    private List<String> images;
-    private ECategory category;
-    private EColor color;
-    private EGender gender;
-    private ESize size;
+    private final User userId;
+    private final String title;
+    private final String description;
+    private final double price;
+    private final List<String> images;
+    private final ECategory category;
+    private final EColor color;
+    private final EGender gender;
+    private final ESize size;
     @CreatedDate
     private Date createdAt;
     @LastModifiedDate //No idea if this is what I think it is and how it works
@@ -186,7 +186,8 @@ public class AdvertisementBuilder {
             return this;
         }
 
-        public AdvertisementBuilder build(){
+        public AdvertisementBuilder build()
+        {
         return new AdvertisementBuilder(this);
         }
     }
