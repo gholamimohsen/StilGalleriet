@@ -27,9 +27,9 @@ public class AdvertisementBuilder {
     private final ESize size;
     @CreatedDate
     private Date createdAt;
-    @LastModifiedDate //No idea if this is what I think it is and how it works
+    @LastModifiedDate
     private Date updatedAt;
-    private boolean isActive;
+    private boolean isActive = true; //Set advertisement to active state on creation
 
     private AdvertisementBuilder(Builder builder)
     {
@@ -92,25 +92,31 @@ public class AdvertisementBuilder {
         return size;
     }
 
-    //Interface chaining
-    //Want to try setting required fields after set category. For example shoes must have shoe size.
-    public interface UserIdSetter //Set so you must have userId and title, have to test this properly
+    //Interface chaining for required fields
+
+    //Start with setting userId
+    public interface UserIdSetter //Set so you must have userId and title.
     {
         TitleSetter userId(User userId);
     }
 
+    //Then set title
     public interface TitleSetter
     {
-        OptionalFieldsSetter title(String title);
+        PriceSetter title(String title);
     }
 
+    //Last mandatory field
+    public interface PriceSetter
+    {
+        OptionalFieldsSetter price(double price);
+    }
+
+    //Optional fields - Not mandatory to have, can be set after all mandatory fields
     public interface OptionalFieldsSetter
     {
         OptionalFieldsSetter description(String description);
-        OptionalFieldsSetter price(double price);
-
         OptionalFieldsSetter images(List<String> images);
-
         OptionalFieldsSetter category(ECategory category);
         OptionalFieldsSetter color(EColor color);
         OptionalFieldsSetter gender(EGender gender);
@@ -120,7 +126,7 @@ public class AdvertisementBuilder {
         AdvertisementBuilder build();
     }
 
-    public static class Builder implements UserIdSetter, TitleSetter, OptionalFieldsSetter
+    public static class Builder implements UserIdSetter, TitleSetter, PriceSetter, OptionalFieldsSetter
     {
         private User userId;
         private String title;

@@ -21,18 +21,17 @@ public class AdvertisementBuilderService {
                 .orElseThrow(() -> new IllegalArgumentException("Invalid user id"));
 
         AdvertisementBuilder advertisementBuilder = AdvertisementBuilder.builder()
+                //Mandatory fields - Must have in order to compile
                 .userId(user)
-
                 .title(advertisementRequest.getTitle())
-                //.description(advertisementRequest.getDescription())
                 .price(advertisementRequest.getPrice())
-                //.images(advertisementRequest.getImages())
-                //.category(advertisementRequest.getCategory())
-                //.color(advertisementRequest.getColor())
-                //.gender(advertisementRequest.getGender())
-                //.size(advertisementRequest.getSize())
-
-
+                //Optional fields
+                .description(advertisementRequest.getDescription())
+                .images(advertisementRequest.getImages())
+                .category(advertisementRequest.getCategory())
+                .color(advertisementRequest.getColor())
+                .gender(advertisementRequest.getGender())
+                .size(advertisementRequest.getSize())
                 .build();
         return advertisementBuilderRepository.save(advertisementBuilder);
     }
