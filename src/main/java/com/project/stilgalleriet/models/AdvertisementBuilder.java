@@ -10,11 +10,15 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+/* Class meant to replace Advertisement as part of OOAD course.
+   Implements the builder pattern into Advertisement.
+   This builder uses interface chaining for the setters. It is inspired by https://github.com/jrhodkinson/youtube-190-builders
+*/
+
 @Document(collection = "advertisements")
 public class AdvertisementBuilder {
     @Id
     private String id;
-
     @DBRef
     private final User userId;
     private final String title;
