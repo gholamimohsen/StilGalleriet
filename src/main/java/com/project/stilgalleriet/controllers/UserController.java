@@ -64,7 +64,7 @@ public class UserController {
 
     //POST ADD a favorite
     @PostMapping("/{username}/favorites/{advertisementId}")
-    public  ResponseEntity<?> addFavorite(@PathVariable String username, @PathVariable String advertisementId) {
+    public ResponseEntity<?> addFavorite(@PathVariable String username, @PathVariable String advertisementId) {
         userService.addFavorite(username, advertisementId);
         return ResponseEntity.ok("Advertisement has been added to your favorites");
     }
