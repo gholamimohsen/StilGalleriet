@@ -1,4 +1,4 @@
-package Mappers;
+package com.project.stilgalleriet.Mappers;
 
 import com.project.stilgalleriet.dto.ReviewDTO;
 import com.project.stilgalleriet.models.Review;

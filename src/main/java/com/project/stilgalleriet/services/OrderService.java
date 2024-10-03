@@ -1,6 +1,6 @@
 package com.project.stilgalleriet.services;
 
-import Mappers.OrderMapper;
+import com.project.stilgalleriet.Mappers.OrderMapper;
 import com.project.stilgalleriet.dto.OrderDTO;
 import com.project.stilgalleriet.exception.EntityNotFoundException;
 import com.project.stilgalleriet.models.Advertisement;
@@ -79,34 +79,8 @@ public class OrderService {
                 .orElseThrow(() -> new EntityNotFoundException("Order with ID " + id + " not found."));
 
         return OrderMapper.toDto(order);
-    /*public List<OrderResponse> getOrderById(String id){
-        Optional<Order> orders =orderRepository.findById(id);
-
-        return OrderMapper.toDto(order);
-
-        //If the order is not found, throw an exception that results in a 404 Not Found response
-      /*  if (orders.isEmpty()) {
-            throw new EntityNotFoundException( "Order with ID " + id + " not found.");
-        }
-       // return orders.stream()
-
-               /* .map(this::convertToDTO)
-                .collect(Collectors.toList());*/
     }
 
-   /*private OrderResponse convertToDTO(Order order) {
-       OrderDTO orderDTO = new OrderDTO();
-       orderDTO.setBuyerUserId(order.getBuyerUserId() != null ? order.getBuyerUserId().getId(): null);
-       orderDTO.setAdvertisementId(order.getAdvertisementId()!= null ? order.getAdvertisementId().getId(): null);
-       orderDTO.setSellerUserId(order.getSellerUserId()!= null ? order.getSellerUserId().getId(): null);
-       orderDTO.setOrderDate(order.getOrderDate());
-       orderDTO.setQuantity(order.getQuantity());
-       orderDTO.setTotalPrice(order.getTotalPrice());
-       orderDTO.setSold(order.isSold());
-       orderDTO.setCreatedAt(order.getCreatedAt());
-       orderDTO.setUpdatedAt(order.getUpdatedAt());
-       return orderDTO ;
-    }*/
 
     public Order updateOrder(String id, Order updatedOrder) {
         return orderRepository.findById(id)

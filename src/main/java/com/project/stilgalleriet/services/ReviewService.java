@@ -1,6 +1,6 @@
 package com.project.stilgalleriet.services;
 
-import Mappers.ReviewMapper;
+import com.project.stilgalleriet.Mappers.ReviewMapper;
 import com.project.stilgalleriet.dto.ReviewDTO;
 import com.project.stilgalleriet.exception.EntityNotFoundException;
 import com.project.stilgalleriet.models.Order;
@@ -70,23 +70,6 @@ public class ReviewService {
         return ReviewMapper.toDto(review);
     }
 
-    //Get all reviews
-  /*  public List<ReviewDTO> getAllReviews(){
-        List<Review> reviews = reviewRepository.findAll();
-        return reviews.stream().map(this::convertToDTO).collect(Collectors.toList());
-    }
-
-    //Find review by ID
-    public ReviewDTO getReviewById(String id) {
-        //No convert method for Optional to DTO
-        Optional<Review> review = reviewRepository.findById(id);
-        ReviewDTO reviewDTO = new ReviewDTO();
-        reviewDTO.setRatingUserId(review.get().getRatingUserId().getId());
-        reviewDTO.setRatedUserId(review.get().getRatedUserId().getId());
-        reviewDTO.setRating(review.get().getRating());
-        reviewDTO.setComment(review.get().getComment());
-        return reviewDTO;
-    }*/
 
     //Update a review
     public ReviewDTO updateReview(String id, Review updatedReview){
@@ -122,23 +105,6 @@ public class ReviewService {
                 .collect(Collectors.toList());
     }
 
-    //Show all reviews for a seller(ratedUserId)
-   /* public List<ReviewDTO> getReviewBySeller(String id){
-        List<Review> reviews = reviewRepository.findByRatedUserId(id);
-        return reviews.stream().map(this::convertToDTO).collect(Collectors.toList());
-    }*/
-
-
-    //Convert Review object to ReviewDTO object
-   /* private ReviewDTO convertToDTO(Review review){
-        ReviewDTO reviewDTO = new ReviewDTO();
-        reviewDTO.setRatingUserId(review.getRatingUserId().getId());
-        reviewDTO.setRatedUserId(review.getRatedUserId().getId());
-        reviewDTO.setRating(review.getRating());
-        reviewDTO.setComment(review.getComment());
-
-        return reviewDTO;*
-    }*/
 
     //Method for checking if user have finished purchase by checking if order exist.
     private boolean isOrderDone(ReviewDTO reviewDTO){

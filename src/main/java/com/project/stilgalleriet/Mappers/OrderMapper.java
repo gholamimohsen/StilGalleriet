@@ -1,4 +1,4 @@
-package Mappers;
+package com.project.stilgalleriet.Mappers;
 
 import com.project.stilgalleriet.models.Order;
 import com.project.stilgalleriet.payload.response.OrderResponse;

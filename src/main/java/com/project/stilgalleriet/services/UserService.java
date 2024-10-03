@@ -1,6 +1,8 @@
 
 package com.project.stilgalleriet.services;
 
+import com.project.stilgalleriet.Mappers.UserMapper;
+import com.project.stilgalleriet.dto.UserDTO;
 import com.project.stilgalleriet.exception.EntityNotFoundException;
 import com.project.stilgalleriet.models.User;
 import com.project.stilgalleriet.repositories.UserRepository;
@@ -9,6 +11,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -20,49 +23,58 @@ public class UserService {
         this.userRepository =userRepository;
 
     }
-    public User createUser(User user) {
-        return userRepository.save(user);
+    public UserDTO createUser(UserDTO userDTO) {
+        User user = UserMapper.toEntity(userDTO); // Business Logic (Mapping), Convert DTO to entity
+        User savedUser= userRepository.save(user); // Data Access (Interacting with Repository)
+        return UserMapper.toDto(savedUser); // Business Logic (Mapping)
     }
 
     // Get all users
     @PreAuthorize("hasRole('ADMIN')")
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
+    public List<UserDTO> getAllUsers() {
+        List<User>users =userRepository.findAll();
+        return users.stream()
+                .map(UserMapper::toDto)
+                .collect(Collectors.toList()); // Data access logic directly in service
     }
 
-    // Get user by ID
-    public User getUserById(String id) {
+    public UserDTO getUserById(String id) {
+        User user = findUserById(id); // Separat metod för att hitta användaren
+        return UserMapper.toDto(user); // Använder en mapper för att konvertera till DTO
+    }
+
+    // Hjälpmetod för att hitta användaren
+    private User findUserById(String id) {
         return userRepository.findById(id)
                 .orElseThrow(() ->
                         new EntityNotFoundException("User not found with id: " + id));
     }
-    public User updateUser(String id, User userDetails) {
-        // Find the user by ID, if not found, throw an exception
-        User user = userRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + id));
 
 
-
-
-            user.setUsername(userDetails.getUsername());
-            user.setEmail(userDetails.getEmail());
-            user.setFirstName(userDetails.getFirstName());
-            user.setLastName(userDetails.getLastName());
-            user.setPassword(userDetails.getPassword());
-            user.setStreet(userDetails.getStreet());
-            user.setCity(userDetails.getCity());
-            user.setState(userDetails.getState());
-            user.setZipcode(userDetails.getZipcode());
-            user.setActive(userDetails.isActive());
-            user.setFavorites(userDetails.getFavorites()); //This might overwrite favorites, probably need .add method from ArrayList
-
+        private User saveUser(User user) {
             return userRepository.save(user);
+        }
+
+
+    public UserDTO updateUser(String id, UserDTO userDTO) {
+        User existingUser = findUserById(id);
+
+            existingUser .setUsername(userDTO.getUsername());
+            existingUser.setEmail(userDTO.getEmail());
+            existingUser.setFirstName(userDTO.getFirstName());
+            existingUser.setLastName(userDTO.getLastName());
+            existingUser.setStreet(userDTO.getStreet());
+            existingUser.setCity(userDTO.getCity());
+            existingUser.setState(userDTO.getState());
+            existingUser.setZipcode(userDTO.getZipcode());
+            existingUser.setActive(userDTO.isActive());
+        User updatedUser = saveUser(existingUser);
+        return UserMapper.toDto(updatedUser);
         }
 
         // Delete user
         public String deleteUser(String id) {
-            User user = userRepository.findById(id)
-                    .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + id));
+            User user = findUserById(id);
             userRepository.delete(user);
             return "User deleted successfully";
         }
@@ -70,119 +82,6 @@ public class UserService {
 }
 
 
-    /*
-    @Autowired
-    UserRepository userRepository;
 
-    @Autowired
-    AdvertisementRepository advertisementRepository;
-
-
-    //create / Post user
-    public User createUser(User user) {
-        return userRepository.save(user);
-    }
-
-    //read / Get user
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
-    }
-
-    //Get user by specific id
-    public User getUserById(String id) {
-        return userRepository.findById(id).get();
-    }
-
-    //Update user. Replaced with an update method. The previous "update" method was a create operation.
-    public User updateUser(String id, User updatedUser) {
-
-        //No exception handling added!
-        return userRepository.findById(id)
-                .map(user -> {
-
-                    user.setFirstName(updatedUser.getFirstName());
-                    user.setLastName(updatedUser.getLastName());
-                    user.setEmail(updatedUser.getEmail());
-                    user.setPassword(updatedUser.getPassword());
-                    user.setStreet(updatedUser.getStreet());
-                    user.setCity(updatedUser.getCity());
-                    user.setState(updatedUser.getState());
-                    user.setZipcode(updatedUser.getZipcode());
-                    user.setActive(updatedUser.isActive());
-                    user.setFavorites(updatedUser.getFavorites()); //This might overwrite favorites, probably need .add method from ArrayList
-
-                    return userRepository.save(user);
-
-                })
-                .orElseThrow();
-    }
-
-    //Delete user
-    public String deleteUser(String id) {
-        userRepository.deleteById(id);
-        return "User successfully deleted";
-    }
-
-
-    // FAVORITES ADVERTISEMENT METHODS
-
-    //Post Favorites
-    public void addFavorite (String usernameId, String advertisementId ) {
-        Optional<User> userOptional = userRepository.findByUsername(usernameId);
-        Optional<Advertisement> advertisementOptional = advertisementRepository.findAdvertisementById(advertisementId);
-
-        if (userOptional.isEmpty()) {
-            throw new UsernameNotFoundException("User not found");
-        }
-        if (advertisementOptional.isEmpty()) {
-            throw  new EntityNotFoundException("Advertisement not found");
-        }
-
-        User user = userOptional.get();
-        Advertisement advertisement = advertisementOptional.get();
-        if (user.getFavorites().contains(advertisement)) { //Checks if you already have this advertisement in favorites.
-            throw new IllegalArgumentException("Advertisement is already in favorites.");
-        }
-        user.getFavorites().add(advertisement);
-        userRepository.save(user);
-    }
-
-    //GET all Advertisement Favorites
-
-    public List<Advertisement> getAddFavorites(String usernameId) {
-        Optional<User> userOptional = userRepository.findByUsername(usernameId);
-
-        if (userOptional.isEmpty()) {
-            throw new UsernameNotFoundException("User not found");
-        }
-
-        User user = userOptional.get();
-        return new ArrayList<>(user.getFavorites());
-    }
-
-    //DELETE an Advertisement Favorite
-
-    public void removeAddFavorite(String usernameId, String advertisementId) {
-        Optional<User> userOptional = userRepository.findByUsername(usernameId);
-        Optional<Advertisement> advertisementOptional = advertisementRepository.findAdvertisementById(advertisementId);
-
-        if (userOptional.isEmpty()) {
-            throw new UsernameNotFoundException("User not found");
-        }
-        if (advertisementOptional.isEmpty()) {
-            throw new EntityNotFoundException("Advertisement not found");
-        }
-        User user = userOptional.get();
-        Advertisement advertisement = advertisementOptional.get();
-
-        if(!user.getFavorites().contains(advertisement)) { //Checks if Advertisement is not in your favorite with (!)
-            throw new IllegalArgumentException("Advertisement is not in favorites");
-        }
-
-        user.getFavorites().remove(advertisement);
-        userRepository.save(user);
-
-
-    }*/
 
 
