@@ -1,26 +1,24 @@
 
 package com.project.stilgalleriet.services;
 
-import com.project.stilgalleriet.exception.EntityNotFoundException;
-import com.project.stilgalleriet.models.Advertisement;
 import com.project.stilgalleriet.models.User;
-import com.project.stilgalleriet.repositories.AdvertisementRepository;
 import com.project.stilgalleriet.repositories.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class UserService {
-    @Autowired
-    UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    @Autowired
-    AdvertisementRepository advertisementRepository;
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
+
+  //  @Autowired
+   // AdvertisementRepository advertisementRepository;
 
 
     //create / Post user
@@ -74,11 +72,21 @@ public class UserService {
         return "User successfully deleted";
     }
 
+    public void addFavorite(String username, String adsId) {
+    }
+
+    public List getAddFavorites(String username) {
+        return null;
+    }
+
+    public void removeAddFavorite(String username, String adsId) {
+    }
+
 
     // FAVORITES ADVERTISEMENT METHODS
 
     //Post Favorites
-    public void addFavorite (String usernameId, String advertisementId ) {
+    /*public void addFavorite (String usernameId, String advertisementId ) {
         Optional<User> userOptional = userRepository.findByUsername(usernameId);
         Optional<Advertisement> advertisementOptional = advertisementRepository.findAdvertisementById(advertisementId);
 
@@ -134,5 +142,5 @@ public class UserService {
         userRepository.save(user);
 
 
-    }
+    }*/
 }

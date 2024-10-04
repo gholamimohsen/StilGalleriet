@@ -14,9 +14,12 @@ import java.util.Optional;
 
 @Service
 public class AdvertisementService {
+    private final AdvertisementRepository advertisementRepository;
 
-    @Autowired
-    AdvertisementRepository advertisementRepository;
+
+    public AdvertisementService(AdvertisementRepository advertisementRepository) {
+        this.advertisementRepository = advertisementRepository;
+    }
 
     @Autowired
     UserRepository userRepository;
