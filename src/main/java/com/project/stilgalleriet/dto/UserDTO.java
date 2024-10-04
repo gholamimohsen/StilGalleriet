@@ -11,6 +11,7 @@ public class UserDTO {
     @Size(max = 50)
     private String username;
 
+    // First and last names of the user, no specific validation requirements.
     private String firstName;
     private String lastName;
 

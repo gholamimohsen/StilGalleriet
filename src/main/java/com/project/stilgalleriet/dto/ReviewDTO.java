@@ -6,8 +6,11 @@ import jakarta.validation.constraints.NotBlank;
 import org.hibernate.validator.constraints.Length;
 
 public class ReviewDTO { //DTO for Reviews. Used for both request and response.
+    // DTO for transferring review data between layers. Used for both requests and responses.
+
     @NotBlank(message = "Can't be found")
     private String ratingUserId; //Can grab this ID somehow with authentication or being logged in(user account)?
+    // ID of the user giving the rating. Must not be blank. Could be fetched through authentication.
     @NotBlank(message = "Can't be found")
     private String ratedUserId;
 
@@ -16,6 +19,7 @@ public class ReviewDTO { //DTO for Reviews. Used for both request and response.
     @Length(min = 0, max = 200, message = "You exceeded 200 letters")
     private String comment;
 
+    // Getter and setter methods for all fields.
     public String getRatingUserId() {
         return ratingUserId;
     }

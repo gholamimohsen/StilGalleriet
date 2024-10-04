@@ -5,6 +5,9 @@ import com.project.stilgalleriet.models.Review;
 import com.project.stilgalleriet.models.User;
 
 public class ReviewMapper {
+    // Converts a Review entity into a ReviewDTO
+    //to ensure that only the necessary data (such as user IDs, rating, and comment)
+    // is passed outside the application layers (
     public static ReviewDTO toDto(Review review) {
         ReviewDTO reviewDTO = new ReviewDTO();
         reviewDTO.setRatingUserId(review.getRatingUserId().getId());
@@ -14,12 +17,14 @@ public class ReviewMapper {
         return reviewDTO;
     }
 
+    // Converts a ReviewDTO into a Review entity
     public static Review toEntity(ReviewDTO reviewDTO, User ratingUser, User ratedUser) {
         Review review = new Review();
+        // Set the RatingUser using the user entity (from the parameters)
         review.setRatingUserId(ratingUser);
         review.setRatedUserId(ratedUser);
         review.setRating(reviewDTO.getRating());
         review.setComment(reviewDTO.getComment());
-        return review;
+        return review; // Return the populated Review entity
     }
 }

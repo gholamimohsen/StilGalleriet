@@ -26,7 +26,10 @@ public class OrderController {
     @PostMapping
     public ResponseEntity<?> createOrder(@Valid @RequestBody OrderDTO orderDTO) {
         try {
+            // Call the service layer to create a new order from the given OrderDTO
+            // This abstracts the business logic into the service layer
             Order newOrder = orderService.createOrder(orderDTO);
+            // Return a 200 OK response with the newly created order in the response body
             return ResponseEntity.ok(newOrder);
         } catch (EntityNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
@@ -41,7 +44,9 @@ public class OrderController {
 
     @GetMapping("/{id}")
     public ResponseEntity<OrderResponse> getOrderById(@PathVariable String id) {
+        // Call the service to fetch the order with the given ID
         OrderResponse orders = orderService.getOrderById(id);
+        // Return the order details in the response body with HTTP 200 OK
         return ResponseEntity.ok(orders);
     }
 
@@ -49,7 +54,9 @@ public class OrderController {
     @PutMapping("/{id}")
     public ResponseEntity<?> updateOrder(@PathVariable String id, @Valid @RequestBody Order orderDetails) {
         try {
+            // Call the service to update the order details
             Order updateOrder = orderService.updateOrder(id, orderDetails);
+            // Return the updated order in the response body with HTTP 200 OK
             return ResponseEntity.ok(updateOrder);
         } catch (EntityNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
@@ -60,7 +67,9 @@ public class OrderController {
         @DeleteMapping("/{id}")
         public ResponseEntity<?> deleteOrder (@PathVariable String id){
         try {
+            // Call the service to delete the order
             orderService.deleteOrder(id);
+            // Return a success message indicating that the order has been deleted
             return ResponseEntity.ok("Deleted Order: " + id + " has been deleted ");
         } catch (EntityNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());

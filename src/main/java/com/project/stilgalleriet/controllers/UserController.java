@@ -23,28 +23,34 @@ public class UserController {
 
     @PostMapping
         public ResponseEntity<UserDTO> createUser(@RequestBody UserDTO userDTO) {
+        // Calls the service to create the user and returns the newly created UserDTO
         UserDTO newUser = userService.createUser(userDTO);
+        // Returns the new user with a 200 OK response
         return ResponseEntity.ok(newUser);
     }
     @GetMapping("/{id}")
     public ResponseEntity<UserDTO> getUserById(@PathVariable String id) {
+        // Calls the service to fetch the user by ID
         UserDTO  user = userService.getUserById(id);
         return ResponseEntity.ok(user);
     }
     @GetMapping
     public ResponseEntity<List<UserDTO>> getAllUsers() {
+        // Calls the service to fetch all users
         List<UserDTO> users = userService.getAllUsers();
         return ResponseEntity.ok(users);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<UserDTO> updateUser(@PathVariable String id, @RequestBody UserDTO userDTO) {
+        // Calls the service to update the user and returns the updated UserDTO
         UserDTO updatedUser = userService.updateUser(id, userDTO);
         return ResponseEntity.ok(updatedUser);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteUser(@PathVariable String id) {
+        // Calls the service to delete the user and returns a success message
         String result = userService.deleteUser(id);
         return ResponseEntity.ok(result);
     }

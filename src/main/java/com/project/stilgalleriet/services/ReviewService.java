@@ -27,7 +27,13 @@ public class ReviewService {
     @Autowired
     UserRepository userRepository;
 
-    //Create a new review, takes DTO as input
+    /**
+     * Create a new review using ReviewDTO.
+     * Checks if the order is done (transaction is complete) before creating the review.
+     *
+     * @param reviewDTO - Data Transfer Object containing the review details.
+     * @return ReviewDTO object representing the newly created review.
+     */
     public ReviewDTO createReview(ReviewDTO reviewDTO){
 
         //Check if user already made review(Can be done with exception handling)
