@@ -71,6 +71,7 @@ public class UserService {
         userRepository.deleteById(id);
         return "User successfully deleted";
     }
+    // New methode for Favorites
 
     public void addFavorite(String username, String adsId) {
     }
